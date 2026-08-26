@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Cleaning & Reporting Automation — Executive Report</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 30px 20px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+        header p { font-size: 14px; opacity: 0.9; }
+        .grid-kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .kpi-label { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+        .kpi-value { font-size: 24px; font-weight: 700; color: var(--primary); margin: 8px 0; }
+        .kpi-desc { font-size: 12px; color: var(--text-muted); }
+        .section-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .section-card h2 { font-size: 18px; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; font-size: 14px; }
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 10px;
+            overflow-x: auto;
+            display: block;
+        }
+        .styled-table th, .styled-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .styled-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        .styled-table tr:nth-child(even) { background-color: #f1f5f9; }
+        footer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Cleaning & Reporting Automation</h1>
+            <p>Automated Data Validation, Transformation, Analysis & Executive Intelligence Report</p>
+            <p style="font-size: 12px; margin-top: 5px;">Report Generated: 2026-08-26 22:56:45</p>
+        </header>
+
+        <div class="grid-kpis">
+            <div class="kpi-card">
+                <div class="kpi-label">Health Score</div>
+                <div class="kpi-value" style="color: var(--success);">97.2/100</div>
+                <div class="kpi-desc">Initial: 72.7/100</div>
+            </div>
+            
+        <div class="kpi-card">
+            <div class="kpi-label">Total Records</div>
+            <div class="kpi-value">120</div>
+            <div class="kpi-desc">Total active rows in processed dataset</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Unique Customers / Accounts</div>
+            <div class="kpi-value">120</div>
+            <div class="kpi-desc">Distinct entities in 'customer_id'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Top Segment (Consumer)</div>
+            <div class="kpi-value">56 records</div>
+            <div class="kpi-desc">Most frequent group in 'customer_segment'</div>
+        </div>
+        
+        </div>
+
+        <div class="section-card">
+            <h2>Data Quality & Cleaning Audit Summary</h2>
+            <ul><li><strong>Step 1:</strong> Standardized 12 column names into clean snake_case.</li><li><strong>Step 2:</strong> Removed 8 exact duplicate records.</li><li><strong>Step 3:</strong> Converted 2 columns to appropriate numeric/date/boolean types.</li><li><strong>Step 4:</strong> Corrected 22 negative values across 1 positive columns.</li><li><strong>Step 5:</strong> Normalized casing and categorical variants across 8 text columns.</li><li><strong>Step 6:</strong> Handled missing values across 11 columns using intelligent imputation.</li><li><strong>Step 7:</strong> Detected outliers in 2 numeric columns (Action: keep).</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Automated Insights</h2>
+            <ul><li>Overall Data Health Score improved from 72.7/100 [B (Acceptable)] to 97.2/100 [A+ (Excellent)].</li><li>Resolved 118 missing values across 11 columns using statistical imputation strategies.</li><li>Eliminated 8 exact duplicate rows, preventing skewed metrics and double-counting.</li><li>Successfully standardized data types for 2 columns (including currency symbol stripping, date parsing, and boolean normalization).</li><li>Standardized 12 column headers into consistent snake_case format for SQL/pipeline compatibility.</li><li>Top contributing category is 'Consumer' accounting for 41.9% of total volume ($110,700,000.00).</li><li>Regional distribution is led by 'Mumbai' generating 27.2% of activity.</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Strategic Recommendations</h2>
+            <ul><li><strong>Action:</strong> Implement frontend form validation at data entry to mandate required fields and eliminate downstream missing values.</li><li><strong>Action:</strong> Enforce database UNIQUE constraints on transactional ID fields to prevent duplicate records at ingestion.</li><li><strong>Action:</strong> Enforce strict schema typing at the ingestion pipeline to avoid storing raw currency symbols and unformatted strings in numeric fields.</li><li><strong>Action:</strong> Evaluate marketing and promotional strategies for lower-performing category 'Home Office' (20.9% share) to balance portfolio revenue.</li><li><strong>Action:</strong> Schedule automated daily/weekly runs of this cleaning pipeline to monitor data health drift over time.</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Cleaned Dataset Preview (First 20 Records)</h2>
+            <table border="1" class="dataframe styled-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>customer_id</th>
+      <th>first_name</th>
+      <th>last_name</th>
+      <th>gender</th>
+      <th>email_address</th>
+      <th>phone_number</th>
+      <th>city</th>
+      <th>annual_income</th>
+      <th>credit_score</th>
+      <th>customer_segment</th>
+      <th>account_status</th>
+      <th>signup_date</th>
+      <th>signup_year</th>
+      <th>signup_month</th>
+      <th>signup_quarter</th>
+      <th>signup_month_year</th>
+      <th>signup_day_name</th>
+      <th>signup_is_weekend</th>
+      <th>full_name</th>
+      <th>credit_tier</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CUST-2001</td>
+      <td>Pari</td>
+      <td>Singh</td>
+      <td>Male</td>
+      <td>Unknown</td>
+      <td>72151-94519</td>
+      <td>Hyderabad</td>
+      <td>25000.0</td>
+      <td>780.0</td>
+      <td>Corporate</td>
+      <td>Active</td>
+      <td>2025-07-11</td>
+      <td>2025.0</td>
+      <td>7.0</td>
+      <td>2025Q3</td>
+      <td>2025-07</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>Pari Singh</td>
+      <td>Very Good (740-799)</td>
+    </tr>
+    <tr>
+      <td>CUST-2002</td>
+      <td>Pari</td>
+      <td>Kapoor</td>
+      <td>Female</td>
+      <td>pari.kapoor93@example.com</td>
+      <td>Unknown</td>
+      <td>Pune</td>
+      <td>45000.0</td>
+      <td>850.0</td>
+      <td>Corporate</td>
+      <td>Suspended</td>
+      <td>2025-05-15</td>
+      <td>2025.0</td>
+      <td>5.0</td>
+      <td>2025Q2</td>
+      <td>2025-05</td>
+      <td>Thursday</td>
+      <td>False</td>
+      <td>Pari Kapoor</td>
+      <td>Exceptional (800+)</td>
+    </tr>
+    <tr>
+      <td>CUST-2003</td>
+      <td>Unknown</td>
+      <td>Verma</td>
+      <td>Female</td>
+      <td>Unknown</td>
+      <td>80535-60262</td>
+      <td>Hyderabad</td>
+      <td>25000.0</td>
+      <td>650.0</td>
+      <td>Home Office</td>
+      <td>Active</td>
+      <td>2024-12-03</td>
+      <td>2024.0</td>
+      <td>12.0</td>
+      <td>2024Q4</td>
+      <td>2024-12</td>
+      <td>Tuesday</td>
+      <td>False</td>
+      <td>Unknown Verma</td>
+      <td>Fair (580-669)</td>
+    </tr>
+    <tr>
+      <td>CUST-2004</td>
+      <td>Aadhya</td>
+      <td>Rao</td>
+      <td>Female</td>
+      <td>aadhya.rao98@example.com</td>
+      <td>+91 9044426601</td>
+      <td>Pune</td>
+      <td>85000.0</td>
+      <td>850.0</td>
+      <td>Corporate</td>
+      <td>Pending</td>
+      <td>2025-07-06</td>
+      <td>2025.0</td>
+      <td>7.0</td>
+      <td>2025Q3</td>
+      <td>2025-07</td>
+      <td>Sunday</td>
+      <td>True</td>
+      <td>Aadhya Rao</td>
+      <td>Exceptional (800+)</td>
+    </tr>
+    <tr>
+      <td>CUST-2005</td>
+      <td>Myra</td>
+      <td>Sharma</td>
+      <td>Other</td>
+      <td>user5@domain.org</td>
+      <td>Unknown</td>
+      <td>Chennai</td>
+      <td>85000.0</td>
+      <td>650.0</td>
+      <td>Consumer</td>
+      <td>Inactive</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>Myra Sharma</td>
+      <td>Fair (580-669)</td>
+    </tr>
+    <tr>
+      <td>CUST-2006</td>
+      <td>Aarav</td>
+      <td>Sharma</td>
+      <td>Other</td>
+      <td>aarav.sharma39@example.com</td>
+      <td>+91 8611022972</td>
+      <td>Chennai</td>
+      <td>25000.0</td>
+      <td>590.0</td>
+      <td>Home Office</td>
+      <td>Suspended</td>
+      <td>2026-05-20</td>
+      <td>2026.0</td>
+      <td>5.0</td>
+      <td>2026Q2</td>
+      <td>2026-05</td>
+      <td>Wednesday</td>
+      <td>False</td>
+      <td>Aarav Sharma</td>
+      <td>Fair (580-669)</td>
+    </tr>
+    <tr>
+      <td>CUST-2007</td>
+      <td>Aadhya</td>
+      <td>Khan</td>
+      <td>Male</td>
+      <td>aadhya.khan53at-domain.com</td>
+      <td>+91 9142950388</td>
+      <td>Kolkata</td>
+      <td>1200000.0</td>
+      <td>800.0</td>
+      <td>Home Office</td>
+      <td>Active</td>
+      <td>2024-12-24</td>
+      <td>2024.0</td>
+      <td>12.0</td>
+      <td>2024Q4</td>
+      <td>2024-12</td>
+      <td>Tuesday</td>
+      <td>False</td>
+      <td>Aadhya Khan</td>
+      <td>Exceptional (800+)</td>
+    </tr>
+    <tr>
+      <td>CUST-2008</td>
+      <td>Krishna</td>
+      <td>Verma</td>
+      <td>Female</td>
+      <td>Unknown</td>
+      <td>Unknown</td>
+      <td>Kolkata</td>
+      <td>15000000.0</td>
+      <td>590.0</td>
+      <td>Consumer</td>
+      <td>Suspended</td>
+      <td>2024-07-26</td>
+      <td>2024.0</td>
+      <td>7.0</td>
+      <td>2024Q3</td>
+      <td>2024-07</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>Krishna Verma</td>
+      <td>Fair (580-669)</td>
+    </tr>
+    <tr>
+      <td>CUST-2009</td>
+      <td>Vihaan</td>
+      <td>Rao</td>
+      <td>Unknown</td>
+      <td>vihaan.rao35@domain.org</td>
+      <td>96591-55873</td>
+      <td>Mumbai</td>
+      <td>85000.0</td>
+      <td>780.0</td>
+      <td>Consumer</td>
+      <td>Pending</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>Vihaan Rao</td>
+      <td>Very Good (740-799)</td>
+    </tr>
+    <tr>
+      <td>CUST-2010</td>
+      <td>Saanvi</td>
+      <td>Reddy</td>
+      <td>Other</td>
+      <td>saanvi.reddy28@example.com</td>
+      <td>Unknown</td>
+      <td>Bangalore</td>
+      <td>25000.0</td>
+      <td>9999.0</td>
+      <td>Home Office</td>
+      <td>Suspended</td>
+      <td>NaT</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>Saanvi Reddy</td>
+      <td>Exceptional (800+)</td>
+    </tr>
+    <tr>
+      <td>CUST-2011</td>
+      <td>Saanvi</td>
+      <td>Verma</td>
+      <td>Female</td>
+      <td>saanvi.verma92@domain.org</td>
+      <td>Unknown</td>
+      <td>Mumbai</td>
+      <td>45000.0</td>
+      <td>800.0</td>
+      <td>Consumer</td>
+      <td>Active</td>
+      <td>2024-04-02</td>
+      <td>2024.0</td>
+      <td>4.0</td>
+      <td>2024Q2</td>
+      <td>2024-04</td>
+      <td>Tuesday</td>
+      <td>False</td>
+      <td>Saanvi Verma</td>
+      <td>Exceptional (800+)</td>
+    </tr>
+    <tr>
+      <td>CUST-2012</td>
+      <td>Pari</td>
+      <td>Sharma</td>
+      <td>Female</td>
+      <td>Unknown</td>
+      <td>Unknown</td>
+      <td>Delhi</td>
+      <td>85000.0</td>
+      <td>9999.0</td>
+      <td>Home Office</td>
+      <td>Inactive</td>
+      <td>2025-01-16</td>
+      <td>2025.0</td>
+      <td>1.0</td>
+      <td>2025Q1</td>
+      <td>2025-01</td>
+      <td>Thursday</td>
+      <td>False</td>
+      <td>Pari Sharma</td>
+      <td>Exceptional (800+)</td>
+    </tr>
+    <tr>
+      <td>CUST-2013</td>
+      <td>Prisha</td>
+      <td>Sharma</td>
+      <td>Female</td>
+      <td>user13@domain.org</td>
+      <td>+91 8047177296</td>
+      <td>Delhi</td>
+      <td>1200000.0</td>
+      <td>780.0</td>
+      <td>Consumer</td>
+      <td>Inactive</td>
+      <td>2026-01-09</td>
+      <td>2026.0</td>
+      <td>1.0</td>
+      <td>2026Q1</td>
+      <td>2026-01</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>Prisha Sharma</td>
+      <td>Very Good (740-799)</td>
+    </tr>
+    <tr>
+      <td>CUST-2014</td>
+      <td>Vivaan</td>
+      <td>Verma</td>
+      <td>Male</td>
+      <td>vivaan.verma48@domain.org</td>
+      <td>+91-8271129368</td>
+      <td>Chennai</td>
+      <td>1200000.0</td>
+      <td>800.0</td>
+      <td>Home Office</td>
+      <td>Inactive</td>
+      <td>2024-08-24</td>
+      <td>2024.0</td>
+      <td>8.0</td>
+      <td>2024Q3</td>
+      <td>2024-08</td>
+      <td>Saturday</td>
+      <td>True</td>
+      <td>Vivaan Verma</td>
+      <td>Exceptional (800+)</td>
+    </tr>
+    <tr>
+      <td>CUST-2015</td>
+      <td>Riya</td>
+      <td>Nair</td>
+      <td>Female</td>
+      <td>riya.nair35at-domain.com</td>
+      <td>Unknown</td>
+      <td>Chennai</td>
+      <td>15000000.0</td>
+      <td>-50.0</td>
+      <td>Corporate</td>
+      <td>Pending</td>
+      <td>2025-01-09</td>
+      <td>2025.0</td>
+      <td>1.0</td>
+      <td>2025Q1</td>
+      <td>2025-01</td>
+      <td>Thursday</td>
+      <td>False</td>
+      <td>Riya Nair</td>
+      <td>Poor (&lt;580)</td>
+    </tr>
+    <tr>
+      <td>CUST-2016</td>
+      <td>Arjun</td>
+      <td>Iyer</td>
+      <td>Female</td>
+      <td>arjun.iyer50@example.com</td>
+      <td>Unknown</td>
+      <td>Bangalore</td>
+      <td>25000.0</td>
+      <td>9999.0</td>
+      <td>Consumer</td>
+      <td>Inactive</td>
+      <td>2026-04-17</td>
+      <td>2026.0</td>
+      <td>4.0</td>
+      <td>2026Q2</td>
+      <td>2026-04</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>Arjun Iyer</td>
+      <td>Exceptional (800+)</td>
+    </tr>
+    <tr>
+      <td>CUST-2017</td>
+      <td>Myra</td>
+      <td>Singh</td>
+      <td>Other</td>
+      <td>myra.singh37@example.com</td>
+      <td>+91-8029141733</td>
+      <td>Delhi</td>
+      <td>1200000.0</td>
+      <td>780.0</td>
+      <td>Consumer</td>
+      <td>Active</td>
+      <td>2025-11-06</td>
+      <td>2025.0</td>
+      <td>11.0</td>
+      <td>2025Q4</td>
+      <td>2025-11</td>
+      <td>Thursday</td>
+      <td>False</td>
+      <td>Myra Singh</td>
+      <td>Very Good (740-799)</td>
+    </tr>
+    <tr>
+      <td>CUST-2018</td>
+      <td>Ananya</td>
+      <td>Reddy</td>
+      <td>Female</td>
+      <td>ananya.reddy76@domain.org</td>
+      <td>+91-9495827412</td>
+      <td>Mumbai</td>
+      <td>25000.0</td>
+      <td>780.0</td>
+      <td>Home Office</td>
+      <td>Inactive</td>
+      <td>2025-05-27</td>
+      <td>2025.0</td>
+      <td>5.0</td>
+      <td>2025Q2</td>
+      <td>2025-05</td>
+      <td>Tuesday</td>
+      <td>False</td>
+      <td>Ananya Reddy</td>
+      <td>Very Good (740-799)</td>
+    </tr>
+    <tr>
+      <td>CUST-2019</td>
+      <td>Prisha</td>
+      <td>Sharma</td>
+      <td>Other</td>
+      <td>user19at-domain.com</td>
+      <td>Unknown</td>
+      <td>Mumbai</td>
+      <td>85000.0</td>
+      <td>780.0</td>
+      <td>Home Office</td>
+      <td>Active</td>
+      <td>2025-07-09</td>
+      <td>2025.0</td>
+      <td>7.0</td>
+      <td>2025Q3</td>
+      <td>2025-07</td>
+      <td>Wednesday</td>
+      <td>False</td>
+      <td>Prisha Sharma</td>
+      <td>Very Good (740-799)</td>
+    </tr>
+    <tr>
+      <td>CUST-2020</td>
+      <td>Pari</td>
+      <td>Rao</td>
+      <td>Female</td>
+      <td>pari.rao29@example.com</td>
+      <td>+91-9274289355</td>
+      <td>Pune</td>
+      <td>15000000.0</td>
+      <td>720.0</td>
+      <td>Consumer</td>
+      <td>Inactive</td>
+      <td>2026-03-07</td>
+      <td>2026.0</td>
+      <td>3.0</td>
+      <td>2026Q1</td>
+      <td>2026-03</td>
+      <td>Saturday</td>
+      <td>True</td>
+      <td>Pari Rao</td>
+      <td>Good (670-739)</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+
+        <footer>
+            Generated by Antigravity Data Cleaning & Reporting Automation System.
+        </footer>
+    </div>
+</body>
+</html>

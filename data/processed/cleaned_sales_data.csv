@@ -1,0 +1,152 @@
+order_id,order_date,customer_name,region,product_category,item,quantity,unit_price,discount_pct,payment_method,order_year,order_month,order_quarter,order_month_year,order_day_name,order_is_weekend,revenue,discount_amount,net_revenue
+ORD-2026-1001,,David Miller,West,Office Supplies,Sticky Notes Pack,3.0,89900.0,-5.0,UPI,,,,,,False,269700.0,-1348500.0,1618200.0
+ORD-2026-1002,,Deepika Padukone,East,Furniture,Conference Table,3.0,45000.0,20.0,UPI,,,,,,False,135000.0,27000.0,108000.0
+ORD-2026-1003,2026-03-30,Unknown,West,Electronics,Noise-Cancelling Headphones,500.0,1250.0,50.0,UPI,2026.0,3.0,2026Q1,2026-03,Monday,False,625000.0,312500.0,312500.0
+ORD-2026-1004,,Amit Verma,South,Furniture,Ergonomic Desk Chair,2.0,3500.0,5.0,UPI,,,,,,False,7000.0,350.0,6650.0
+ORD-2026-1005,2026-04-02,Unknown,North,Clothing,Corporate Polo T-Shirt,10.0,150.0,0.0,UPI,2026.0,4.0,2026Q2,2026-04,Thursday,False,1500.0,0.0,1500.0
+ORD-2026-1006,,Deepika Padukone,North,Furniture,Standing Desk,0.0,3500.0,5.0,Credit Card,,,,,,False,0.0,0.0,0.0
+ORD-2026-1007,,Priya Patel,East,Clothing,Breathable Face Mask (10Pk),15.0,89900.0,10.0,Cash on Delivery,,,,,,False,1348500.0,134850.0,1213650.0
+ORD-2026-1008,,Sarah Connor,West,Office Supplies,Whiteboard 4X3,2.0,1250.0,0.0,Credit Card,,,,,,False,2500.0,0.0,2500.0
+ORD-2026-1009,2026-05-16,Meera Nair,North,Office Supplies,Gel Pens Box (50),3.0,199.99,10.0,UPI,2026.0,5.0,2026Q2,2026-05,Saturday,True,599.97,60.0,539.97
+ORD-2026-1010,2026-02-10,Vikram Singh,East,Electronics,4K Ultra Monitor,10.0,1250.0,-5.0,Debit Card,2026.0,2.0,2026Q1,2026-02,Tuesday,False,12500.0,-62500.0,75000.0
+ORD-2026-1011,,Sarah Connor,South,Electronics,Laptop Pro 15,15.0,45000.0,10.0,Debit Card,,,,,,False,675000.0,67500.0,607500.0
+ORD-2026-1012,,Vikram Singh,North,Electronics,4K Ultra Monitor,10.0,1250.0,10.0,UPI,,,,,,False,12500.0,1250.0,11250.0
+ORD-2026-1013,2026-04-06,Michael Chang,North,Clothing,Breathable Face Mask (10Pk),4.0,3500.0,50.0,Debit Card,2026.0,4.0,2026Q2,2026-04,Monday,False,14000.0,7000.0,7000.0
+ORD-2026-1014,,David Miller,West,Office Supplies,Whiteboard 4X3,500.0,1250.0,5.0,Net Banking,,,,,,False,625000.0,31250.0,593750.0
+ORD-2026-1015,2026-01-28,Karan Johar,South,Clothing,Corporate Polo T-Shirt,3.0,3500.0,10.0,Cash on Delivery,2026.0,1.0,2026Q1,2026-01,Wednesday,False,10500.0,1050.0,9450.0
+ORD-2026-1016,2026-08-13,Karan Johar,South,Office Supplies,Sticky Notes Pack,2.0,1250.0,15.0,Cash on Delivery,2026.0,8.0,2026Q3,2026-08,Thursday,False,2500.0,375.0,2125.0
+ORD-2026-1017,2026-06-04,Rohan Gupta,South,Office Supplies,Heavy Duty Stapler,5.0,199.99,10.0,UPI,2026.0,6.0,2026Q2,2026-06,Thursday,False,999.95,100.0,899.95
+ORD-2026-1018,2026-06-29,Unknown,East,Office Supplies,Heavy Duty Stapler,1.0,3500.0,50.0,Credit Card,2026.0,6.0,2026Q2,2026-06,Monday,False,3500.0,1750.0,1750.0
+ORD-2026-1019,2026-07-03,Robert Vance,South,Electronics,4K Ultra Monitor,500.0,199.99,5.0,Credit Card,2026.0,7.0,2026Q3,2026-07,Friday,False,99995.0,4999.75,94995.25
+ORD-2026-1020,2026-06-05,Rahul Sharma,North,Furniture,Desk Lamp Led,5.0,45000.0,50.0,UPI,2026.0,6.0,2026Q2,2026-06,Friday,False,225000.0,112500.0,112500.0
+ORD-2026-1021,2026-03-10,Robert Vance,South,Clothing,Breathable Face Mask (10Pk),2.0,45000.0,0.0,UPI,2026.0,3.0,2026Q1,2026-03,Tuesday,False,90000.0,0.0,90000.0
+ORD-2026-1022,2026-05-28,Ananya Iyer,West,Office Supplies,Sticky Notes Pack,500.0,3500.0,10.0,UPI,2026.0,5.0,2026Q2,2026-05,Thursday,False,1750000.0,175000.0,1575000.0
+ORD-2026-1023,2026-08-21,Clark Kent,South,Electronics,4K Ultra Monitor,15.0,89900.0,-5.0,UPI,2026.0,8.0,2026Q3,2026-08,Friday,False,1348500.0,-6742500.0,8091000.0
+ORD-2026-1024,,Karan Johar,East,Electronics,4K Ultra Monitor,0.0,1250.0,10.0,Credit Card,,,,,,False,0.0,0.0,0.0
+ORD-2026-1025,,Robert Vance,North,Office Supplies,Sticky Notes Pack,3.0,14999.0,50.0,Credit Card,,,,,,False,44997.0,22498.5,22498.5
+ORD-2026-1026,2026-07-27,Amit Verma,North,Office Supplies,Gel Pens Box (50),4.0,150.0,-5.0,UPI,2026.0,7.0,2026Q3,2026-07,Monday,False,600.0,-3000.0,3600.0
+ORD-2026-1027,2026-06-15,Robert Vance,East,Furniture,Bookshelf 5-Tier,3.0,1250.0,10.0,UPI,2026.0,6.0,2026Q2,2026-06,Monday,False,3750.0,375.0,3375.0
+ORD-2026-1028,,Lisa Kudrow,North,Office Supplies,Whiteboard 4X3,3.0,1250.0,15.0,Credit Card,,,,,,False,3750.0,562.5,3187.5
+ORD-2026-1029,2026-02-17,Rahul Sharma,North,Electronics,Noise-Cancelling Headphones,15.0,150.0,0.0,Net Banking,2026.0,2.0,2026Q1,2026-02,Tuesday,False,2250.0,0.0,2250.0
+ORD-2026-1030,,Bruce Wayne,South,Electronics,Noise-Cancelling Headphones,8.0,45000.0,10.0,Debit Card,,,,,,False,360000.0,36000.0,324000.0
+ORD-2026-1031,2026-04-07,Priya Patel,South,Furniture,Bookshelf 5-Tier,1.0,14999.0,10.0,Cash on Delivery,2026.0,4.0,2026Q2,2026-04,Tuesday,False,14999.0,1499.9,13499.1
+ORD-2026-1032,,Robert Vance,North,Furniture,Bookshelf 5-Tier,5.0,45000.0,10.0,UPI,,,,,,False,225000.0,22500.0,202500.0
+ORD-2026-1033,2026-04-05,Robert Vance,North,Furniture,Desk Lamp Led,3.0,199.99,20.0,Net Banking,2026.0,4.0,2026Q2,2026-04,Sunday,True,599.97,119.99,479.98
+ORD-2026-1034,,Amit Verma,North,Office Supplies,Gel Pens Box (50),0.0,1250.0,25.0,Credit Card,,,,,,False,0.0,0.0,0.0
+ORD-2026-1035,2026-01-17,Kavita Reddy,North,Office Supplies,A4 Printing Paper (Ream),2.0,45000.0,10.0,Credit Card,2026.0,1.0,2026Q1,2026-01,Saturday,True,90000.0,9000.0,81000.0
+ORD-2026-1036,,Amit Verma,North,Office Supplies,A4 Printing Paper (Ream),10.0,1250.0,15.0,Credit Card,,,,,,False,12500.0,1875.0,10625.0
+ORD-2026-1037,2026-05-22,Deepika Padukone,North,Furniture,Ergonomic Desk Chair,3.0,89900.0,5.0,UPI,2026.0,5.0,2026Q2,2026-05,Friday,False,269700.0,13485.0,256215.0
+ORD-2026-1038,,Bruce Wayne,East,Electronics,Smart Watch V2,8.0,45000.0,15.0,Credit Card,,,,,,False,360000.0,54000.0,306000.0
+ORD-2026-1039,,David Miller,South,Clothing,Executive Blazer,5.0,14999.0,25.0,UPI,,,,,,False,74995.0,18748.75,56246.25
+ORD-2026-1040,,Arjun Kapoor,East,Furniture,Bookshelf 5-Tier,0.0,1250.0,-5.0,UPI,,,,,,False,0.0,-0.0,0.0
+ORD-2026-1041,,Arjun Kapoor,East,Electronics,Noise-Cancelling Headphones,2.0,14999.0,10.0,Net Banking,,,,,,False,29998.0,2999.8,26998.2
+ORD-2026-1042,,David Miller,North,Clothing,Corporate Polo T-Shirt,2.0,150.0,20.0,UPI,,,,,,False,300.0,60.0,240.0
+ORD-2026-1043,2026-04-03,Rohan Gupta,South,Electronics,Usb-C Hub,3.0,1250.0,25.0,Cash on Delivery,2026.0,4.0,2026Q2,2026-04,Friday,False,3750.0,937.5,2812.5
+ORD-2026-1044,2026-02-16,Emily Watson,West,Office Supplies,Whiteboard 4X3,4.0,14999.0,10.0,Net Banking,2026.0,2.0,2026Q1,2026-02,Monday,False,59996.0,5999.6,53996.4
+ORD-2026-1045,,Unknown,South,Clothing,Breathable Face Mask (10Pk),5.0,89900.0,10.0,UPI,,,,,,False,449500.0,44950.0,404550.0
+ORD-2026-1046,2026-11-08,Sneha Rao,North,Furniture,Desk Lamp Led,0.0,1250.0,0.0,UPI,2026.0,11.0,2026Q4,2026-11,Sunday,True,0.0,0.0,0.0
+ORD-2026-1047,2026-01-24,Michael Chang,North,Office Supplies,Whiteboard 4X3,1.0,3500.0,5.0,UPI,2026.0,1.0,2026Q1,2026-01,Saturday,True,3500.0,175.0,3325.0
+ORD-2026-1048,2026-06-28,Rahul Sharma,North,Electronics,Noise-Cancelling Headphones,5.0,1250.0,0.0,Net Banking,2026.0,6.0,2026Q2,2026-06,Sunday,True,6250.0,0.0,6250.0
+ORD-2026-1049,2026-05-21,John Doe,West,Office Supplies,A4 Printing Paper (Ream),2.0,1250.0,10.0,Net Banking,2026.0,5.0,2026Q2,2026-05,Thursday,False,2500.0,250.0,2250.0
+ORD-2026-1050,2026-07-21,Deepika Padukone,West,Office Supplies,Gel Pens Box (50),2.0,1250.0,50.0,Credit Card,2026.0,7.0,2026Q3,2026-07,Tuesday,False,2500.0,1250.0,1250.0
+ORD-2026-1051,,Unknown,North,Furniture,Standing Desk,2.0,14999.0,10.0,Net Banking,,,,,,False,29998.0,2999.8,26998.2
+ORD-2026-1052,2026-07-11,Vikram Singh,East,Furniture,Standing Desk,1.0,1250.0,5.0,UPI,2026.0,7.0,2026Q3,2026-07,Saturday,True,1250.0,62.5,1187.5
+ORD-2026-1053,,Vikram Singh,West,Electronics,Smart Watch V2,3.0,1250.0,0.0,Credit Card,,,,,,False,3750.0,0.0,3750.0
+ORD-2026-1054,2026-05-21,Clark Kent,East,Electronics,Smart Watch V2,3.0,199.99,10.0,Cash on Delivery,2026.0,5.0,2026Q2,2026-05,Thursday,False,599.97,60.0,539.97
+ORD-2026-1055,2026-07-25,Suresh Menon,South,Electronics,Noise-Cancelling Headphones,3.0,14999.0,10.0,UPI,2026.0,7.0,2026Q3,2026-07,Saturday,True,44997.0,4499.7,40497.3
+ORD-2026-1056,2026-05-31,Unknown,North,Office Supplies,Sticky Notes Pack,10.0,14999.0,10.0,Net Banking,2026.0,5.0,2026Q2,2026-05,Sunday,True,149990.0,14999.0,134991.0
+ORD-2026-1057,2026-08-09,Vikram Singh,North,Office Supplies,A4 Printing Paper (Ream),500.0,450.0,10.0,Debit Card,2026.0,8.0,2026Q3,2026-08,Sunday,True,225000.0,22500.0,202500.0
+ORD-2026-1058,,Jane Smith,North,Clothing,Executive Blazer,15.0,1250.0,5.0,Net Banking,,,,,,False,18750.0,937.5,17812.5
+ORD-2026-1059,,Priya Patel,South,Clothing,Executive Blazer,3.0,150.0,0.0,Net Banking,,,,,,False,450.0,0.0,450.0
+ORD-2026-1060,2026-02-14,Robert Vance,South,Furniture,Conference Table,4.0,45000.0,10.0,Credit Card,2026.0,2.0,2026Q1,2026-02,Saturday,True,180000.0,18000.0,162000.0
+ORD-2026-1061,,Kavita Reddy,East,Furniture,Bookshelf 5-Tier,3.0,450.0,10.0,UPI,,,,,,False,1350.0,135.0,1215.0
+ORD-2026-1062,2026-04-15,Deepika Padukone,West,Furniture,Conference Table,3.0,1250.0,0.0,Debit Card,2026.0,4.0,2026Q2,2026-04,Wednesday,False,3750.0,0.0,3750.0
+ORD-2026-1063,2026-02-27,Ananya Iyer,South,Office Supplies,Gel Pens Box (50),5.0,45000.0,20.0,Cash on Delivery,2026.0,2.0,2026Q1,2026-02,Friday,False,225000.0,45000.0,180000.0
+ORD-2026-1064,2026-05-26,Bruce Wayne,North,Furniture,Bookshelf 5-Tier,1.0,199.99,25.0,Credit Card,2026.0,5.0,2026Q2,2026-05,Tuesday,False,199.99,50.0,149.99
+ORD-2026-1065,2026-07-22,Sarah Connor,South,Furniture,Bookshelf 5-Tier,0.0,150.0,-5.0,Credit Card,2026.0,7.0,2026Q3,2026-07,Wednesday,False,0.0,-0.0,0.0
+ORD-2026-1066,2026-07-05,Sneha Rao,East,Furniture,Standing Desk,2.0,14999.0,15.0,UPI,2026.0,7.0,2026Q3,2026-07,Sunday,True,29998.0,4499.7,25498.3
+ORD-2026-1067,,Robert Vance,East,Clothing,Executive Blazer,3.0,45000.0,10.0,Credit Card,,,,,,False,135000.0,13500.0,121500.0
+ORD-2026-1068,2026-01-30,Priya Patel,East,Furniture,Ergonomic Desk Chair,500.0,14999.0,25.0,UPI,2026.0,1.0,2026Q1,2026-01,Friday,False,7499500.0,1874875.0,5624625.0
+ORD-2026-1069,2026-03-26,David Miller,North,Electronics,Wireless Mouse,2.0,45000.0,0.0,UPI,2026.0,3.0,2026Q1,2026-03,Thursday,False,90000.0,0.0,90000.0
+ORD-2026-1070,,Suresh Menon,North,Electronics,Wireless Mouse,8.0,199.99,20.0,Debit Card,,,,,,False,1599.92,319.98,1279.94
+ORD-2026-1071,,Unknown,South,Furniture,Bookshelf 5-Tier,3.0,199.99,10.0,Net Banking,,,,,,False,599.97,60.0,539.97
+ORD-2026-1072,2026-07-09,Michael Chang,West,Electronics,4K Ultra Monitor,1.0,150.0,-5.0,UPI,2026.0,7.0,2026Q3,2026-07,Thursday,False,150.0,-750.0,900.0
+ORD-2026-1073,2026-01-03,Priya Patel,South,Office Supplies,A4 Printing Paper (Ream),2.0,199.99,20.0,Cash on Delivery,2026.0,1.0,2026Q1,2026-01,Saturday,True,399.98,80.0,319.98
+ORD-2026-1074,,Robert Vance,South,Clothing,Corporate Polo T-Shirt,500.0,1250.0,5.0,Debit Card,,,,,,False,625000.0,31250.0,593750.0
+ORD-2026-1075,2026-03-20,Priya Patel,North,Furniture,Standing Desk,3.0,450.0,10.0,Cash on Delivery,2026.0,3.0,2026Q1,2026-03,Friday,False,1350.0,135.0,1215.0
+ORD-2026-1076,2026-04-16,Meera Nair,West,Furniture,Ergonomic Desk Chair,1.0,14999.0,15.0,Cash on Delivery,2026.0,4.0,2026Q2,2026-04,Thursday,False,14999.0,2249.85,12749.15
+ORD-2026-1077,,Robert Vance,East,Clothing,Breathable Face Mask (10Pk),5.0,450.0,10.0,Credit Card,,,,,,False,2250.0,225.0,2025.0
+ORD-2026-1078,2026-04-14,Unknown,East,Office Supplies,Heavy Duty Stapler,15.0,1250.0,10.0,UPI,2026.0,4.0,2026Q2,2026-04,Tuesday,False,18750.0,1875.0,16875.0
+ORD-2026-1079,2026-02-20,Lisa Kudrow,West,Electronics,4K Ultra Monitor,5.0,14999.0,10.0,Credit Card,2026.0,2.0,2026Q1,2026-02,Friday,False,74995.0,7499.5,67495.5
+ORD-2026-1080,2026-08-21,Ananya Iyer,North,Furniture,Desk Lamp Led,0.0,450.0,10.0,Net Banking,2026.0,8.0,2026Q3,2026-08,Friday,False,0.0,0.0,0.0
+ORD-2026-1081,,Karan Johar,East,Clothing,Corporate Polo T-Shirt,500.0,199.99,15.0,Cash on Delivery,,,,,,False,99995.0,14999.25,84995.75
+ORD-2026-1082,,Amit Verma,West,Electronics,Laptop Pro 15,0.0,89900.0,10.0,UPI,,,,,,False,0.0,0.0,0.0
+ORD-2026-1083,,Bruce Wayne,South,Clothing,Breathable Face Mask (10Pk),500.0,450.0,25.0,UPI,,,,,,False,225000.0,56250.0,168750.0
+ORD-2026-1084,2026-08-17,David Miller,East,Electronics,4K Ultra Monitor,0.0,89900.0,0.0,Debit Card,2026.0,8.0,2026Q3,2026-08,Monday,False,0.0,0.0,0.0
+ORD-2026-1085,2026-01-13,Jane Smith,East,Office Supplies,A4 Printing Paper (Ream),2.0,3500.0,10.0,Credit Card,2026.0,1.0,2026Q1,2026-01,Tuesday,False,7000.0,700.0,6300.0
+ORD-2026-1086,2026-02-08,Lisa Kudrow,North,Office Supplies,Whiteboard 4X3,15.0,150.0,10.0,Debit Card,2026.0,2.0,2026Q1,2026-02,Sunday,True,2250.0,225.0,2025.0
+ORD-2026-1087,2026-01-26,Vikram Singh,South,Clothing,Corporate Polo T-Shirt,500.0,150.0,25.0,UPI,2026.0,1.0,2026Q1,2026-01,Monday,False,75000.0,18750.0,56250.0
+ORD-2026-1088,,Rahul Sharma,South,Furniture,Ergonomic Desk Chair,8.0,89900.0,-5.0,Cash on Delivery,,,,,,False,719200.0,-3596000.0,4315200.0
+ORD-2026-1089,,Arjun Kapoor,North,Office Supplies,Gel Pens Box (50),8.0,450.0,15.0,UPI,,,,,,False,3600.0,540.0,3060.0
+ORD-2026-1090,2026-03-03,Meera Nair,South,Furniture,Ergonomic Desk Chair,2.0,150.0,10.0,UPI,2026.0,3.0,2026Q1,2026-03,Tuesday,False,300.0,30.0,270.0
+ORD-2026-1091,2026-07-31,Unknown,North,Furniture,Standing Desk,4.0,199.99,0.0,UPI,2026.0,7.0,2026Q3,2026-07,Friday,False,799.96,0.0,799.96
+ORD-2026-1092,2026-05-19,Ananya Iyer,South,Clothing,Executive Blazer,500.0,1250.0,25.0,Cash on Delivery,2026.0,5.0,2026Q2,2026-05,Tuesday,False,625000.0,156250.0,468750.0
+ORD-2026-1093,2026-06-21,Vikram Singh,South,Electronics,Wireless Mouse,15.0,450.0,0.0,Credit Card,2026.0,6.0,2026Q2,2026-06,Sunday,True,6750.0,0.0,6750.0
+ORD-2026-1094,,Robert Vance,East,Furniture,Ergonomic Desk Chair,10.0,1250.0,20.0,UPI,,,,,,False,12500.0,2500.0,10000.0
+ORD-2026-1095,2026-05-17,Unknown,East,Electronics,Smart Watch V2,3.0,1250.0,0.0,UPI,2026.0,5.0,2026Q2,2026-05,Sunday,True,3750.0,0.0,3750.0
+ORD-2026-1096,,Deepika Padukone,West,Office Supplies,Sticky Notes Pack,3.0,1250.0,20.0,Credit Card,,,,,,False,3750.0,750.0,3000.0
+ORD-2026-1097,2026-05-12,Emily Watson,East,Furniture,Bookshelf 5-Tier,0.0,1250.0,5.0,Cash on Delivery,2026.0,5.0,2026Q2,2026-05,Tuesday,False,0.0,0.0,0.0
+ORD-2026-1098,2026-03-04,Ananya Iyer,North,Office Supplies,Heavy Duty Stapler,2.0,199.99,50.0,Debit Card,2026.0,3.0,2026Q1,2026-03,Wednesday,False,399.98,199.99,199.99
+ORD-2026-1099,2026-06-28,Unknown,East,Electronics,Smart Watch V2,8.0,45000.0,50.0,UPI,2026.0,6.0,2026Q2,2026-06,Sunday,True,360000.0,180000.0,180000.0
+ORD-2026-1100,2026-08-10,Clark Kent,West,Electronics,Wireless Mouse,4.0,45000.0,0.0,Credit Card,2026.0,8.0,2026Q3,2026-08,Monday,False,180000.0,0.0,180000.0
+ORD-2026-1101,,Arjun Kapoor,North,Furniture,Bookshelf 5-Tier,2.0,14999.0,10.0,Cash on Delivery,,,,,,False,29998.0,2999.8,26998.2
+ORD-2026-1102,2026-02-16,Ananya Iyer,West,Electronics,Smart Watch V2,15.0,3500.0,-5.0,Debit Card,2026.0,2.0,2026Q1,2026-02,Monday,False,52500.0,-262500.0,315000.0
+ORD-2026-1103,2026-06-22,David Miller,North,Furniture,Desk Lamp Led,500.0,1250.0,15.0,UPI,2026.0,6.0,2026Q2,2026-06,Monday,False,625000.0,93750.0,531250.0
+ORD-2026-1104,2026-05-28,John Doe,West,Furniture,Standing Desk,0.0,150.0,10.0,Net Banking,2026.0,5.0,2026Q2,2026-05,Thursday,False,0.0,0.0,0.0
+ORD-2026-1105,2026-04-14,Karan Johar,North,Office Supplies,A4 Printing Paper (Ream),500.0,3500.0,20.0,Debit Card,2026.0,4.0,2026Q2,2026-04,Tuesday,False,1750000.0,350000.0,1400000.0
+ORD-2026-1106,2026-02-04,Deepika Padukone,East,Office Supplies,Whiteboard 4X3,2.0,45000.0,-5.0,Credit Card,2026.0,2.0,2026Q1,2026-02,Wednesday,False,90000.0,-450000.0,540000.0
+ORD-2026-1107,,Arjun Kapoor,North,Office Supplies,Heavy Duty Stapler,4.0,45000.0,0.0,Cash on Delivery,,,,,,False,180000.0,0.0,180000.0
+ORD-2026-1108,,Deepika Padukone,South,Furniture,Bookshelf 5-Tier,4.0,1250.0,20.0,Debit Card,,,,,,False,5000.0,1000.0,4000.0
+ORD-2026-1109,2026-03-31,Amit Verma,North,Clothing,Corporate Polo T-Shirt,8.0,450.0,5.0,Credit Card,2026.0,3.0,2026Q1,2026-03,Tuesday,False,3600.0,180.0,3420.0
+ORD-2026-1110,,John Doe,West,Clothing,Corporate Polo T-Shirt,15.0,1250.0,50.0,UPI,,,,,,False,18750.0,9375.0,9375.0
+ORD-2026-1111,2026-01-29,Meera Nair,North,Furniture,Desk Lamp Led,8.0,450.0,0.0,Credit Card,2026.0,1.0,2026Q1,2026-01,Thursday,False,3600.0,0.0,3600.0
+ORD-2026-1112,,Clark Kent,East,Office Supplies,Gel Pens Box (50),8.0,150.0,50.0,Credit Card,,,,,,False,1200.0,600.0,600.0
+ORD-2026-1113,2026-07-03,Arjun Kapoor,North,Electronics,Usb-C Hub,1.0,150.0,5.0,UPI,2026.0,7.0,2026Q3,2026-07,Friday,False,150.0,7.5,142.5
+ORD-2026-1114,2026-08-08,Bruce Wayne,North,Electronics,Smart Watch V2,2.0,45000.0,15.0,Credit Card,2026.0,8.0,2026Q3,2026-08,Saturday,True,90000.0,13500.0,76500.0
+ORD-2026-1115,2026-01-02,Arjun Kapoor,South,Electronics,Usb-C Hub,0.0,1250.0,0.0,UPI,2026.0,1.0,2026Q1,2026-01,Friday,False,0.0,0.0,0.0
+ORD-2026-1116,2026-01-08,Lisa Kudrow,South,Office Supplies,Sticky Notes Pack,2.0,89900.0,-5.0,Net Banking,2026.0,1.0,2026Q1,2026-01,Thursday,False,179800.0,-899000.0,1078800.0
+ORD-2026-1117,,Deepika Padukone,South,Office Supplies,Heavy Duty Stapler,1.0,150.0,10.0,Credit Card,,,,,,False,150.0,15.0,135.0
+ORD-2026-1118,,Sarah Connor,North,Office Supplies,Heavy Duty Stapler,5.0,89900.0,50.0,UPI,,,,,,False,449500.0,224750.0,224750.0
+ORD-2026-1119,,Rahul Sharma,South,Clothing,Casual Friday Hoodie,3.0,450.0,0.0,Net Banking,,,,,,False,1350.0,0.0,1350.0
+ORD-2026-1120,2026-05-10,John Doe,East,Furniture,Conference Table,10.0,89900.0,15.0,Debit Card,2026.0,5.0,2026Q2,2026-05,Sunday,True,899000.0,134850.0,764150.0
+ORD-2026-1121,,Ananya Iyer,North,Furniture,Desk Lamp Led,4.0,45000.0,-5.0,Credit Card,,,,,,False,180000.0,-900000.0,1080000.0
+ORD-2026-1122,2026-08-03,Meera Nair,West,Electronics,Wireless Mouse,2.0,1250.0,10.0,Cash on Delivery,2026.0,8.0,2026Q3,2026-08,Monday,False,2500.0,250.0,2250.0
+ORD-2026-1123,,Michael Chang,East,Office Supplies,A4 Printing Paper (Ream),8.0,3500.0,10.0,Debit Card,,,,,,False,28000.0,2800.0,25200.0
+ORD-2026-1124,,John Doe,South,Electronics,Usb-C Hub,2.0,45000.0,0.0,Credit Card,,,,,,False,90000.0,0.0,90000.0
+ORD-2026-1125,,Ananya Iyer,East,Furniture,Ergonomic Desk Chair,5.0,1250.0,25.0,UPI,,,,,,False,6250.0,1562.5,4687.5
+ORD-2026-1126,2026-02-22,Priya Patel,West,Clothing,Breathable Face Mask (10Pk),1.0,14999.0,10.0,Net Banking,2026.0,2.0,2026Q1,2026-02,Sunday,True,14999.0,1499.9,13499.1
+ORD-2026-1127,,Unknown,West,Electronics,Noise-Cancelling Headphones,0.0,14999.0,-5.0,Credit Card,,,,,,False,0.0,-0.0,0.0
+ORD-2026-1128,2026-02-08,Sneha Rao,North,Clothing,Breathable Face Mask (10Pk),8.0,450.0,-5.0,UPI,2026.0,2.0,2026Q1,2026-02,Sunday,True,3600.0,-18000.0,21600.0
+ORD-2026-1129,2026-08-15,Sneha Rao,North,Electronics,Wireless Mouse,500.0,199.99,5.0,UPI,2026.0,8.0,2026Q3,2026-08,Saturday,True,99995.0,4999.75,94995.25
+ORD-2026-1130,2026-07-20,Priya Patel,South,Office Supplies,A4 Printing Paper (Ream),1.0,1250.0,-5.0,Credit Card,2026.0,7.0,2026Q3,2026-07,Monday,False,1250.0,-6250.0,7500.0
+ORD-2026-1131,2026-08-17,Rohan Gupta,North,Clothing,Corporate Polo T-Shirt,3.0,1250.0,10.0,UPI,2026.0,8.0,2026Q3,2026-08,Monday,False,3750.0,375.0,3375.0
+ORD-2026-1132,2026-03-15,Robert Vance,West,Furniture,Conference Table,10.0,199.99,-5.0,Credit Card,2026.0,3.0,2026Q1,2026-03,Sunday,True,1999.9,-9999.5,11999.4
+ORD-2026-1133,,Robert Vance,South,Electronics,Usb-C Hub,15.0,1250.0,5.0,Net Banking,,,,,,False,18750.0,937.5,17812.5
+ORD-2026-1134,,David Miller,West,Office Supplies,Sticky Notes Pack,0.0,89900.0,50.0,Credit Card,,,,,,False,0.0,0.0,0.0
+ORD-2026-1135,,Unknown,East,Clothing,Corporate Polo T-Shirt,3.0,150.0,50.0,Debit Card,,,,,,False,450.0,225.0,225.0
+ORD-2026-1136,2026-05-26,Clark Kent,South,Electronics,Smart Watch V2,0.0,89900.0,-5.0,UPI,2026.0,5.0,2026Q2,2026-05,Tuesday,False,0.0,-0.0,0.0
+ORD-2026-1137,2026-02-06,Michael Chang,North,Electronics,Noise-Cancelling Headphones,15.0,89900.0,50.0,UPI,2026.0,2.0,2026Q1,2026-02,Friday,False,1348500.0,674250.0,674250.0
+ORD-2026-1138,,Sneha Rao,West,Office Supplies,Gel Pens Box (50),0.0,450.0,10.0,Cash on Delivery,,,,,,False,0.0,0.0,0.0
+ORD-2026-1139,2026-01-18,Arjun Kapoor,West,Electronics,Smart Watch V2,500.0,89900.0,0.0,Net Banking,2026.0,1.0,2026Q1,2026-01,Sunday,True,44950000.0,0.0,44950000.0
+ORD-2026-1140,2026-08-27,Karan Johar,East,Furniture,Conference Table,0.0,1250.0,50.0,UPI,2026.0,8.0,2026Q3,2026-08,Thursday,False,0.0,0.0,0.0
+ORD-2026-1141,,Rahul Sharma,North,Furniture,Desk Lamp Led,2.0,3500.0,20.0,Credit Card,,,,,,False,7000.0,1400.0,5600.0
+ORD-2026-1142,2026-03-14,Unknown,North,Office Supplies,Gel Pens Box (50),2.0,150.0,10.0,Debit Card,2026.0,3.0,2026Q1,2026-03,Saturday,True,300.0,30.0,270.0
+ORD-2026-1143,,Vikram Singh,West,Furniture,Desk Lamp Led,15.0,450.0,50.0,UPI,,,,,,False,6750.0,3375.0,3375.0
+ORD-2026-1144,,Deepika Padukone,North,Furniture,Conference Table,5.0,1250.0,10.0,Net Banking,,,,,,False,6250.0,625.0,5625.0
+ORD-2026-1145,,Karan Johar,East,Clothing,Executive Blazer,5.0,14999.0,10.0,Credit Card,,,,,,False,74995.0,7499.5,67495.5
+ORD-2026-1146,2026-08-22,Robert Vance,West,Electronics,Noise-Cancelling Headphones,2.0,450.0,-5.0,UPI,2026.0,8.0,2026Q3,2026-08,Saturday,True,900.0,-4500.0,5400.0
+ORD-2026-1147,2026-05-05,Ananya Iyer,West,Electronics,4K Ultra Monitor,2.0,3500.0,5.0,UPI,2026.0,5.0,2026Q2,2026-05,Tuesday,False,7000.0,350.0,6650.0
+ORD-2026-1148,,Meera Nair,North,Clothing,Corporate Polo T-Shirt,2.0,450.0,10.0,UPI,,,,,,False,900.0,90.0,810.0
+ORD-2026-1149,2026-08-14,Vikram Singh,West,Office Supplies,Gel Pens Box (50),8.0,150.0,20.0,UPI,2026.0,8.0,2026Q3,2026-08,Friday,False,1200.0,240.0,960.0
+ORD-2026-1150,,Ananya Iyer,South,Clothing,Executive Blazer,1.0,450.0,10.0,UPI,,,,,,False,450.0,45.0,405.0
+Unknown,,Unknown,North,Furniture,Unknown,3.0,1250.0,10.0,UPI,,,,,,False,3750.0,375.0,3375.0

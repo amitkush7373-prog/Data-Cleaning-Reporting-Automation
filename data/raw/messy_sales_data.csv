@@ -1,0 +1,164 @@
+Order ID,Order Date,Customer Name,Region,Product Category,Item,Quantity,Unit Price,Discount %,Payment Method
+ORD-2026-1001,Unknown Date,David Miller,West,Office Supplies,Sticky Notes Pack,3.0,"89,900.00",-5%,
+ORD-2026-1002,2026-99-99,Deepika Padukone,East,furniture,Conference Table,,"₹ 45,000.00",20%,UPI
+ORD-2026-1003,2026-03-30,   ,WEST,Electronics,Noise-Cancelling Headphones,500.0,1250.0,50%,upi
+ORD-2026-1004,Unknown Date,Amit Verma,South,Furniture,Ergonomic Desk Chair,2.0,"$3,500.00",5%,UPI
+ORD-2026-1005,"Apr 02, 2026",,north,Clothing,Corporate Polo T-Shirt,10.0,-150.00,0%,upi
+ORD-2026-1006,,Deepika Padukone,North Region,Furniture,Standing Desk,0.0,   3500.0   ,5%,credit card
+ORD-2026-1007,,Priya Patel,EAST,Clothing,Breathable Face Mask (10pk),15.0,89900.0,None,Cash on Delivery
+ORD-2026-1008,2026-99-99,Sarah Connor,WEST,office supplies,Whiteboard 4x3,-2.0,,0%,credit card
+ORD-2026-1009,05-16-2026,Meera Nair,North,OFFICE SUPPLIES,Gel Pens Box (50),3.0,199.99,10%,upi
+ORD-2026-1010,"Feb 10, 2026",Vikram Singh,EAST,Electronics,4K Ultra Monitor,10.0,,-5%,Debit Card
+ORD-2026-1011,2026-99-99,Sarah Connor,SOUTH,electronics,Laptop Pro 15,15.0,"45,000.00",10%,Debit Card
+ORD-2026-1012,2026-99-99,Vikram Singh,,Electronics,4K Ultra Monitor,10.0,,,UPI
+ORD-2026-1013,2026-04-06,Michael Chang,NORTH,Clothing,Breathable Face Mask (10pk),4.0,   3500.0   ,50%,Debit Card
+ORD-2026-1014,Unknown Date,David Miller,West,Office Supplies,Whiteboard 4x3,500.0,1250.0,5%,Net Banking
+ORD-2026-1015,"Jan 28, 2026",Karan Johar,South,Clothing,Corporate Polo T-Shirt,,"3,500.00",,Cash on Delivery
+ORD-2026-1016,2026-08-13,Karan Johar,SOUTH,Office Supplies,Sticky Notes Pack,-2.0,,15%,Cash on Delivery
+ORD-2026-1017,2026-06-04,Rohan Gupta,south,OFFICE SUPPLIES,Heavy Duty Stapler,5.0,199.99,,
+ORD-2026-1018,2026-06-29,   ,East,office supplies,Heavy Duty Stapler,1.0,3500.0,50%,Credit Card
+ORD-2026-1019,2026-07-03,Robert Vance,South,electronics,4K Ultra Monitor,500.0,₹ 199.99,5%,Credit Card
+ORD-2026-1020,06/05/2026,Rahul Sharma,North,FURNITURE,Desk Lamp LED,5.0,45000.0,50%,UPI
+ORD-2026-1021,"Mar 10, 2026",Robert Vance,south,clothing,Breathable Face Mask (10pk),2.0,"45,000.00",0%,
+ORD-2026-1022,"May 28, 2026",Ananya Iyer,WEST,OFFICE SUPPLIES,Sticky Notes Pack,500.0,"3,500.00",,UPI
+ORD-2026-1023,2026-08-21,Clark Kent,SOUTH,ELECTRONICS,4K Ultra Monitor,15.0,"₹ 89,900.00",-5%,upi
+ORD-2026-1024,,Karan Johar,east,Electronics,4K Ultra Monitor,0.0,1250.0,,credit card
+ORD-2026-1025,,Robert Vance,north,OFFICE SUPPLIES,Sticky Notes Pack,,   14999.0   ,50%,Credit Card
+ORD-2026-1026,07-27-2026,Amit Verma,NORTH,OFFICE SUPPLIES,Gel Pens Box (50),4.0,$-150.00,-5%,
+ORD-2026-1027,"Jun 15, 2026",Robert Vance,East,Furniture,Bookshelf 5-Tier,3.0,,10%,upi
+ORD-2026-1028,,Lisa Kudrow,,OFFICE SUPPLIES,Whiteboard 4x3,3.0,,15%,credit card
+ORD-2026-1029,"Feb 17, 2026",Rahul Sharma,,Electronics,Noise-Cancelling Headphones,15.0,-150.00,0%,Net Banking
+ORD-2026-1030,,Bruce Wayne,south,Electronics,Noise-Cancelling Headphones,8.0,   45000.0   ,10%,Debit Card
+ORD-2026-1031,"Apr 07, 2026",Priya Patel,South,FURNITURE,Bookshelf 5-Tier,1.0,14999.0,10%,Cash on Delivery
+ORD-2026-1032,,Robert Vance,North,Furniture,Bookshelf 5-Tier,5.0,"45,000.00",None,upi
+ORD-2026-1033,04-05-2026,Robert Vance,,furniture,Desk Lamp LED,,199.99,20%,Net Banking
+ORD-2026-1034,,Amit Verma,north,Office Supplies,Gel Pens Box (50),0.0,"₹ 1,250.00",25%,Credit Card
+ORD-2026-1035,2026-01-17,Kavita Reddy,north,Office Supplies,A4 Printing Paper (Ream),-2.0,   45000.0   ,,credit card
+ORD-2026-1036,Unknown Date,Amit Verma,north,Office Supplies,A4 Printing Paper (Ream),10.0,,15%,Credit Card
+ORD-2026-1037,"May 22, 2026",Deepika Padukone,,Furniture,Ergonomic Desk Chair,3.0,89900.0,5%,
+ORD-2026-1038,,Bruce Wayne,east,electronics,Smart Watch v2,8.0,"$45,000.00",15%,credit card
+ORD-2026-1039,2026-99-99,David Miller,south,Clothing,Executive Blazer,5.0,14999.0,25%,UPI
+ORD-2026-1040,2026-99-99,Arjun Kapoor,East,Furniture,Bookshelf 5-Tier,0.0,"$1,250.00",-5%,upi
+ORD-2026-1041,Unknown Date,Arjun Kapoor,EAST,ELECTRONICS,Noise-Cancelling Headphones,-2.0,"$14,999.00",,Net Banking
+ORD-2026-1042,,David Miller,north,Clothing,Corporate Polo T-Shirt,-2.0,   -150.0   ,20%,
+ORD-2026-1043,04-03-2026,Rohan Gupta,South,Electronics,USB-C Hub,,   1250.0   ,25%,Cash on Delivery
+ORD-2026-1044,2026-02-16,Emily Watson,west,OFFICE SUPPLIES,Whiteboard 4x3,4.0,14999.0,,Net Banking
+ORD-2026-1045,,,SOUTH,Clothing,Breathable Face Mask (10pk),5.0,"₹ 89,900.00",,upi
+ORD-2026-1046,11/08/2026,Sneha Rao,north,FURNITURE,Desk Lamp LED,0.0,"₹ 1,250.00",0%,upi
+ORD-2026-1047,24/01/2026,Michael Chang,North Region,office supplies,Whiteboard 4x3,1.0,3500.0,5%,
+ORD-2026-1048,06-28-2026,Rahul Sharma,North,ELECTRONICS,Noise-Cancelling Headphones,5.0,"$1,250.00",0%,Net Banking
+ORD-2026-1049,"May 21, 2026",John Doe,west,office supplies,A4 Printing Paper (Ream),2.0,"₹ 1,250.00",10%,Net Banking
+ORD-2026-1050,21/07/2026,Deepika Padukone,WEST,Office Supplies,Gel Pens Box (50),2.0,"$1,250.00",50%,credit card
+ORD-2026-1051,Unknown Date,,north,Furniture,Standing Desk,-2.0,   14999.0   ,None,Net Banking
+ORD-2026-1052,07-11-2026,Vikram Singh,east,Furniture,Standing Desk,1.0,1250.0,5%,
+ORD-2026-1053,2026-99-99,Vikram Singh,west,Electronics,Smart Watch v2,3.0,,0%,Credit Card
+ORD-2026-1054,05-21-2026,Clark Kent,east,Electronics,Smart Watch v2,3.0,199.99,None,Cash on Delivery
+ORD-2026-1055,"Jul 25, 2026",Suresh Menon,SOUTH,ELECTRONICS,Noise-Cancelling Headphones,3.0,   14999.0   ,10%,upi
+ORD-2026-1056,2026-05-31,,North Region,OFFICE SUPPLIES,Sticky Notes Pack,10.0,"₹ 14,999.00",,Net Banking
+ORD-2026-1057,08-09-2026,Vikram Singh,NORTH,Office Supplies,A4 Printing Paper (Ream),500.0,450.0,None,Debit Card
+ORD-2026-1058,,Jane Smith,North,Clothing,Executive Blazer,15.0,,5%,Net Banking
+ORD-2026-1059,,Priya Patel,South,clothing,Executive Blazer,3.0,   -150.0   ,0%,Net Banking
+ORD-2026-1060,"Feb 14, 2026",Robert Vance,SOUTH,FURNITURE,Conference Table,4.0,45000.0,10%,Credit Card
+ORD-2026-1061,,Kavita Reddy,EAST,FURNITURE,Bookshelf 5-Tier,3.0,450.0,,UPI
+ORD-2026-1062,2026-04-15,Deepika Padukone,WEST,Furniture,Conference Table,3.0,,0%,Debit Card
+ORD-2026-1063,"Feb 27, 2026",Ananya Iyer,South,OFFICE SUPPLIES,Gel Pens Box (50),5.0,   45000.0   ,20%,Cash on Delivery
+ORD-2026-1064,2026-05-26,Bruce Wayne,North Region,Furniture,Bookshelf 5-Tier,1.0,   199.99   ,25%,Credit Card
+ORD-2026-1065,"Jul 22, 2026",Sarah Connor,SOUTH,FURNITURE,Bookshelf 5-Tier,0.0,-150.0,-5%,Credit Card
+ORD-2026-1066,"Jul 05, 2026",Sneha Rao,EAST,furniture,Standing Desk,2.0,"$14,999.00",15%,
+ORD-2026-1067,2026-99-99,Robert Vance,east,clothing,Executive Blazer,3.0,"₹ 45,000.00",10%,Credit Card
+ORD-2026-1068,30/01/2026,Priya Patel,EAST,furniture,Ergonomic Desk Chair,500.0,"$14,999.00",25%,
+ORD-2026-1069,26/03/2026,David Miller,North,Electronics,Wireless Mouse,-2.0,"45,000.00",0%,UPI
+ORD-2026-1070,Unknown Date,Suresh Menon,NORTH,Electronics,Wireless Mouse,8.0,   199.99   ,20%,Debit Card
+ORD-2026-1071,2026-99-99,,SOUTH,FURNITURE,Bookshelf 5-Tier,3.0,   199.99   ,None,Net Banking
+ORD-2026-1072,2026-07-09,Michael Chang,WEST,Electronics,4K Ultra Monitor,1.0,₹ -150.00,-5%,upi
+ORD-2026-1073,01-03-2026,Priya Patel,south,Office Supplies,A4 Printing Paper (Ream),2.0,199.99,20%,Cash on Delivery
+ORD-2026-1074,2026-99-99,Robert Vance,SOUTH,clothing,Corporate Polo T-Shirt,500.0,1250.0,5%,Debit Card
+ORD-2026-1075,03-20-2026,Priya Patel,north,FURNITURE,Standing Desk,3.0,450.0,None,Cash on Delivery
+ORD-2026-1076,04-16-2026,Meera Nair,west,FURNITURE,Ergonomic Desk Chair,1.0,   14999.0   ,15%,Cash on Delivery
+ORD-2026-1077,2026-99-99,Robert Vance,EAST,Clothing,Breathable Face Mask (10pk),5.0,   450.0   ,10%,Credit Card
+ORD-2026-1078,"Apr 14, 2026",   ,East,OFFICE SUPPLIES,Heavy Duty Stapler,15.0,,10%,upi
+ORD-2026-1079,02-20-2026,Lisa Kudrow,WEST,ELECTRONICS,4K Ultra Monitor,5.0,"₹ 14,999.00",,credit card
+ORD-2026-1080,"Aug 21, 2026",Ananya Iyer,North,FURNITURE,Desk Lamp LED,0.0,$450.00,,Net Banking
+ORD-2026-1081,,Karan Johar,east,clothing,Corporate Polo T-Shirt,500.0,₹ 199.99,15%,Cash on Delivery
+ORD-2026-1082,,Amit Verma,WEST,Electronics,Laptop Pro 15,0.0,"₹ 89,900.00",,upi
+ORD-2026-1083,,Bruce Wayne,SOUTH,clothing,Breathable Face Mask (10pk),500.0,₹ 450.00,25%,UPI
+ORD-2026-1084,"Aug 17, 2026",David Miller,east,ELECTRONICS,4K Ultra Monitor,0.0,"$89,900.00",0%,Debit Card
+ORD-2026-1085,"Jan 13, 2026",Jane Smith,east,Office Supplies,A4 Printing Paper (Ream),-2.0,"₹ 3,500.00",10%,Credit Card
+ORD-2026-1086,02/08/2026,Lisa Kudrow,North Region,OFFICE SUPPLIES,Whiteboard 4x3,15.0,$-150.00,10%,Debit Card
+ORD-2026-1087,26/01/2026,Vikram Singh,south,Clothing,Corporate Polo T-Shirt,500.0,-150.00,25%,upi
+ORD-2026-1088,,Rahul Sharma,South,furniture,Ergonomic Desk Chair,8.0,89900.0,-5%,Cash on Delivery
+ORD-2026-1089,2026-99-99,Arjun Kapoor,NORTH,Office Supplies,Gel Pens Box (50),8.0,450.0,15%,UPI
+ORD-2026-1090,2026-03-03,Meera Nair,south,FURNITURE,Ergonomic Desk Chair,2.0,₹ -150.00,10%,UPI
+ORD-2026-1091,2026-07-31,   ,North Region,furniture,Standing Desk,4.0,199.99,0%,UPI
+ORD-2026-1092,"May 19, 2026",Ananya Iyer,South,Clothing,Executive Blazer,500.0,"$1,250.00",25%,Cash on Delivery
+ORD-2026-1093,21/06/2026,Vikram Singh,SOUTH,electronics,Wireless Mouse,15.0,450.0,0%,credit card
+ORD-2026-1094,,Robert Vance,east,furniture,Ergonomic Desk Chair,10.0,"$1,250.00",20%,UPI
+ORD-2026-1095,17/05/2026,,East,electronics,Smart Watch v2,,"1,250.00",0%,UPI
+ORD-2026-1096,,Deepika Padukone,West,office supplies,Sticky Notes Pack,,   1250.0   ,20%,Credit Card
+ORD-2026-1097,2026-05-12,Emily Watson,EAST,furniture,Bookshelf 5-Tier,0.0,,5%,Cash on Delivery
+ORD-2026-1098,2026-03-04,Ananya Iyer,North,office supplies,Heavy Duty Stapler,-2.0,$199.99,50%,Debit Card
+ORD-2026-1099,06-28-2026,,East,electronics,Smart Watch v2,8.0,"45,000.00",50%,
+ORD-2026-1100,08-10-2026,Clark Kent,WEST,ELECTRONICS,Wireless Mouse,4.0,"$45,000.00",0%,Credit Card
+ORD-2026-1101,,Arjun Kapoor,North,furniture,Bookshelf 5-Tier,2.0,"14,999.00",,Cash on Delivery
+ORD-2026-1102,"Feb 16, 2026",Ananya Iyer,WEST,Electronics,Smart Watch v2,15.0,   3500.0   ,-5%,Debit Card
+ORD-2026-1103,22/06/2026,David Miller,North Region,furniture,Desk Lamp LED,500.0,"1,250.00",15%,upi
+ORD-2026-1104,05-28-2026,John Doe,West,Furniture,Standing Desk,0.0,₹ -150.00,,Net Banking
+ORD-2026-1105,"Apr 14, 2026",Karan Johar,North,office supplies,A4 Printing Paper (Ream),500.0,3500.0,20%,Debit Card
+ORD-2026-1106,02/04/2026,Deepika Padukone,EAST,office supplies,Whiteboard 4x3,-2.0,"45,000.00",-5%,Credit Card
+ORD-2026-1107,Unknown Date,Arjun Kapoor,North,OFFICE SUPPLIES,Heavy Duty Stapler,4.0,"$45,000.00",0%,Cash on Delivery
+ORD-2026-1108,Unknown Date,Deepika Padukone,South,FURNITURE,Bookshelf 5-Tier,4.0,,20%,Debit Card
+ORD-2026-1109,03-31-2026,Amit Verma,North Region,Clothing,Corporate Polo T-Shirt,8.0,₹ 450.00,5%,Credit Card
+ORD-2026-1110,,John Doe,West,clothing,Corporate Polo T-Shirt,15.0,,50%,upi
+ORD-2026-1111,01-29-2026,Meera Nair,North,Furniture,Desk Lamp LED,8.0,   450.0   ,0%,Credit Card
+ORD-2026-1112,,Clark Kent,east,Office Supplies,Gel Pens Box (50),8.0,$-150.00,50%,Credit Card
+ORD-2026-1113,07-03-2026,Arjun Kapoor,NORTH,Electronics,USB-C Hub,1.0,-150.00,5%,UPI
+ORD-2026-1114,2026-08-08,Bruce Wayne,north,Electronics,Smart Watch v2,2.0,"45,000.00",15%,credit card
+ORD-2026-1115,01/02/2026,Arjun Kapoor,SOUTH,Electronics,USB-C Hub,0.0,"₹ 1,250.00",0%,UPI
+ORD-2026-1116,2026-01-08,Lisa Kudrow,SOUTH,Office Supplies,Sticky Notes Pack,-2.0,"89,900.00",-5%,Net Banking
+ORD-2026-1117,Unknown Date,Deepika Padukone,south,Office Supplies,Heavy Duty Stapler,1.0,₹ -150.00,10%,Credit Card
+ORD-2026-1118,,Sarah Connor,North Region,office supplies,Heavy Duty Stapler,5.0,"₹ 89,900.00",50%,upi
+ORD-2026-1119,2026-99-99,Rahul Sharma,SOUTH,Clothing,Casual Friday Hoodie,,₹ 450.00,0%,Net Banking
+ORD-2026-1120,05-10-2026,John Doe,EAST,furniture,Conference Table,10.0,89900.0,15%,Debit Card
+ORD-2026-1121,Unknown Date,Ananya Iyer,,furniture,Desk Lamp LED,4.0,45000.0,-5%,Credit Card
+ORD-2026-1122,2026-08-03,Meera Nair,West,Electronics,Wireless Mouse,2.0,"$1,250.00",None,Cash on Delivery
+ORD-2026-1123,,Michael Chang,east,office supplies,A4 Printing Paper (Ream),8.0,"₹ 3,500.00",,Debit Card
+ORD-2026-1124,2026-99-99,John Doe,south,electronics,USB-C Hub,-2.0,"₹ 45,000.00",0%,credit card
+ORD-2026-1125,Unknown Date,Ananya Iyer,EAST,furniture,Ergonomic Desk Chair,5.0,,25%,upi
+ORD-2026-1126,22/02/2026,Priya Patel,west,clothing,Breathable Face Mask (10pk),1.0,14999.0,,Net Banking
+ORD-2026-1127,2026-99-99,   ,West,electronics,Noise-Cancelling Headphones,0.0,"14,999.00",-5%,Credit Card
+ORD-2026-1128,02-08-2026,Sneha Rao,North,clothing,Breathable Face Mask (10pk),8.0,   450.0   ,-5%,UPI
+ORD-2026-1129,"Aug 15, 2026",Sneha Rao,North Region,Electronics,Wireless Mouse,500.0,199.99,5%,UPI
+ORD-2026-1130,2026-07-20,Priya Patel,South,OFFICE SUPPLIES,A4 Printing Paper (Ream),1.0,,-5%,Credit Card
+ORD-2026-1131,"Aug 17, 2026",Rohan Gupta,NORTH,Clothing,Corporate Polo T-Shirt,,"₹ 1,250.00",10%,UPI
+ORD-2026-1132,2026-03-15,Robert Vance,WEST,furniture,Conference Table,10.0,199.99,-5%,Credit Card
+ORD-2026-1133,,Robert Vance,SOUTH,ELECTRONICS,USB-C Hub,15.0,,5%,Net Banking
+ORD-2026-1134,2026-99-99,David Miller,West,OFFICE SUPPLIES,Sticky Notes Pack,0.0,"$89,900.00",50%,credit card
+ORD-2026-1135,2026-99-99,   ,EAST,Clothing,Corporate Polo T-Shirt,3.0,₹ -150.00,50%,Debit Card
+ORD-2026-1136,05-26-2026,Clark Kent,SOUTH,electronics,Smart Watch v2,0.0,"$89,900.00",-5%,UPI
+ORD-2026-1137,02-06-2026,Michael Chang,north,ELECTRONICS,Noise-Cancelling Headphones,15.0,89900.0,50%,UPI
+ORD-2026-1138,2026-99-99,Sneha Rao,WEST,office supplies,Gel Pens Box (50),0.0,450.00,,Cash on Delivery
+ORD-2026-1139,01-18-2026,Arjun Kapoor,WEST,electronics,Smart Watch v2,500.0,89900.0,0%,Net Banking
+ORD-2026-1140,2026-08-27,Karan Johar,East,furniture,Conference Table,0.0,,50%,upi
+ORD-2026-1141,Unknown Date,Rahul Sharma,,Furniture,Desk Lamp LED,2.0,"₹ 3,500.00",20%,Credit Card
+ORD-2026-1142,2026-03-14,,,OFFICE SUPPLIES,Gel Pens Box (50),-2.0,-150.0,,Debit Card
+ORD-2026-1143,,Vikram Singh,West,furniture,Desk Lamp LED,15.0,$450.00,50%,upi
+ORD-2026-1144,,Deepika Padukone,North Region,Furniture,Conference Table,5.0,   1250.0   ,,Net Banking
+ORD-2026-1145,,Karan Johar,EAST,clothing,Executive Blazer,5.0,"$14,999.00",None,Credit Card
+ORD-2026-1146,08-22-2026,Robert Vance,WEST,ELECTRONICS,Noise-Cancelling Headphones,2.0,$450.00,-5%,UPI
+ORD-2026-1147,2026-05-05,Ananya Iyer,WEST,ELECTRONICS,4K Ultra Monitor,-2.0,   3500.0   ,5%,
+ORD-2026-1148,2026-99-99,Meera Nair,NORTH,clothing,Corporate Polo T-Shirt,-2.0,450.0,,UPI
+ORD-2026-1149,"Aug 14, 2026",Vikram Singh,West,OFFICE SUPPLIES,Gel Pens Box (50),8.0,-150.00,20%,UPI
+ORD-2026-1150,2026-99-99,Ananya Iyer,South,Clothing,Executive Blazer,1.0,   450.0   ,10%,upi
+ORD-2026-1054,05-21-2026,Clark Kent,east,Electronics,Smart Watch v2,3.0,199.99,None,Cash on Delivery
+ORD-2026-1112,,Clark Kent,east,Office Supplies,Gel Pens Box (50),8.0,$-150.00,50%,Credit Card
+ORD-2026-1117,Unknown Date,Deepika Padukone,south,Office Supplies,Heavy Duty Stapler,1.0,₹ -150.00,10%,Credit Card
+ORD-2026-1043,04-03-2026,Rohan Gupta,South,Electronics,USB-C Hub,,   1250.0   ,25%,Cash on Delivery
+ORD-2026-1150,2026-99-99,Ananya Iyer,South,Clothing,Executive Blazer,1.0,   450.0   ,10%,upi
+ORD-2026-1072,2026-07-09,Michael Chang,WEST,Electronics,4K Ultra Monitor,1.0,₹ -150.00,-5%,upi
+ORD-2026-1018,2026-06-29,   ,East,office supplies,Heavy Duty Stapler,1.0,3500.0,50%,Credit Card
+ORD-2026-1138,2026-99-99,Sneha Rao,WEST,office supplies,Gel Pens Box (50),0.0,450.00,,Cash on Delivery
+ORD-2026-1069,26/03/2026,David Miller,North,Electronics,Wireless Mouse,-2.0,"45,000.00",0%,UPI
+ORD-2026-1149,"Aug 14, 2026",Vikram Singh,West,OFFICE SUPPLIES,Gel Pens Box (50),8.0,-150.00,20%,UPI
+,,,,,,,,,
+,,,,,,,,,
+,,,,,,,,,

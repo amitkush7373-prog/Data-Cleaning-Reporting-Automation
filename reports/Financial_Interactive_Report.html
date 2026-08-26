@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Cleaning & Reporting Automation — Executive Report</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 30px 20px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+        header p { font-size: 14px; opacity: 0.9; }
+        .grid-kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .kpi-label { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+        .kpi-value { font-size: 24px; font-weight: 700; color: var(--primary); margin: 8px 0; }
+        .kpi-desc { font-size: 12px; color: var(--text-muted); }
+        .section-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .section-card h2 { font-size: 18px; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; font-size: 14px; }
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 10px;
+            overflow-x: auto;
+            display: block;
+        }
+        .styled-table th, .styled-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .styled-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        .styled-table tr:nth-child(even) { background-color: #f1f5f9; }
+        footer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Cleaning & Reporting Automation</h1>
+            <p>Automated Data Validation, Transformation, Analysis & Executive Intelligence Report</p>
+            <p style="font-size: 12px; margin-top: 5px;">Report Generated: 2026-08-26 22:56:45</p>
+        </header>
+
+        <div class="grid-kpis">
+            <div class="kpi-card">
+                <div class="kpi-label">Health Score</div>
+                <div class="kpi-value" style="color: var(--success);">100.0/100</div>
+                <div class="kpi-desc">Initial: 74.8/100</div>
+            </div>
+            
+        <div class="kpi-card">
+            <div class="kpi-label">Total Records</div>
+            <div class="kpi-value">24</div>
+            <div class="kpi-desc">Total active rows in processed dataset</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Total Revenue / Sales</div>
+            <div class="kpi-value">$18,442,434.00</div>
+            <div class="kpi-desc">Cumulative sum of 'gross_revenue'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Average Order Value</div>
+            <div class="kpi-value">$768,434.75</div>
+            <div class="kpi-desc">Average ticket size from 'gross_revenue'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Max Transaction</div>
+            <div class="kpi-value">$1,450,130.00</div>
+            <div class="kpi-desc">Highest recorded value in 'gross_revenue'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Total Gross Profit</div>
+            <div class="kpi-value">$9,162,666.00</div>
+            <div class="kpi-desc">Gross profit calculated from 'gross_profit'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Average Margin</div>
+            <div class="kpi-value">48.1%</div>
+            <div class="kpi-desc">Mean profit margin percentage</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Top Category (General & Admin)</div>
+            <div class="kpi-value">$5,610,515.00 (30.4%)</div>
+            <div class="kpi-desc">Leading contributor from 'business_unit'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Latest Period Growth</div>
+            <div class="kpi-value">+52.1%</div>
+            <div class="kpi-desc">Growth between last two periods in 'fiscal_quarter'</div>
+        </div>
+        
+        </div>
+
+        <div class="section-card">
+            <h2>Data Quality & Cleaning Audit Summary</h2>
+            <ul><li><strong>Step 1:</strong> Standardized 7 column names into clean snake_case.</li><li><strong>Step 2:</strong> Removed 3 exact duplicate records.</li><li><strong>Step 3:</strong> Converted 4 columns to appropriate numeric/date/boolean types.</li><li><strong>Step 4:</strong> Normalized casing and categorical variants across 1 text columns.</li><li><strong>Step 5:</strong> Handled missing values across 2 columns using intelligent imputation.</li><li><strong>Step 6:</strong> Detected outliers in 1 numeric columns (Action: keep).</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Automated Insights</h2>
+            <ul><li>Overall Data Health Score improved from 74.8/100 [B (Acceptable)] to 100.0/100 [A+ (Excellent)].</li><li>Resolved 9 missing values across 2 columns using statistical imputation strategies.</li><li>Eliminated 3 exact duplicate rows, preventing skewed metrics and double-counting.</li><li>Successfully standardized data types for 4 columns (including currency symbol stripping, date parsing, and boolean normalization).</li><li>Standardized 7 column headers into consistent snake_case format for SQL/pipeline compatibility.</li><li>Total cumulative revenue / sales volume stands at $18,442,434.00 across 24 transactions.</li><li>Average Order Value (AOV) was calculated at $768,434.75 per transaction.</li><li>Top contributing category is 'General & Admin' accounting for 30.4% of total volume ($5,610,515.00).</li><li>Latest period performance demonstrated a growth rate of +52.1%.</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Strategic Recommendations</h2>
+            <ul><li><strong>Action:</strong> Implement frontend form validation at data entry to mandate required fields and eliminate downstream missing values.</li><li><strong>Action:</strong> Enforce database UNIQUE constraints on transactional ID fields to prevent duplicate records at ingestion.</li><li><strong>Action:</strong> Enforce strict schema typing at the ingestion pipeline to avoid storing raw currency symbols and unformatted strings in numeric fields.</li><li><strong>Action:</strong> Evaluate marketing and promotional strategies for lower-performing category 'Operations' (20.1% share) to balance portfolio revenue.</li><li><strong>Action:</strong> Schedule automated daily/weekly runs of this cleaning pipeline to monitor data health drift over time.</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Cleaned Dataset Preview (First 20 Records)</h2>
+            <table border="1" class="dataframe styled-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>fiscal_quarter</th>
+      <th>business_unit</th>
+      <th>gross_revenue</th>
+      <th>operating_cost</th>
+      <th>marketing_spend</th>
+      <th>tax_rate_pct</th>
+      <th>report_status</th>
+      <th>gross_profit</th>
+      <th>profit_margin_pct</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Q1-2025</td>
+      <td>Engineering</td>
+      <td>625468.0</td>
+      <td>365976.0</td>
+      <td>71240.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>259492.0</td>
+      <td>41.49</td>
+    </tr>
+    <tr>
+      <td>Q1-2025</td>
+      <td>Sales &amp; Marketing</td>
+      <td>1194620.0</td>
+      <td>924834.0</td>
+      <td>48315.5</td>
+      <td>0.18</td>
+      <td>Draft</td>
+      <td>269786.0</td>
+      <td>22.58</td>
+    </tr>
+    <tr>
+      <td>Q1-2025</td>
+      <td>Operations</td>
+      <td>940389.0</td>
+      <td>251538.0</td>
+      <td>36564.0</td>
+      <td>18.00</td>
+      <td>Audited</td>
+      <td>688851.0</td>
+      <td>73.25</td>
+    </tr>
+    <tr>
+      <td>Q1-2025</td>
+      <td>General &amp; Admin</td>
+      <td>1044081.0</td>
+      <td>292029.0</td>
+      <td>40106.0</td>
+      <td>18.00</td>
+      <td>Audited</td>
+      <td>752052.0</td>
+      <td>72.03</td>
+    </tr>
+    <tr>
+      <td>Q2-2025</td>
+      <td>Engineering</td>
+      <td>417583.0</td>
+      <td>201754.0</td>
+      <td>37127.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>215829.0</td>
+      <td>51.69</td>
+    </tr>
+    <tr>
+      <td>Q2-2025</td>
+      <td>Sales &amp; Marketing</td>
+      <td>1004807.0</td>
+      <td>639376.0</td>
+      <td>74425.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>365431.0</td>
+      <td>36.37</td>
+    </tr>
+    <tr>
+      <td>Q2-2025</td>
+      <td>Operations</td>
+      <td>278077.0</td>
+      <td>108712.0</td>
+      <td>37128.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>169365.0</td>
+      <td>60.91</td>
+    </tr>
+    <tr>
+      <td>Q2-2025</td>
+      <td>General &amp; Admin</td>
+      <td>495064.0</td>
+      <td>351514.0</td>
+      <td>52712.0</td>
+      <td>0.18</td>
+      <td>Audited</td>
+      <td>143550.0</td>
+      <td>29.00</td>
+    </tr>
+    <tr>
+      <td>Q3-2025</td>
+      <td>Engineering</td>
+      <td>557246.0</td>
+      <td>382727.0</td>
+      <td>48315.5</td>
+      <td>18.00</td>
+      <td>Audited</td>
+      <td>174519.0</td>
+      <td>31.32</td>
+    </tr>
+    <tr>
+      <td>Q3-2025</td>
+      <td>Sales &amp; Marketing</td>
+      <td>826256.0</td>
+      <td>513089.0</td>
+      <td>31644.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>313167.0</td>
+      <td>37.90</td>
+    </tr>
+    <tr>
+      <td>Q3-2025</td>
+      <td>Operations</td>
+      <td>242291.0</td>
+      <td>135060.0</td>
+      <td>35675.0</td>
+      <td>18.00</td>
+      <td>Pending</td>
+      <td>107231.0</td>
+      <td>44.26</td>
+    </tr>
+    <tr>
+      <td>Q3-2025</td>
+      <td>General &amp; Admin</td>
+      <td>908672.0</td>
+      <td>437369.0</td>
+      <td>43919.0</td>
+      <td>18.00</td>
+      <td>Audited</td>
+      <td>471303.0</td>
+      <td>51.87</td>
+    </tr>
+    <tr>
+      <td>Q4-2025</td>
+      <td>Engineering</td>
+      <td>1450130.0</td>
+      <td>658963.0</td>
+      <td>36400.0</td>
+      <td>18.00</td>
+      <td>Pending</td>
+      <td>791167.0</td>
+      <td>54.56</td>
+    </tr>
+    <tr>
+      <td>Q4-2025</td>
+      <td>Sales &amp; Marketing</td>
+      <td>672963.0</td>
+      <td>188791.0</td>
+      <td>66184.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>484172.0</td>
+      <td>71.95</td>
+    </tr>
+    <tr>
+      <td>Q4-2025</td>
+      <td>Operations</td>
+      <td>1233668.0</td>
+      <td>925626.0</td>
+      <td>77391.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>308042.0</td>
+      <td>24.97</td>
+    </tr>
+    <tr>
+      <td>Q4-2025</td>
+      <td>General &amp; Admin</td>
+      <td>497675.0</td>
+      <td>283887.0</td>
+      <td>79267.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>213788.0</td>
+      <td>42.96</td>
+    </tr>
+    <tr>
+      <td>Q1-2026</td>
+      <td>Engineering</td>
+      <td>227798.0</td>
+      <td>164887.0</td>
+      <td>53526.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>62911.0</td>
+      <td>27.62</td>
+    </tr>
+    <tr>
+      <td>Q1-2026</td>
+      <td>Sales &amp; Marketing</td>
+      <td>605105.0</td>
+      <td>386479.0</td>
+      <td>63747.0</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>218626.0</td>
+      <td>36.13</td>
+    </tr>
+    <tr>
+      <td>Q1-2026</td>
+      <td>Operations</td>
+      <td>331184.0</td>
+      <td>187051.0</td>
+      <td>26523.0</td>
+      <td>18.00</td>
+      <td>Audited</td>
+      <td>144133.0</td>
+      <td>43.52</td>
+    </tr>
+    <tr>
+      <td>Q1-2026</td>
+      <td>General &amp; Admin</td>
+      <td>1390456.0</td>
+      <td>335419.0</td>
+      <td>48315.5</td>
+      <td>18.00</td>
+      <td>Draft</td>
+      <td>1055037.0</td>
+      <td>75.88</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+
+        <footer>
+            Generated by Antigravity Data Cleaning & Reporting Automation System.
+        </footer>
+    </div>
+</body>
+</html>

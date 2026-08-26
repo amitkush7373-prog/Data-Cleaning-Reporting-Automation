@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Cleaning & Reporting Automation — Executive Report</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 30px 20px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+        header p { font-size: 14px; opacity: 0.9; }
+        .grid-kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .kpi-label { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+        .kpi-value { font-size: 24px; font-weight: 700; color: var(--primary); margin: 8px 0; }
+        .kpi-desc { font-size: 12px; color: var(--text-muted); }
+        .section-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .section-card h2 { font-size: 18px; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; font-size: 14px; }
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 10px;
+            overflow-x: auto;
+            display: block;
+        }
+        .styled-table th, .styled-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .styled-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        .styled-table tr:nth-child(even) { background-color: #f1f5f9; }
+        footer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Cleaning & Reporting Automation</h1>
+            <p>Automated Data Validation, Transformation, Analysis & Executive Intelligence Report</p>
+            <p style="font-size: 12px; margin-top: 5px;">Report Generated: 2026-08-26 22:56:44</p>
+        </header>
+
+        <div class="grid-kpis">
+            <div class="kpi-card">
+                <div class="kpi-label">Health Score</div>
+                <div class="kpi-value" style="color: var(--success);">89.6/100</div>
+                <div class="kpi-desc">Initial: 71.2/100</div>
+            </div>
+            
+        <div class="kpi-card">
+            <div class="kpi-label">Total Records</div>
+            <div class="kpi-value">151</div>
+            <div class="kpi-desc">Total active rows in processed dataset</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Total Revenue / Sales</div>
+            <div class="kpi-value">$81,405,053.55</div>
+            <div class="kpi-desc">Cumulative sum of 'net_revenue'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Average Order Value</div>
+            <div class="kpi-value">$539,106.31</div>
+            <div class="kpi-desc">Average ticket size from 'net_revenue'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Max Transaction</div>
+            <div class="kpi-value">$44,950,000.00</div>
+            <div class="kpi-desc">Highest recorded value in 'net_revenue'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Total Units Sold</div>
+            <div class="kpi-value">8,113</div>
+            <div class="kpi-desc">Total volume from 'quantity'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Unique Customers / Accounts</div>
+            <div class="kpi-value">24</div>
+            <div class="kpi-desc">Distinct entities in 'customer_name'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Unique Products / SKUs</div>
+            <div class="kpi-value">21</div>
+            <div class="kpi-desc">Distinct offerings in 'item'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Top Category (Electronics)</div>
+            <div class="kpi-value">$56,668,518.91 (69.6%)</div>
+            <div class="kpi-desc">Leading contributor from 'product_category'</div>
+        </div>
+        
+        </div>
+
+        <div class="section-card">
+            <h2>Data Quality & Cleaning Audit Summary</h2>
+            <ul><li><strong>Step 1:</strong> Standardized 10 column names into clean snake_case.</li><li><strong>Step 2:</strong> Removed 12 exact duplicate records.</li><li><strong>Step 3:</strong> Converted 3 columns to appropriate numeric/date/boolean types.</li><li><strong>Step 4:</strong> Corrected 32 negative values across 2 positive columns.</li><li><strong>Step 5:</strong> Normalized casing and categorical variants across 6 text columns.</li><li><strong>Step 6:</strong> Handled missing values across 10 columns using intelligent imputation.</li><li><strong>Step 7:</strong> Detected outliers in 3 numeric columns (Action: keep).</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Automated Insights</h2>
+            <ul><li>Overall Data Health Score improved from 71.2/100 [B (Acceptable)] to 89.6/100 [A (Good)].</li><li>Resolved -229 missing values across 10 columns using statistical imputation strategies.</li><li>Eliminated 12 exact duplicate rows, preventing skewed metrics and double-counting.</li><li>Successfully standardized data types for 3 columns (including currency symbol stripping, date parsing, and boolean normalization).</li><li>Standardized 10 column headers into consistent snake_case format for SQL/pipeline compatibility.</li><li>Total cumulative revenue / sales volume stands at $81,405,053.55 across 151 transactions.</li><li>Average Order Value (AOV) was calculated at $539,106.31 per transaction.</li><li>Top contributing category is 'Electronics' accounting for 69.6% of total volume ($56,668,518.91).</li><li>Noticeable concentration risk: 'Electronics' commands over half of the entire dataset revenue.</li><li>Regional distribution is led by 'West' generating 61.1% of activity.</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Strategic Recommendations</h2>
+            <ul><li><strong>Action:</strong> Implement frontend form validation at data entry to mandate required fields and eliminate downstream missing values.</li><li><strong>Action:</strong> Enforce database UNIQUE constraints on transactional ID fields to prevent duplicate records at ingestion.</li><li><strong>Action:</strong> Enforce strict schema typing at the ingestion pipeline to avoid storing raw currency symbols and unformatted strings in numeric fields.</li><li><strong>Action:</strong> Evaluate marketing and promotional strategies for lower-performing category 'Clothing' (4.2% share) to balance portfolio revenue.</li><li><strong>Action:</strong> Schedule automated daily/weekly runs of this cleaning pipeline to monitor data health drift over time.</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Cleaned Dataset Preview (First 20 Records)</h2>
+            <table border="1" class="dataframe styled-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>order_id</th>
+      <th>order_date</th>
+      <th>customer_name</th>
+      <th>region</th>
+      <th>product_category</th>
+      <th>item</th>
+      <th>quantity</th>
+      <th>unit_price</th>
+      <th>discount_pct</th>
+      <th>payment_method</th>
+      <th>order_year</th>
+      <th>order_month</th>
+      <th>order_quarter</th>
+      <th>order_month_year</th>
+      <th>order_day_name</th>
+      <th>order_is_weekend</th>
+      <th>revenue</th>
+      <th>discount_amount</th>
+      <th>net_revenue</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ORD-2026-1001</td>
+      <td>NaT</td>
+      <td>David Miller</td>
+      <td>West</td>
+      <td>Office Supplies</td>
+      <td>Sticky Notes Pack</td>
+      <td>3.0</td>
+      <td>89900.00</td>
+      <td>-5.0</td>
+      <td>UPI</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>269700.00</td>
+      <td>-1348500.00</td>
+      <td>1618200.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1002</td>
+      <td>NaT</td>
+      <td>Deepika Padukone</td>
+      <td>East</td>
+      <td>Furniture</td>
+      <td>Conference Table</td>
+      <td>3.0</td>
+      <td>45000.00</td>
+      <td>20.0</td>
+      <td>UPI</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>135000.00</td>
+      <td>27000.00</td>
+      <td>108000.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1003</td>
+      <td>2026-03-30</td>
+      <td>Unknown</td>
+      <td>West</td>
+      <td>Electronics</td>
+      <td>Noise-Cancelling Headphones</td>
+      <td>500.0</td>
+      <td>1250.00</td>
+      <td>50.0</td>
+      <td>UPI</td>
+      <td>2026.0</td>
+      <td>3.0</td>
+      <td>2026Q1</td>
+      <td>2026-03</td>
+      <td>Monday</td>
+      <td>False</td>
+      <td>625000.00</td>
+      <td>312500.00</td>
+      <td>312500.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1004</td>
+      <td>NaT</td>
+      <td>Amit Verma</td>
+      <td>South</td>
+      <td>Furniture</td>
+      <td>Ergonomic Desk Chair</td>
+      <td>2.0</td>
+      <td>3500.00</td>
+      <td>5.0</td>
+      <td>UPI</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>7000.00</td>
+      <td>350.00</td>
+      <td>6650.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1005</td>
+      <td>2026-04-02</td>
+      <td>Unknown</td>
+      <td>North</td>
+      <td>Clothing</td>
+      <td>Corporate Polo T-Shirt</td>
+      <td>10.0</td>
+      <td>150.00</td>
+      <td>0.0</td>
+      <td>UPI</td>
+      <td>2026.0</td>
+      <td>4.0</td>
+      <td>2026Q2</td>
+      <td>2026-04</td>
+      <td>Thursday</td>
+      <td>False</td>
+      <td>1500.00</td>
+      <td>0.00</td>
+      <td>1500.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1006</td>
+      <td>NaT</td>
+      <td>Deepika Padukone</td>
+      <td>North</td>
+      <td>Furniture</td>
+      <td>Standing Desk</td>
+      <td>0.0</td>
+      <td>3500.00</td>
+      <td>5.0</td>
+      <td>Credit Card</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>0.00</td>
+      <td>0.00</td>
+      <td>0.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1007</td>
+      <td>NaT</td>
+      <td>Priya Patel</td>
+      <td>East</td>
+      <td>Clothing</td>
+      <td>Breathable Face Mask (10Pk)</td>
+      <td>15.0</td>
+      <td>89900.00</td>
+      <td>10.0</td>
+      <td>Cash on Delivery</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>1348500.00</td>
+      <td>134850.00</td>
+      <td>1213650.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1008</td>
+      <td>NaT</td>
+      <td>Sarah Connor</td>
+      <td>West</td>
+      <td>Office Supplies</td>
+      <td>Whiteboard 4X3</td>
+      <td>2.0</td>
+      <td>1250.00</td>
+      <td>0.0</td>
+      <td>Credit Card</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>2500.00</td>
+      <td>0.00</td>
+      <td>2500.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1009</td>
+      <td>2026-05-16</td>
+      <td>Meera Nair</td>
+      <td>North</td>
+      <td>Office Supplies</td>
+      <td>Gel Pens Box (50)</td>
+      <td>3.0</td>
+      <td>199.99</td>
+      <td>10.0</td>
+      <td>UPI</td>
+      <td>2026.0</td>
+      <td>5.0</td>
+      <td>2026Q2</td>
+      <td>2026-05</td>
+      <td>Saturday</td>
+      <td>True</td>
+      <td>599.97</td>
+      <td>60.00</td>
+      <td>539.97</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1010</td>
+      <td>2026-02-10</td>
+      <td>Vikram Singh</td>
+      <td>East</td>
+      <td>Electronics</td>
+      <td>4K Ultra Monitor</td>
+      <td>10.0</td>
+      <td>1250.00</td>
+      <td>-5.0</td>
+      <td>Debit Card</td>
+      <td>2026.0</td>
+      <td>2.0</td>
+      <td>2026Q1</td>
+      <td>2026-02</td>
+      <td>Tuesday</td>
+      <td>False</td>
+      <td>12500.00</td>
+      <td>-62500.00</td>
+      <td>75000.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1011</td>
+      <td>NaT</td>
+      <td>Sarah Connor</td>
+      <td>South</td>
+      <td>Electronics</td>
+      <td>Laptop Pro 15</td>
+      <td>15.0</td>
+      <td>45000.00</td>
+      <td>10.0</td>
+      <td>Debit Card</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>675000.00</td>
+      <td>67500.00</td>
+      <td>607500.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1012</td>
+      <td>NaT</td>
+      <td>Vikram Singh</td>
+      <td>North</td>
+      <td>Electronics</td>
+      <td>4K Ultra Monitor</td>
+      <td>10.0</td>
+      <td>1250.00</td>
+      <td>10.0</td>
+      <td>UPI</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>12500.00</td>
+      <td>1250.00</td>
+      <td>11250.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1013</td>
+      <td>2026-04-06</td>
+      <td>Michael Chang</td>
+      <td>North</td>
+      <td>Clothing</td>
+      <td>Breathable Face Mask (10Pk)</td>
+      <td>4.0</td>
+      <td>3500.00</td>
+      <td>50.0</td>
+      <td>Debit Card</td>
+      <td>2026.0</td>
+      <td>4.0</td>
+      <td>2026Q2</td>
+      <td>2026-04</td>
+      <td>Monday</td>
+      <td>False</td>
+      <td>14000.00</td>
+      <td>7000.00</td>
+      <td>7000.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1014</td>
+      <td>NaT</td>
+      <td>David Miller</td>
+      <td>West</td>
+      <td>Office Supplies</td>
+      <td>Whiteboard 4X3</td>
+      <td>500.0</td>
+      <td>1250.00</td>
+      <td>5.0</td>
+      <td>Net Banking</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>625000.00</td>
+      <td>31250.00</td>
+      <td>593750.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1015</td>
+      <td>2026-01-28</td>
+      <td>Karan Johar</td>
+      <td>South</td>
+      <td>Clothing</td>
+      <td>Corporate Polo T-Shirt</td>
+      <td>3.0</td>
+      <td>3500.00</td>
+      <td>10.0</td>
+      <td>Cash on Delivery</td>
+      <td>2026.0</td>
+      <td>1.0</td>
+      <td>2026Q1</td>
+      <td>2026-01</td>
+      <td>Wednesday</td>
+      <td>False</td>
+      <td>10500.00</td>
+      <td>1050.00</td>
+      <td>9450.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1016</td>
+      <td>2026-08-13</td>
+      <td>Karan Johar</td>
+      <td>South</td>
+      <td>Office Supplies</td>
+      <td>Sticky Notes Pack</td>
+      <td>2.0</td>
+      <td>1250.00</td>
+      <td>15.0</td>
+      <td>Cash on Delivery</td>
+      <td>2026.0</td>
+      <td>8.0</td>
+      <td>2026Q3</td>
+      <td>2026-08</td>
+      <td>Thursday</td>
+      <td>False</td>
+      <td>2500.00</td>
+      <td>375.00</td>
+      <td>2125.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1017</td>
+      <td>2026-06-04</td>
+      <td>Rohan Gupta</td>
+      <td>South</td>
+      <td>Office Supplies</td>
+      <td>Heavy Duty Stapler</td>
+      <td>5.0</td>
+      <td>199.99</td>
+      <td>10.0</td>
+      <td>UPI</td>
+      <td>2026.0</td>
+      <td>6.0</td>
+      <td>2026Q2</td>
+      <td>2026-06</td>
+      <td>Thursday</td>
+      <td>False</td>
+      <td>999.95</td>
+      <td>100.00</td>
+      <td>899.95</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1018</td>
+      <td>2026-06-29</td>
+      <td>Unknown</td>
+      <td>East</td>
+      <td>Office Supplies</td>
+      <td>Heavy Duty Stapler</td>
+      <td>1.0</td>
+      <td>3500.00</td>
+      <td>50.0</td>
+      <td>Credit Card</td>
+      <td>2026.0</td>
+      <td>6.0</td>
+      <td>2026Q2</td>
+      <td>2026-06</td>
+      <td>Monday</td>
+      <td>False</td>
+      <td>3500.00</td>
+      <td>1750.00</td>
+      <td>1750.00</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1019</td>
+      <td>2026-07-03</td>
+      <td>Robert Vance</td>
+      <td>South</td>
+      <td>Electronics</td>
+      <td>4K Ultra Monitor</td>
+      <td>500.0</td>
+      <td>199.99</td>
+      <td>5.0</td>
+      <td>Credit Card</td>
+      <td>2026.0</td>
+      <td>7.0</td>
+      <td>2026Q3</td>
+      <td>2026-07</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>99995.00</td>
+      <td>4999.75</td>
+      <td>94995.25</td>
+    </tr>
+    <tr>
+      <td>ORD-2026-1020</td>
+      <td>2026-06-05</td>
+      <td>Rahul Sharma</td>
+      <td>North</td>
+      <td>Furniture</td>
+      <td>Desk Lamp Led</td>
+      <td>5.0</td>
+      <td>45000.00</td>
+      <td>50.0</td>
+      <td>UPI</td>
+      <td>2026.0</td>
+      <td>6.0</td>
+      <td>2026Q2</td>
+      <td>2026-06</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>225000.00</td>
+      <td>112500.00</td>
+      <td>112500.00</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+
+        <footer>
+            Generated by Antigravity Data Cleaning & Reporting Automation System.
+        </footer>
+    </div>
+</body>
+</html>

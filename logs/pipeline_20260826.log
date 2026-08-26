@@ -1,0 +1,107 @@
+2026-08-26 22:54:29 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 62.6/100 [C (Needs Attention)]. Found 6 issue categories.
+2026-08-26 22:54:29 | INFO     | DataCleaner | [TRANSFORM] Applied 8 feature engineering transformations.
+2026-08-26 22:54:29 | INFO     | DataCleaner | [ANALYZE] Calculated 7 dynamic KPIs.
+2026-08-26 22:54:29 | INFO     | DataCleaner | [CLEAN] Column names standardized.
+2026-08-26 22:54:29 | INFO     | DataCleaner | [CLEAN] Removed 1 duplicate rows.
+2026-08-26 22:54:29 | INFO     | DataCleaner | [CLEAN] Converted data types: ['order_date', 'unit_price', 'discount_pct']
+2026-08-26 22:54:29 | INFO     | DataCleaner | [CLEAN] Fixed negative values in {'quantity': 1}
+2026-08-26 22:54:29 | INFO     | DataCleaner | [CLEAN] Categorical normalization completed.
+2026-08-26 22:54:29 | INFO     | DataCleaner | [CLEAN] Imputed missing values across 2 columns.
+2026-08-26 22:54:29 | INFO     | DataCleaner | [CLEAN] Cleaning completed successfully. Shape changed from (5, 9) to (4, 9).
+2026-08-26 22:54:30 | INFO     | DataCleaner | [TRANSFORM] Applied 8 feature engineering transformations.
+2026-08-26 22:54:30 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 62.6/100 [C (Needs Attention)]. Found 6 issue categories.
+2026-08-26 22:54:30 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 88.3/100 [A (Good)]. Found 2 issue categories.
+2026-08-26 22:54:30 | INFO     | DataCleaner | [ANALYZE] Calculated 9 dynamic KPIs.
+2026-08-26 22:54:30 | INFO     | DataCleaner | [INSIGHTS] Generated 5 quality, 6 business, and 4 recommendation points.
+2026-08-26 22:54:30 | INFO     | DataCleaner | [EXPORT] Saved styled Excel report to 'C:\Users\amitk\AppData\Local\Temp\pytest-of-amitk\pytest-0\test_multi_format_report_gener0\test_report.xlsx'.
+2026-08-26 22:54:30 | INFO     | DataCleaner | [EXPORT] PDF report compiled successfully.
+2026-08-26 22:54:30 | INFO     | DataCleaner | [EXPORT] Saved HTML report to 'C:\Users\amitk\AppData\Local\Temp\pytest-of-amitk\pytest-0\test_multi_format_report_gener0\test_report.html'.
+2026-08-26 22:54:30 | INFO     | DataCleaner | [CLEAN] Column names standardized.
+2026-08-26 22:54:30 | INFO     | DataCleaner | [CLEAN] Cleaning completed successfully. Shape changed from (0, 0) to (0, 0).
+2026-08-26 22:54:50 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 62.6/100 [C (Needs Attention)]. Found 6 issue categories.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [TRANSFORM] Applied 8 feature engineering transformations.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [ANALYZE] Calculated 7 dynamic KPIs.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [CLEAN] Column names standardized.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [CLEAN] Removed 1 duplicate rows.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [CLEAN] Converted data types: ['order_date', 'unit_price', 'discount_pct']
+2026-08-26 22:54:50 | INFO     | DataCleaner | [CLEAN] Fixed negative values in {'quantity': 1}
+2026-08-26 22:54:50 | INFO     | DataCleaner | [CLEAN] Categorical normalization completed.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [CLEAN] Imputed missing values across 2 columns.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [CLEAN] Cleaning completed successfully. Shape changed from (5, 9) to (4, 9).
+2026-08-26 22:54:50 | INFO     | DataCleaner | [TRANSFORM] Applied 8 feature engineering transformations.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 62.6/100 [C (Needs Attention)]. Found 6 issue categories.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 94.2/100 [A+ (Excellent)]. Found 2 issue categories.
+2026-08-26 22:54:50 | INFO     | DataCleaner | [ANALYZE] Calculated 9 dynamic KPIs.
+2026-08-26 22:54:51 | INFO     | DataCleaner | [INSIGHTS] Generated 5 quality, 6 business, and 4 recommendation points.
+2026-08-26 22:54:51 | INFO     | DataCleaner | [EXPORT] Saved styled Excel report to 'C:\Users\amitk\AppData\Local\Temp\pytest-of-amitk\pytest-1\test_multi_format_report_gener0\test_report.xlsx'.
+2026-08-26 22:54:51 | INFO     | DataCleaner | [EXPORT] PDF report compiled successfully.
+2026-08-26 22:54:51 | INFO     | DataCleaner | [EXPORT] Saved HTML report to 'C:\Users\amitk\AppData\Local\Temp\pytest-of-amitk\pytest-1\test_multi_format_report_gener0\test_report.html'.
+2026-08-26 22:54:51 | INFO     | DataCleaner | [CLEAN] Column names standardized.
+2026-08-26 22:54:51 | INFO     | DataCleaner | [CLEAN] Cleaning completed successfully. Shape changed from (0, 0) to (0, 0).
+2026-08-26 22:56:43 | INFO     | DataCleaner | [LOAD] Loaded 'messy_sales_data.csv' successfully (163 rows, 10 cols, 15.71 KB)
+2026-08-26 22:56:43 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 71.2/100 [B (Acceptable)]. Found 6 issue categories.
+2026-08-26 22:56:43 | INFO     | DataCleaner | [CLEAN] Column names standardized.
+2026-08-26 22:56:43 | INFO     | DataCleaner | [CLEAN] Removed 12 duplicate rows.
+2026-08-26 22:56:43 | INFO     | DataCleaner | [CLEAN] Converted data types: ['order_date', 'unit_price', 'discount_pct']
+2026-08-26 22:56:43 | INFO     | DataCleaner | [CLEAN] Fixed negative values in {'quantity': 15, 'unit_price': 17}
+2026-08-26 22:56:43 | INFO     | DataCleaner | [CLEAN] Categorical normalization completed.
+2026-08-26 22:56:43 | INFO     | DataCleaner | [CLEAN] Imputed missing values across 10 columns.
+2026-08-26 22:56:43 | INFO     | DataCleaner | [CLEAN] Outliers processed with action 'keep'.
+2026-08-26 22:56:43 | INFO     | DataCleaner | [CLEAN] Cleaning completed successfully. Shape changed from (163, 10) to (151, 10).
+2026-08-26 22:56:43 | INFO     | DataCleaner | [TRANSFORM] Applied 8 feature engineering transformations.
+2026-08-26 22:56:43 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 89.6/100 [A (Good)]. Found 3 issue categories.
+2026-08-26 22:56:43 | INFO     | DataCleaner | [ANALYZE] Calculated 8 dynamic KPIs.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [INSIGHTS] Generated 5 quality, 5 business, and 5 recommendation points.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [EXPORT] Saved styled Excel report to 'reports/Sales_Automated_Report.xlsx'.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [EXPORT] PDF report compiled successfully.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [EXPORT] Saved HTML report to 'reports/Sales_Interactive_Report.html'.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [LOAD] Loaded 'messy_customer_data.xlsx' successfully (128 rows, 12 cols, 13.42 KB)
+2026-08-26 22:56:44 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 72.7/100 [B (Acceptable)]. Found 6 issue categories.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [CLEAN] Column names standardized.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [CLEAN] Removed 8 duplicate rows.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [CLEAN] Converted data types: ['annual_income', 'signup_date']
+2026-08-26 22:56:44 | INFO     | DataCleaner | [CLEAN] Fixed negative values in {'annual_income': 22}
+2026-08-26 22:56:44 | INFO     | DataCleaner | [CLEAN] Categorical normalization completed.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [CLEAN] Imputed missing values across 11 columns.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [CLEAN] Outliers processed with action 'keep'.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [CLEAN] Cleaning completed successfully. Shape changed from (128, 12) to (120, 12).
+2026-08-26 22:56:44 | INFO     | DataCleaner | [TRANSFORM] Applied 8 feature engineering transformations.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 97.2/100 [A+ (Excellent)]. Found 1 issue categories.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [ANALYZE] Calculated 3 dynamic KPIs.
+2026-08-26 22:56:44 | INFO     | DataCleaner | [INSIGHTS] Generated 5 quality, 2 business, and 5 recommendation points.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [EXPORT] Saved styled Excel report to 'reports/Customer_Automated_Report.xlsx'.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [EXPORT] PDF report compiled successfully.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [EXPORT] Saved HTML report to 'reports/Customer_Interactive_Report.html'.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [LOAD] Loaded 'messy_employee_data.csv' successfully (105 rows, 9 cols, 8.31 KB)
+2026-08-26 22:56:45 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 75.1/100 [B (Acceptable)]. Found 6 issue categories.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Column names standardized.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Removed 5 duplicate rows.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Converted data types: ['hire_date', 'salary']
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Fixed negative values in {'salary': 17, 'experience_yrs': 7}
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Categorical normalization completed.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Imputed missing values across 6 columns.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Outliers processed with action 'keep'.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Cleaning completed successfully. Shape changed from (105, 9) to (100, 9).
+2026-08-26 22:56:45 | INFO     | DataCleaner | [TRANSFORM] Applied 7 feature engineering transformations.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 98.2/100 [A+ (Excellent)]. Found 1 issue categories.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [ANALYZE] Calculated 4 dynamic KPIs.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [INSIGHTS] Generated 5 quality, 3 business, and 5 recommendation points.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [EXPORT] Saved styled Excel report to 'reports/Employee_Automated_Report.xlsx'.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [EXPORT] PDF report compiled successfully.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [EXPORT] Saved HTML report to 'reports/Employee_Interactive_Report.html'.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [LOAD] Loaded 'messy_financial_data.xlsx' successfully (27 rows, 7 cols, 6.0 KB)
+2026-08-26 22:56:45 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 74.8/100 [B (Acceptable)]. Found 4 issue categories.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Column names standardized.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Removed 3 duplicate rows.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Converted data types: ['gross_revenue', 'operating_cost', 'marketing_spend', 'tax_rate_pct']
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Categorical normalization completed.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Imputed missing values across 2 columns.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Outliers processed with action 'keep'.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [CLEAN] Cleaning completed successfully. Shape changed from (27, 7) to (24, 7).
+2026-08-26 22:56:45 | INFO     | DataCleaner | [TRANSFORM] Applied 2 feature engineering transformations.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [VALIDATE] Validation complete. Overall Health Score: 100.0/100 [A+ (Excellent)]. Found 0 issue categories.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [ANALYZE] Calculated 8 dynamic KPIs.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [INSIGHTS] Generated 5 quality, 4 business, and 5 recommendation points.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [EXPORT] Saved styled Excel report to 'reports/Financial_Automated_Report.xlsx'.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [EXPORT] PDF report compiled successfully.
+2026-08-26 22:56:45 | INFO     | DataCleaner | [EXPORT] Saved HTML report to 'reports/Financial_Interactive_Report.html'.

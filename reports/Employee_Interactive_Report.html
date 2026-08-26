@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Cleaning & Reporting Automation — Executive Report</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 30px 20px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        header h1 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+        header p { font-size: 14px; opacity: 0.9; }
+        .grid-kpis {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .kpi-label { font-size: 13px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; }
+        .kpi-value { font-size: 24px; font-weight: 700; color: var(--primary); margin: 8px 0; }
+        .kpi-desc { font-size: 12px; color: var(--text-muted); }
+        .section-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 25px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .section-card h2 { font-size: 18px; color: var(--primary); margin-bottom: 15px; border-bottom: 2px solid var(--border); padding-bottom: 8px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 8px; font-size: 14px; }
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin-top: 10px;
+            overflow-x: auto;
+            display: block;
+        }
+        .styled-table th, .styled-table td {
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            text-align: left;
+        }
+        .styled-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        .styled-table tr:nth-child(even) { background-color: #f1f5f9; }
+        footer { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Data Cleaning & Reporting Automation</h1>
+            <p>Automated Data Validation, Transformation, Analysis & Executive Intelligence Report</p>
+            <p style="font-size: 12px; margin-top: 5px;">Report Generated: 2026-08-26 22:56:45</p>
+        </header>
+
+        <div class="grid-kpis">
+            <div class="kpi-card">
+                <div class="kpi-label">Health Score</div>
+                <div class="kpi-value" style="color: var(--success);">98.2/100</div>
+                <div class="kpi-desc">Initial: 75.1/100</div>
+            </div>
+            
+        <div class="kpi-card">
+            <div class="kpi-label">Total Records</div>
+            <div class="kpi-value">100</div>
+            <div class="kpi-desc">Total active rows in processed dataset</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Unique Customers / Accounts</div>
+            <div class="kpi-value">100</div>
+            <div class="kpi-desc">Distinct entities in 'emp_id'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Unique Products / SKUs</div>
+            <div class="kpi-value">6</div>
+            <div class="kpi-desc">Distinct offerings in 'job_title'</div>
+        </div>
+        
+        <div class="kpi-card">
+            <div class="kpi-label">Top Segment (Finance)</div>
+            <div class="kpi-value">38 records</div>
+            <div class="kpi-desc">Most frequent group in 'department'</div>
+        </div>
+        
+        </div>
+
+        <div class="section-card">
+            <h2>Data Quality & Cleaning Audit Summary</h2>
+            <ul><li><strong>Step 1:</strong> Standardized 9 column names into clean snake_case.</li><li><strong>Step 2:</strong> Removed 5 exact duplicate records.</li><li><strong>Step 3:</strong> Converted 2 columns to appropriate numeric/date/boolean types.</li><li><strong>Step 4:</strong> Corrected 24 negative values across 2 positive columns.</li><li><strong>Step 5:</strong> Normalized casing and categorical variants across 3 text columns.</li><li><strong>Step 6:</strong> Handled missing values across 6 columns using intelligent imputation.</li><li><strong>Step 7:</strong> Detected outliers in 3 numeric columns (Action: keep).</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Automated Insights</h2>
+            <ul><li>Overall Data Health Score improved from 75.1/100 [B (Acceptable)] to 98.2/100 [A+ (Excellent)].</li><li>Resolved 35 missing values across 6 columns using statistical imputation strategies.</li><li>Eliminated 5 exact duplicate rows, preventing skewed metrics and double-counting.</li><li>Successfully standardized data types for 2 columns (including currency symbol stripping, date parsing, and boolean normalization).</li><li>Standardized 9 column headers into consistent snake_case format for SQL/pipeline compatibility.</li><li>Top contributing category is 'Finance' accounting for 54.7% of total volume ($12,690,000.00).</li><li>Noticeable concentration risk: 'Finance' commands over half of the entire dataset revenue.</li><li>Regional distribution is led by 'Remote' generating 65.3% of activity.</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Strategic Recommendations</h2>
+            <ul><li><strong>Action:</strong> Implement frontend form validation at data entry to mandate required fields and eliminate downstream missing values.</li><li><strong>Action:</strong> Enforce database UNIQUE constraints on transactional ID fields to prevent duplicate records at ingestion.</li><li><strong>Action:</strong> Enforce strict schema typing at the ingestion pipeline to avoid storing raw currency symbols and unformatted strings in numeric fields.</li><li><strong>Action:</strong> Evaluate marketing and promotional strategies for lower-performing category 'Marketing' (5.5% share) to balance portfolio revenue.</li><li><strong>Action:</strong> Schedule automated daily/weekly runs of this cleaning pipeline to monitor data health drift over time.</li></ul>
+        </div>
+
+        <div class="section-card">
+            <h2>Cleaned Dataset Preview (First 20 Records)</h2>
+            <table border="1" class="dataframe styled-table">
+  <thead>
+    <tr style="text-align: right;">
+      <th>emp_id</th>
+      <th>employee_name</th>
+      <th>department</th>
+      <th>job_title</th>
+      <th>hire_date</th>
+      <th>salary</th>
+      <th>performance_rating</th>
+      <th>experience_yrs</th>
+      <th>location</th>
+      <th>hire_year</th>
+      <th>hire_month</th>
+      <th>hire_quarter</th>
+      <th>hire_month_year</th>
+      <th>hire_day_name</th>
+      <th>hire_is_weekend</th>
+      <th>experience_level</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EMP-5001</td>
+      <td>Employee 1</td>
+      <td>Finance</td>
+      <td>Account Executive</td>
+      <td>2023-08-27</td>
+      <td>5000.0</td>
+      <td>99.0</td>
+      <td>12.0</td>
+      <td>Remote</td>
+      <td>2023.0</td>
+      <td>8.0</td>
+      <td>2023Q3</td>
+      <td>2023-08</td>
+      <td>Sunday</td>
+      <td>True</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5002</td>
+      <td>Employee 2</td>
+      <td>Engineering</td>
+      <td>Software Engineer</td>
+      <td>2024-08-03</td>
+      <td>95000.0</td>
+      <td>4.0</td>
+      <td>12.0</td>
+      <td>Remote</td>
+      <td>2024.0</td>
+      <td>8.0</td>
+      <td>2024Q3</td>
+      <td>2024-08</td>
+      <td>Saturday</td>
+      <td>True</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5003</td>
+      <td>Employee 3</td>
+      <td>Finance</td>
+      <td>Senior Developer</td>
+      <td>2023-12-23</td>
+      <td>85000.0</td>
+      <td>5.0</td>
+      <td>15.0</td>
+      <td>Hyderabad</td>
+      <td>2023.0</td>
+      <td>12.0</td>
+      <td>2023Q4</td>
+      <td>2023-12</td>
+      <td>Saturday</td>
+      <td>True</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5004</td>
+      <td>Employee 4</td>
+      <td>Finance</td>
+      <td>Marketing Lead</td>
+      <td>2024-01-14</td>
+      <td>95000.0</td>
+      <td>4.0</td>
+      <td>8.0</td>
+      <td>Remote</td>
+      <td>2024.0</td>
+      <td>1.0</td>
+      <td>2024Q1</td>
+      <td>2024-01</td>
+      <td>Sunday</td>
+      <td>True</td>
+      <td>Senior (6-10 yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5005</td>
+      <td>Employee 5</td>
+      <td>Marketing</td>
+      <td>Account Executive</td>
+      <td>2025-01-22</td>
+      <td>95000.0</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>Remote</td>
+      <td>2025.0</td>
+      <td>1.0</td>
+      <td>2025Q1</td>
+      <td>2025-01</td>
+      <td>Wednesday</td>
+      <td>False</td>
+      <td>Junior (0-2 yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5006</td>
+      <td>Employee 6</td>
+      <td>Engineering</td>
+      <td>Marketing Lead</td>
+      <td>2023-04-05</td>
+      <td>5000.0</td>
+      <td>4.0</td>
+      <td>1.0</td>
+      <td>Bangalore</td>
+      <td>2023.0</td>
+      <td>4.0</td>
+      <td>2023Q2</td>
+      <td>2023-04</td>
+      <td>Wednesday</td>
+      <td>False</td>
+      <td>Junior (0-2 yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5007</td>
+      <td>Employee 7</td>
+      <td>Sales</td>
+      <td>Account Executive</td>
+      <td>NaT</td>
+      <td>120000.0</td>
+      <td>2.0</td>
+      <td>5.0</td>
+      <td>Pune</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>Mid-Level (3-5 yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5008</td>
+      <td>Employee 8</td>
+      <td>Finance</td>
+      <td>Financial Analyst</td>
+      <td>2022-05-30</td>
+      <td>95000.0</td>
+      <td>4.0</td>
+      <td>12.0</td>
+      <td>Hyderabad</td>
+      <td>2022.0</td>
+      <td>5.0</td>
+      <td>2022Q2</td>
+      <td>2022-05</td>
+      <td>Monday</td>
+      <td>False</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5009</td>
+      <td>Employee 9</td>
+      <td>Sales</td>
+      <td>Marketing Lead</td>
+      <td>2022-11-20</td>
+      <td>120000.0</td>
+      <td>1.0</td>
+      <td>3.0</td>
+      <td>Remote</td>
+      <td>2022.0</td>
+      <td>11.0</td>
+      <td>2022Q4</td>
+      <td>2022-11</td>
+      <td>Sunday</td>
+      <td>True</td>
+      <td>Mid-Level (3-5 yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5010</td>
+      <td>Employee 10</td>
+      <td>Human Resources</td>
+      <td>Account Executive</td>
+      <td>2021-10-07</td>
+      <td>120000.0</td>
+      <td>2.0</td>
+      <td>15.0</td>
+      <td>Pune</td>
+      <td>2021.0</td>
+      <td>10.0</td>
+      <td>2021Q4</td>
+      <td>2021-10</td>
+      <td>Thursday</td>
+      <td>False</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5011</td>
+      <td>Employee 11</td>
+      <td>Finance</td>
+      <td>Senior Developer</td>
+      <td>2020-09-18</td>
+      <td>95000.0</td>
+      <td>5.0</td>
+      <td>12.0</td>
+      <td>Remote</td>
+      <td>2020.0</td>
+      <td>9.0</td>
+      <td>2020Q3</td>
+      <td>2020-09</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5012</td>
+      <td>Employee 12</td>
+      <td>Finance</td>
+      <td>Hr Specialist</td>
+      <td>2024-04-21</td>
+      <td>1450000.0</td>
+      <td>4.0</td>
+      <td>12.0</td>
+      <td>Pune</td>
+      <td>2024.0</td>
+      <td>4.0</td>
+      <td>2024Q2</td>
+      <td>2024-04</td>
+      <td>Sunday</td>
+      <td>True</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5013</td>
+      <td>Employee 13</td>
+      <td>Marketing</td>
+      <td>Financial Analyst</td>
+      <td>2020-07-19</td>
+      <td>85000.0</td>
+      <td>5.0</td>
+      <td>8.0</td>
+      <td>Bangalore</td>
+      <td>2020.0</td>
+      <td>7.0</td>
+      <td>2020Q3</td>
+      <td>2020-07</td>
+      <td>Sunday</td>
+      <td>True</td>
+      <td>Senior (6-10 yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5014</td>
+      <td>Employee 14</td>
+      <td>Marketing</td>
+      <td>Marketing Lead</td>
+      <td>2024-02-21</td>
+      <td>85000.0</td>
+      <td>5.0</td>
+      <td>3.0</td>
+      <td>Remote</td>
+      <td>2024.0</td>
+      <td>2.0</td>
+      <td>2024Q1</td>
+      <td>2024-02</td>
+      <td>Wednesday</td>
+      <td>False</td>
+      <td>Mid-Level (3-5 yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5015</td>
+      <td>Employee 15</td>
+      <td>Marketing</td>
+      <td>Hr Specialist</td>
+      <td>2022-04-08</td>
+      <td>95000.0</td>
+      <td>2.0</td>
+      <td>3.0</td>
+      <td>Remote</td>
+      <td>2022.0</td>
+      <td>4.0</td>
+      <td>2022Q2</td>
+      <td>2022-04</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>Mid-Level (3-5 yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5016</td>
+      <td>Employee 16</td>
+      <td>Engineering</td>
+      <td>Senior Developer</td>
+      <td>NaT</td>
+      <td>95000.0</td>
+      <td>99.0</td>
+      <td>12.0</td>
+      <td>Remote</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>False</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5017</td>
+      <td>Employee 17</td>
+      <td>Finance</td>
+      <td>Marketing Lead</td>
+      <td>2024-06-15</td>
+      <td>5000.0</td>
+      <td>3.0</td>
+      <td>3.0</td>
+      <td>Pune</td>
+      <td>2024.0</td>
+      <td>6.0</td>
+      <td>2024Q2</td>
+      <td>2024-06</td>
+      <td>Saturday</td>
+      <td>True</td>
+      <td>Mid-Level (3-5 yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5018</td>
+      <td>Employee 18</td>
+      <td>Sales</td>
+      <td>Account Executive</td>
+      <td>2023-01-27</td>
+      <td>120000.0</td>
+      <td>2.0</td>
+      <td>45.0</td>
+      <td>Remote</td>
+      <td>2023.0</td>
+      <td>1.0</td>
+      <td>2023Q1</td>
+      <td>2023-01</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5019</td>
+      <td>Employee 19</td>
+      <td>Hr</td>
+      <td>Senior Developer</td>
+      <td>2022-09-25</td>
+      <td>5000.0</td>
+      <td>4.0</td>
+      <td>12.0</td>
+      <td>Bangalore</td>
+      <td>2022.0</td>
+      <td>9.0</td>
+      <td>2022Q3</td>
+      <td>2022-09</td>
+      <td>Sunday</td>
+      <td>True</td>
+      <td>Lead/Principal (10+ yrs)</td>
+    </tr>
+    <tr>
+      <td>EMP-5020</td>
+      <td>Employee 20</td>
+      <td>Sales</td>
+      <td>Marketing Lead</td>
+      <td>2020-04-03</td>
+      <td>95000.0</td>
+      <td>5.0</td>
+      <td>3.0</td>
+      <td>Pune</td>
+      <td>2020.0</td>
+      <td>4.0</td>
+      <td>2020Q2</td>
+      <td>2020-04</td>
+      <td>Friday</td>
+      <td>False</td>
+      <td>Mid-Level (3-5 yrs)</td>
+    </tr>
+  </tbody>
+</table>
+        </div>
+
+        <footer>
+            Generated by Antigravity Data Cleaning & Reporting Automation System.
+        </footer>
+    </div>
+</body>
+</html>
