@@ -1,7 +1,7 @@
 """
 Data Cleaning & Reporting Automation — Streamlit Web Application
-An end-to-end automated platform for data ingestion, quality validation,
-cleaning, transformation, analytics, visualization, and multi-format reporting.
+An enterprise-grade, modern SaaS platform for automated data profiling,
+validation, cleaning, transformation, analytics, visualization, and multi-format reporting.
 """
 import os
 import io
@@ -38,190 +38,404 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for Modern, Sleek, Professional Interface
+# -------------------------------------------------------------
+# Centralized SaaS Analytics Design System (CSS)
+# -------------------------------------------------------------
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+    :root {
+        --font-primary: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        --color-bg-gradient: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 50%, #eef2ff 100%);
+        --color-surface: #ffffff;
+        --color-surface-glass: rgba(255, 255, 255, 0.95);
+        --color-border: #e2e8f0;
+        --color-text-main: #0f172a;
+        --color-text-muted: #64748b;
+        --shadow-subtle: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+        --shadow-hover: 0 12px 28px -4px rgba(15, 23, 42, 0.1);
+    }
 
     html, body, [class*="css"] {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: var(--font-primary);
+        color: var(--color-text-main);
     }
-    
-    /* Header Container */
-    .main-header {
-        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
-        padding: 24px 30px;
-        border-radius: 14px;
+
+    /* Background smoothing */
+    [data-testid="stAppViewContainer"] {
+        background: var(--color-bg-gradient);
+    }
+
+    /* Main Container Padding */
+    .main .block-container {
+        padding-top: 1.5rem;
+        padding-bottom: 3rem;
+        max-width: 1400px;
+    }
+
+    /* Hero Banner Component */
+    .hero-banner {
+        background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #4f46e5 100%);
+        border-radius: 16px;
+        padding: 28px 32px;
         color: white;
-        margin-bottom: 24px;
-        box-shadow: 0 4px 14px 0 rgba(37, 99, 235, 0.2);
+        margin-bottom: 20px;
+        box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.25);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.15);
     }
-    .main-header h1 {
-        font-size: 28px;
+    .hero-banner::after {
+        content: "";
+        position: absolute;
+        top: -60%;
+        right: -8%;
+        width: 380px;
+        height: 380px;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 70%);
+        border-radius: 50%;
+        pointer-events: none;
+    }
+    .hero-tags {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 8px;
+        flex-wrap: wrap;
+    }
+    .hero-pill {
+        background: rgba(255, 255, 255, 0.18);
+        backdrop-filter: blur(8px);
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 11px;
         font-weight: 700;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+    .hero-pill-active {
+        background: rgba(16, 185, 129, 0.25);
+        border-color: rgba(16, 185, 129, 0.5);
+    }
+    .hero-title {
+        font-size: 28px;
+        font-weight: 800;
         margin: 0;
         color: white;
         letter-spacing: -0.5px;
+        line-height: 1.2;
     }
-    .main-header p {
+    .hero-subtitle {
         font-size: 14px;
         color: #e0e7ff;
         margin: 6px 0 0 0;
         font-weight: 400;
+        max-width: 850px;
+        line-height: 1.5;
     }
 
-    /* Metric Cards */
-    .metric-card {
+    /* Pipeline Stepper Component */
+    .pipeline-stepper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
         background: white;
-        border-radius: 10px;
-        padding: 16px 20px;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        transition: transform 0.2s, box-shadow 0.2s;
+        padding: 12px 18px;
+        border-radius: 12px;
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-subtle);
+        margin-bottom: 20px;
+        align-items: center;
     }
-    .metric-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 6px -1px rgba(0,0,0,0.08);
-    }
-    .metric-title {
-        font-size: 12px;
-        font-weight: 600;
-        color: #64748b;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    .metric-value {
-        font-size: 22px;
-        font-weight: 700;
-        color: #0f172a;
-        margin: 4px 0;
-    }
-    .metric-delta {
-        font-size: 11px;
-        font-weight: 500;
-    }
-    .delta-positive { color: #16a34a; }
-    .delta-neutral { color: #64748b; }
-
-    /* Workflow Pipeline Steps */
-    .step-pill {
-        display: inline-block;
-        padding: 4px 10px;
-        background: #f1f5f9;
+    .step-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
         border-radius: 20px;
         font-size: 12px;
         font-weight: 600;
-        color: #334155;
-        margin-right: 6px;
-        margin-bottom: 8px;
+        transition: all 0.2s ease;
     }
-    .step-pill.active {
-        background: #2563eb;
+    .step-done {
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+    }
+    .step-active {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
         color: white;
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
     }
 
-    /* Card Containers */
-    .custom-card {
+    /* KPI Grid Cards */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin-bottom: 22px;
+    }
+    .kpi-card {
         background: white;
-        border-radius: 10px;
+        border-radius: 14px;
         padding: 20px;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-subtle);
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .kpi-card:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-hover);
+    }
+    .kpi-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+    }
+    .border-emerald::before { background: linear-gradient(90deg, #10b981, #34d399); }
+    .border-blue::before { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+    .border-rose::before { background: linear-gradient(90deg, #f43f5e, #fb7185); }
+    .border-purple::before { background: linear-gradient(90deg, #7c3aed, #a78bfa); }
+    .border-amber::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
+    .kpi-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+    }
+    .kpi-card-label {
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--color-text-muted);
+    }
+    .kpi-icon-pill {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+    }
+    .kpi-val-number {
+        font-size: 26px;
+        font-weight: 800;
+        color: #0f172a;
+        margin: 4px 0;
+        letter-spacing: -0.5px;
+    }
+    .kpi-delta-row {
+        font-size: 12px;
+        color: var(--color-text-muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 500;
+    }
+    .pill-green {
+        background: #dcfce7;
+        color: #15803d;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 11px;
+    }
+    .pill-blue {
+        background: #e0f2fe;
+        color: #0369a1;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 11px;
+    }
+
+    /* Section Cards */
+    .saas-box {
+        background: white;
+        border-radius: 14px;
+        padding: 24px;
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-subtle);
         margin-bottom: 20px;
     }
-
-    /* Section Subheaders */
-    .section-title {
+    .saas-box-header {
         font-size: 16px;
+        font-weight: 700;
+        color: #0f172a;
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Export Studio Cards */
+    .export-box {
+        background: white;
+        border-radius: 14px;
+        padding: 22px;
+        border: 1px solid var(--color-border);
+        box-shadow: var(--shadow-subtle);
+        transition: all 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+    .export-box:hover {
+        border-color: #93c5fd;
+        box-shadow: var(--shadow-hover);
+        transform: translateY(-2px);
+    }
+    .export-icon-box {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+    }
+
+    /* Sidebar Refinement */
+    [data-testid="stSidebar"] {
+        background-color: #f8fafc;
+        border-right: 1px solid #e2e8f0;
+    }
+    .brand-container {
+        padding: 8px 0 16px 0;
+        border-bottom: 1px solid #e2e8f0;
+        margin-bottom: 16px;
+    }
+    .brand-title {
+        font-size: 18px;
+        font-weight: 800;
+        color: #1e3a8a;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .brand-caption {
+        font-size: 12px;
+        color: var(--color-text-muted);
+        margin: 4px 0 0 0;
+    }
+
+    /* Segmented Navigation Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 6px;
+        background-color: #f1f5f9;
+        padding: 6px;
+        border-radius: 12px;
+        border: 1px solid #e2e8f0;
+    }
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 8px;
+        padding: 8px 16px;
         font-weight: 600;
-        color: #1e293b;
-        margin-bottom: 12px;
-        border-left: 4px solid #2563eb;
-        padding-left: 8px;
+        font-size: 13px;
+        color: #64748b;
+        background-color: transparent;
+        transition: all 0.2s ease;
+    }
+    .stTabs [aria-selected="true"] {
+        background-color: #ffffff !important;
+        color: #2563eb !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 </style>
 """, unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
-# Application Header
+# Sidebar: Control Center & Cleaning Configuration
 # -------------------------------------------------------------
-st.markdown("""
-<div class="main-header">
-    <h1>⚡ Data Cleaning & Reporting Automation</h1>
-    <p>Automate data validation, cleaning, transformation, analysis, visual summaries, and executive reports.</p>
-</div>
-""", unsafe_allow_html=True)
+with st.sidebar:
+    st.markdown("""
+    <div class="brand-container">
+        <h2 class="brand-title">⚡ Control Center</h2>
+        <p class="brand-caption">Data Analytics & Reporting SaaS</p>
+    </div>
+    """, unsafe_allow_html=True)
 
-
-# -------------------------------------------------------------
-# Sidebar: Ingestion, Sample Data, Cleaning Configuration
-# -------------------------------------------------------------
-st.sidebar.title("🛠️ Control Center")
-
-st.sidebar.markdown("### 1. Data Ingestion")
-sample_choice = st.sidebar.selectbox(
-    "Load Sample Business Dataset:",
-    [
-        "None (Upload my own file)",
-        "Messy Sales Data (CSV)",
-        "Messy Customer Data (Excel)",
-        "Messy Employee Data (CSV)",
-        "Messy Financial Data (Excel)"
-    ]
-)
-
-uploaded_file = st.sidebar.file_uploader(
-    "Or upload your CSV / Excel file:",
-    type=["csv", "xlsx", "xls", "txt"],
-    help="Supports comma/semicolon CSVs and multi-sheet Excel files."
-)
-
-# Sheet selection for Excel
-selected_sheet = 0
-if uploaded_file and uploaded_file.name.lower().endswith((".xlsx", ".xls")):
-    sheets = get_excel_sheet_names(uploaded_file)
-    if len(sheets) > 1:
-        selected_sheet = st.sidebar.selectbox("Select Excel Sheet:", sheets)
-
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 2. Cleaning Configuration")
-
-with st.sidebar.expander("⚙️ Pipeline Rules & Defaults", expanded=True):
-    opt_std_names = st.checkbox("Standardize Column Names (snake_case)", value=True)
-    opt_remove_dups = st.checkbox("Remove Exact Duplicate Rows", value=True)
-    opt_convert_types = st.checkbox("Convert Currency / Date / Booleans", value=True)
-    opt_fix_negatives = st.checkbox("Fix Negative Values in Positive Fields", value=True)
-    opt_std_cats = st.checkbox("Standardize Categorical Casing & Domains", value=True)
-    opt_handle_missing = st.checkbox("Handle Missing Values", value=True)
-    
-    num_missing_strat = st.selectbox(
-        "Numeric Missing Strategy:",
-        ["median", "mean", "zero", "drop_row"],
-        index=0
-    )
-    cat_missing_strat = st.selectbox(
-        "Categorical Missing Strategy:",
-        ["mode_or_unknown", "mode", "constant_unknown", "drop_row"],
+    st.markdown("### 📥 1. Ingestion Source")
+    sample_choice = st.selectbox(
+        "Load Sample Business Dataset:",
+        [
+            "None (Upload my own file)",
+            "Messy Sales Data (CSV)",
+            "Messy Customer Data (Excel)",
+            "Messy Employee Data (CSV)",
+            "Messy Financial Data (Excel)"
+        ],
         index=0
     )
 
-with st.sidebar.expander("📊 Outlier Handling", expanded=False):
-    outlier_method = st.radio("Detection Method:", ["iqr", "zscore"], index=0)
-    outlier_action = st.selectbox("Action for Detected Outliers:", ["keep", "cap", "remove"], index=0,
-                                  help="'keep' flags them safely, 'cap' clips them to bounds, 'remove' drops them.")
+    uploaded_file = st.file_uploader(
+        "Or Drag & Drop CSV / Excel File:",
+        type=["csv", "xlsx", "xls", "txt"],
+        help="Supports comma/semicolon CSVs and multi-sheet Excel files."
+    )
 
-cleaning_options = {
-    "standardize_names": opt_std_names,
-    "remove_dups": opt_remove_dups,
-    "convert_types": opt_convert_types,
-    "fix_negatives": opt_fix_negatives,
-    "standardize_cats": opt_std_cats,
-    "handle_missing": opt_handle_missing,
-    "numeric_missing_strategy": num_missing_strat,
-    "categorical_missing_strategy": cat_missing_strat,
-    "outlier_method": outlier_method,
-    "outlier_action": outlier_action
-}
+    selected_sheet = 0
+    if uploaded_file and uploaded_file.name.lower().endswith((".xlsx", ".xls")):
+        sheets = get_excel_sheet_names(uploaded_file)
+        if len(sheets) > 1:
+            selected_sheet = st.selectbox("Select Excel Sheet:", sheets)
+
+    st.markdown("---")
+    st.markdown("### ⚙️ 2. Cleaning Configuration")
+
+    with st.expander("🛠️ Cleaning Rules", expanded=True):
+        opt_std_names = st.checkbox("Standardize Column Names (snake_case)", value=True)
+        opt_remove_dups = st.checkbox("Remove Exact Duplicate Rows", value=True)
+        opt_convert_types = st.checkbox("Convert Currency / Dates / Booleans", value=True)
+        opt_fix_negatives = st.checkbox("Fix Negatives in Positive Fields", value=True)
+        opt_std_cats = st.checkbox("Standardize Categorical Casing", value=True)
+        opt_handle_missing = st.checkbox("Handle Missing Values", value=True)
+        
+        num_missing_strat = st.selectbox(
+            "Numeric Strategy:",
+            ["median", "mean", "zero", "drop_row"],
+            index=0
+        )
+        cat_missing_strat = st.selectbox(
+            "Categorical Strategy:",
+            ["mode_or_unknown", "mode", "constant_unknown", "drop_row"],
+            index=0
+        )
+
+    with st.expander("📊 Outlier Handling", expanded=False):
+        outlier_method = st.radio("Method:", ["iqr", "zscore"], index=0)
+        outlier_action = st.selectbox("Action for Outliers:", ["keep", "cap", "remove"], index=0,
+                                      help="'keep' flags safely, 'cap' winsorizes to bounds, 'remove' drops.")
+
+    cleaning_options = {
+        "standardize_names": opt_std_names,
+        "remove_dups": opt_remove_dups,
+        "convert_types": opt_convert_types,
+        "fix_negatives": opt_fix_negatives,
+        "standardize_cats": opt_std_cats,
+        "handle_missing": opt_handle_missing,
+        "numeric_missing_strategy": num_missing_strat,
+        "categorical_missing_strategy": cat_missing_strat,
+        "outlier_method": outlier_method,
+        "outlier_action": outlier_action
+    }
+
+    st.markdown("---")
+    st.caption("🟢 Pipeline Engine: Operational v1.2")
 
 
 # -------------------------------------------------------------
@@ -247,147 +461,177 @@ elif sample_choice != "None (Upload my own file)":
     if os.path.exists(path):
         raw_df, file_meta = load_data(path, file_name=os.path.basename(path))
     else:
-        st.error(f"Sample dataset file not found at '{path}'. Please run the sample data generator.")
+        st.error(f"Sample dataset file not found at '{path}'. Please run generate_sample_data.py.")
 
 
 # -------------------------------------------------------------
-# Main Application Flow
-# -------------------------------------------------------------
-if raw_df is None or raw_df.empty:
-    st.info("👋 Welcome! Please upload a CSV / Excel file or select one of the realistic sample business datasets from the sidebar to begin.")
-    
-    st.markdown("### 🚀 Automated Workflow Demonstration")
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.markdown("""
-        **1. Ingestion & Validation**
-        - Multi-format loader (CSV/Excel)
-        - Data quality health scoring
-        - Missingness & duplicate detection
-        """)
-    with col2:
-        st.markdown("""
-        **2. Intelligent Cleaning**
-        - snake_case standardization
-        - Currency symbol & comma stripping
-        - Multi-format date parsing
-        """)
-    with col3:
-        st.markdown("""
-        **3. Analytics & Charts**
-        - Dynamic business KPI engine
-        - Interactive Plotly visualizations
-        - Outlier spread & distributions
-        """)
-    with col4:
-        st.markdown("""
-        **4. Executive Reporting**
-        - Styled Multi-Sheet Excel (.xlsx)
-        - Executive PDF Business Report
-        - Interactive HTML & Clean CSV
-        """)
-    st.stop()
-
-# -------------------------------------------------------------
-# Pipeline Execution (Validation -> Cleaning -> Transformation -> Analysis -> Insights)
-# -------------------------------------------------------------
-
-# Step 1: Raw Validation
-raw_validation = validate_data(raw_df)
-
-# Step 2: Automated Cleaning
-clean_df, audit_log = clean_data(raw_df, cleaning_options)
-
-# Step 3: Transformation & Feature Engineering
-transformed_df, transformations = transform_data(clean_df)
-
-# Step 4: Cleaned Validation
-clean_validation = validate_data(transformed_df)
-
-# Step 5: KPIs & Statistical Aggregations
-kpis = calculate_kpis(transformed_df)
-stat_summary = generate_statistical_summary(transformed_df)
-aggregations = generate_aggregations(transformed_df)
-
-# Step 6: Automated Insights Engine
-insights = generate_insights(raw_validation, clean_validation, audit_log, kpis, aggregations)
-
-
-# -------------------------------------------------------------
-# Progress Pipeline Badge Bar
+# Application Header / Hero Banner
 # -------------------------------------------------------------
 st.markdown("""
-<div style="margin-bottom: 15px;">
-    <span class="step-pill active">1. Ingestion ✅</span>
-    <span class="step-pill active">2. Validation ✅</span>
-    <span class="step-pill active">3. Cleaning ✅</span>
-    <span class="step-pill active">4. Transformation ✅</span>
-    <span class="step-pill active">5. KPIs & Analytics ✅</span>
-    <span class="step-pill active">6. Visual Summary ✅</span>
-    <span class="step-pill active">7. Insights ✅</span>
-    <span class="step-pill active">8. Multi-Format Export ✅</span>
+<div class="hero-banner">
+    <div class="hero-tags">
+        <span class="hero-pill">⚡ Automated Analytics Engine</span>
+        <span class="hero-pill hero-pill-active">🟢 Status: Pipeline Ready</span>
+    </div>
+    <h1 class="hero-title">Data Cleaning & Reporting Automation</h1>
+    <p class="hero-subtitle">
+        Automate raw data validation, intelligent cleaning, feature engineering, dynamic business KPIs, 
+        interactive visual distributions, and publication-ready multi-format report exports in one click.
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
-# Quick Scorecard Hero Metrics
+# Empty State / Landing Guide
 # -------------------------------------------------------------
-col_m1, col_m2, col_m3, col_m4, col_m5 = st.columns(5)
+if raw_df is None or raw_df.empty:
+    st.markdown("""
+    <div class="saas-box" style="text-align: center; padding: 40px 20px;">
+        <div style="font-size: 48px; margin-bottom: 12px;">📊</div>
+        <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Ready to Clean & Analyze Your Dataset</h2>
+        <p style="color: #64748b; font-size: 14px; max-width: 600px; margin: 0 auto 24px auto;">
+            Upload your CSV or Excel business dataset from the sidebar, or select one of our pre-built realistic messy datasets to explore the automated workflow.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        st.markdown("""
+        <div class="saas-box">
+            <div style="font-size: 24px; margin-bottom: 8px;">🩺</div>
+            <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">1. Quality Diagnostics</div>
+            <p style="font-size: 12px; color: #64748b; margin: 0;">0-100% Data Health Scorecard, missingness & duplicate anomaly checks.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    with col2:
+        st.markdown("""
+        <div class="saas-box">
+            <div style="font-size: 24px; margin-bottom: 8px;">✨</div>
+            <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">2. Smart Cleaning</div>
+            <p style="font-size: 12px; color: #64748b; margin: 0;">snake_case names, currency stripping, multi-format dates, type casting.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    with col3:
+        st.markdown("""
+        <div class="saas-box">
+            <div style="font-size: 24px; margin-bottom: 8px;">📈</div>
+            <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">3. KPI Intelligence</div>
+            <p style="font-size: 12px; color: #64748b; margin: 0;">Auto-discovered metrics, group-by breakdowns, and statistical summaries.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    with col4:
+        st.markdown("""
+        <div class="saas-box">
+            <div style="font-size: 24px; margin-bottom: 8px;">📑</div>
+            <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">4. Multi-Format Export</div>
+            <p style="font-size: 12px; color: #64748b; margin: 0;">Styled Excel (.xlsx), Executive PDF, standalone HTML, and clean CSV.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    st.stop()
+
+
+# -------------------------------------------------------------
+# Execute Complete Pipeline
+# -------------------------------------------------------------
+raw_validation = validate_data(raw_df)
+clean_df, audit_log = clean_data(raw_df, cleaning_options)
+transformed_df, transformations = transform_data(clean_df)
+clean_validation = validate_data(transformed_df)
+kpis = calculate_kpis(transformed_df)
+stat_summary = generate_statistical_summary(transformed_df)
+aggregations = generate_aggregations(transformed_df)
+insights = generate_insights(raw_validation, clean_validation, audit_log, kpis, aggregations)
+
+
+# -------------------------------------------------------------
+# Horizontal Pipeline Stepper Tracker
+# -------------------------------------------------------------
+st.markdown("""
+<div class="pipeline-stepper">
+    <span class="step-badge step-done">✔ 1. Ingestion</span>
+    <span class="step-badge step-done">✔ 2. Validation</span>
+    <span class="step-badge step-done">✔ 3. Cleaning</span>
+    <span class="step-badge step-done">✔ 4. Transformation</span>
+    <span class="step-badge step-done">✔ 5. KPIs & Analytics</span>
+    <span class="step-badge step-done">✔ 6. Visual Summary</span>
+    <span class="step-badge step-done">✔ 7. Insights</span>
+    <span class="step-badge step-active">⚡ 8. Multi-Format Export Ready</span>
+</div>
+""", unsafe_allow_html=True)
+
+
+# -------------------------------------------------------------
+# Colorful SaaS KPI Scorecards
+# -------------------------------------------------------------
 raw_score = raw_validation.get("quality_score", 0.0)
 clean_score = clean_validation.get("quality_score", 100.0)
 score_diff = clean_score - raw_score
+dups_removed = audit_log.get("duplicates_removed", 0)
+raw_missing = raw_validation.get("missing_report", {}).get("total_missing", 0)
+clean_missing = clean_validation.get("missing_report", {}).get("total_missing", 0)
+rev_kpi = kpis.get("total_revenue", {}).get("value", "N/A")
+top_cat_label = kpis.get("top_category", {}).get("label", "Automated")
 
-with col_m1:
-    st.metric(
-        label="Data Health Score",
-        value=f"{clean_score:.0f}/100",
-        delta=f"+{score_diff:.1f} pts ({clean_validation.get('quality_grade', '')})",
-        delta_color="normal"
-    )
-
-with col_m2:
-    dups_removed = audit_log.get("duplicates_removed", 0)
-    st.metric(
-        label="Total Active Rows",
-        value=f"{len(transformed_df):,}",
-        delta=f"-{dups_removed} duplicates" if dups_removed > 0 else "0 duplicates",
-        delta_color="inverse" if dups_removed > 0 else "off"
-    )
-
-with col_m3:
-    raw_missing = raw_validation.get("missing_report", {}).get("total_missing", 0)
-    clean_missing = clean_validation.get("missing_report", {}).get("total_missing", 0)
-    st.metric(
-        label="Missing Cells",
-        value=f"{clean_missing:,}",
-        delta=f"-{raw_missing - clean_missing:,} resolved" if raw_missing > 0 else "0 missing",
-        delta_color="inverse" if raw_missing > 0 else "off"
-    )
-
-with col_m4:
-    st.metric(
-        label="Columns Processed",
-        value=f"{len(transformed_df.columns)}",
-        delta=f"+{len(transformations)} engineered" if transformations else "Standardized",
-        delta_color="normal"
-    )
-
-with col_m5:
-    rev_kpi = kpis.get("total_revenue", {}).get("value", "N/A")
-    st.metric(
-        label="Total Business Value",
-        value=rev_kpi,
-        delta=kpis.get("top_category", {}).get("label", "Automated"),
-        delta_color="off"
-    )
-
-st.markdown("<br>", unsafe_allow_html=True)
+st.markdown(f"""
+<div class="kpi-grid">
+    <div class="kpi-card border-emerald">
+        <div class="kpi-card-header">
+            <span class="kpi-card-label">Health Score</span>
+            <div class="kpi-icon-pill" style="background: #d1fae5; color: #065f46;">🩺</div>
+        </div>
+        <div class="kpi-val-number">{clean_score:.0f}/100</div>
+        <div class="kpi-delta-row">
+            <span class="pill-green">+{score_diff:.1f} pts</span> {clean_validation.get('quality_grade', '')}
+        </div>
+    </div>
+    <div class="kpi-card border-blue">
+        <div class="kpi-card-header">
+            <span class="kpi-card-label">Active Records</span>
+            <div class="kpi-icon-pill" style="background: #dbeafe; color: #1e40af;">📋</div>
+        </div>
+        <div class="kpi-val-number">{len(transformed_df):,}</div>
+        <div class="kpi-delta-row">
+            <span class="pill-blue">-{dups_removed} dups</span> Raw: {raw_validation.get('total_rows', 0):,}
+        </div>
+    </div>
+    <div class="kpi-card border-rose">
+        <div class="kpi-card-header">
+            <span class="kpi-card-label">Missing Cells</span>
+            <div class="kpi-icon-pill" style="background: #ffe4e6; color: #9f1239;">✨</div>
+        </div>
+        <div class="kpi-val-number">{clean_missing:,}</div>
+        <div class="kpi-delta-row">
+            <span class="pill-green">100% Resolved</span> Was {raw_missing:,}
+        </div>
+    </div>
+    <div class="kpi-card border-purple">
+        <div class="kpi-card-header">
+            <span class="kpi-card-label">Processed Columns</span>
+            <div class="kpi-icon-pill" style="background: #ede9fe; color: #5b21b6;">⚙️</div>
+        </div>
+        <div class="kpi-val-number">{len(transformed_df.columns)}</div>
+        <div class="kpi-delta-row">
+            <span class="pill-blue">+{len(transformations)} engineered</span> Standardized
+        </div>
+    </div>
+    <div class="kpi-card border-amber">
+        <div class="kpi-card-header">
+            <span class="kpi-card-label">Business Value</span>
+            <div class="kpi-icon-pill" style="background: #fef3c7; color: #92400e;">💎</div>
+        </div>
+        <div class="kpi-val-number" style="font-size: 22px;">{rev_kpi}</div>
+        <div class="kpi-delta-row" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            {top_cat_label}
+        </div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
-# Main Dashboard Tabs
+# Main Navigation Tabs
 # -------------------------------------------------------------
 tab_overview, tab_quality, tab_cleaning, tab_kpi, tab_charts, tab_insights, tab_export, tab_logs = st.tabs([
     "📋 Data Overview",
@@ -405,30 +649,30 @@ tab_overview, tab_quality, tab_cleaning, tab_kpi, tab_charts, tab_insights, tab_
 # Tab 1: Data Overview
 # -------------------------------------------------------------
 with tab_overview:
-    st.markdown('<div class="section-title">Dataset Profile & Interactive Explorer</div>', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box-header">📁 Ingestion Profile & Interactive Explorer</div>', unsafe_allow_html=True)
     
     col_info1, col_info2, col_info3 = st.columns([1, 1, 2])
     with col_info1:
         st.write(f"**File Name:** `{file_meta.get('file_name', 'Unknown')}`")
-        st.write(f"**Format:** `{file_meta.get('file_type', 'CSV')}`")
+        st.write(f"**File Format:** `{file_meta.get('file_type', 'CSV')}`")
     with col_info2:
-        st.write(f"**Size on Disk:** `{file_meta.get('file_size_kb', 0)} KB`")
-        st.write(f"**Memory Footprint:** `{file_meta.get('memory_kb', 0)} KB`")
+        st.write(f"**File Size:** `{file_meta.get('file_size_kb', 0)} KB`")
+        st.write(f"**Memory Size:** `{file_meta.get('memory_kb', 0)} KB`")
     with col_info3:
-        st.write(f"**Initial Shape:** `{raw_validation['total_rows']} rows × {raw_validation['total_columns']} columns`")
-        st.write(f"**Cleaned Shape:** `{clean_validation['total_rows']} rows × {clean_validation['total_columns']} columns`")
+        st.write(f"**Raw Dimensions:** `{raw_validation['total_rows']:,} rows × {raw_validation['total_columns']} columns`")
+        st.write(f"**Processed Dimensions:** `{clean_validation['total_rows']:,} rows × {clean_validation['total_columns']} columns`")
 
     st.markdown("---")
 
     col_view_opt1, col_view_opt2 = st.columns([1, 3])
     with col_view_opt1:
-        view_mode = st.radio("Dataset View Mode:", ["Cleaned & Transformed Data", "Raw Uploaded Data"], horizontal=True)
+        view_mode = st.radio("View Mode:", ["Cleaned & Transformed", "Raw Uploaded"], horizontal=True)
     
-    active_df = transformed_df if view_mode == "Cleaned & Transformed Data" else raw_df
+    active_df = transformed_df if view_mode == "Cleaned & Transformed" else raw_df
 
-    # Search & Filter Controls
     with col_view_opt2:
-        search_query = st.text_input("🔍 Search rows (text filter across all columns):", placeholder="Type customer, category, ID...")
+        search_query = st.text_input("🔍 Quick Search Filter (across all attributes):", placeholder="Type keywords, names, categories, codes...")
 
     filtered_df = active_df
     if search_query:
@@ -448,37 +692,40 @@ with tab_overview:
     start_idx = (page - 1) * page_size
     end_idx = start_idx + page_size
     st.dataframe(filtered_df.iloc[start_idx:end_idx], use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
 # Tab 2: Quality Diagnostics
 # -------------------------------------------------------------
 with tab_quality:
-    st.markdown('<div class="section-title">Comprehensive Data Quality Health Assessment</div>', unsafe_allow_html=True)
-    
     col_q1, col_q2 = st.columns([1, 2])
     with col_q1:
+        st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+        st.markdown('<div class="saas-box-header">🩺 Health Score Breakdown</div>', unsafe_allow_html=True)
         gauge_fig = create_quality_gauge(raw_score, raw_validation.get("quality_grade", ""))
         st.plotly_chart(gauge_fig, use_container_width=True)
         
         dims = raw_validation.get("dimensions", {})
         st.markdown(f"""
-        **Quality Dimensions Breakdown:**
+        **Quality Dimensions Scorecard:**
         - **Completeness:** `{dims.get('completeness', 0)}%`
         - **Uniqueness:** `{dims.get('uniqueness', 0)}%`
         - **Validity:** `{dims.get('validity', 0)}%`
         - **Consistency:** `{dims.get('consistency', 0)}%`
         """)
+        st.markdown('</div>', unsafe_allow_html=True)
 
     with col_q2:
-        st.markdown("**Identified Data Hygiene Issues:**")
+        st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+        st.markdown('<div class="saas-box-header">⚠️ Identified Data Quality Issues</div>', unsafe_allow_html=True)
         for issue in raw_validation.get("issues_summary", []):
-            st.warning(f"⚠️ {issue}")
+            st.warning(f"• {issue}")
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("---")
-    st.markdown('<div class="section-title">Column Missingness & Cardinality Breakdown</div>', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box-header">📊 Column Missingness, Cardinality & Inferred Semantic Types</div>', unsafe_allow_html=True)
     
-    # Missingness Table
     missing_table_rows = []
     r_missing_cols = raw_validation.get("missing_report", {}).get("columns", {})
     cardinality = raw_validation.get("cardinality", {})
@@ -497,32 +744,33 @@ with tab_quality:
         })
 
     st.dataframe(pd.DataFrame(missing_table_rows), use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
 # Tab 3: Cleaning Studio & Audit Log
 # -------------------------------------------------------------
 with tab_cleaning:
-    st.markdown('<div class="section-title">Before vs After Cleaning Comparison</div>', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box-header">✨ Before vs After Cleaning Comparison</div>', unsafe_allow_html=True)
     
     col_c1, col_c2, col_c3, col_c4 = st.columns(4)
     with col_c1:
-        st.metric("Missing Values", f"{clean_validation['missing_report']['total_missing']}", f"-{raw_missing - clean_missing} resolved", delta_color="inverse")
+        st.metric("Missing Cells", f"{clean_validation['missing_report']['total_missing']}", f"-{raw_missing - clean_missing} resolved", delta_color="inverse")
     with col_c2:
-        st.metric("Duplicate Rows", f"{clean_validation['duplicate_report']['duplicate_count']}", f"-{dups_removed} removed", delta_color="inverse")
+        st.metric("Duplicate Records", f"{clean_validation['duplicate_report']['duplicate_count']}", f"-{dups_removed} removed", delta_color="inverse")
     with col_c3:
-        st.metric("Columns Standardized", f"{len(audit_log.get('column_renaming', {}))}", "snake_case applied")
+        st.metric("Column Headers", f"{len(audit_log.get('column_renaming', {}))}", "snake_case standardized")
     with col_c4:
-        st.metric("Features Engineered", f"{len(transformations)}", "Domain transformations")
+        st.metric("Engineered Features", f"{len(transformations)}", "Domain transformations")
 
-    # Missing value visual comparison
     missing_chart = create_before_after_missing_chart(raw_df, clean_df)
     if missing_chart:
         st.plotly_chart(missing_chart, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("---")
-    st.markdown('<div class="section-title">Step-by-Step Cleaning Audit Changelog</div>', unsafe_allow_html=True)
-    
+    st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box-header">📜 Step-by-Step Cleaning Audit Changelog</div>', unsafe_allow_html=True)
     for idx, step in enumerate(audit_log.get("steps_executed", []), start=1):
         st.markdown(f"**Step {idx}:** {step}")
 
@@ -536,38 +784,37 @@ with tab_cleaning:
     if audit_log.get("outlier_detection"):
         with st.expander("🔍 View Outlier Detection Details (Bounds & Counts)"):
             st.json(audit_log.get("outlier_detection", {}))
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
 # Tab 4: KPIs & Analytics
 # -------------------------------------------------------------
 with tab_kpi:
-    st.markdown('<div class="section-title">Dynamic Business KPI Intelligence</div>', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box-header">📈 Dynamic Business Performance Intelligence</div>', unsafe_allow_html=True)
     
-    # KPI Grid
     kpi_cols = st.columns(len(kpis) if len(kpis) <= 4 else 4)
     for idx, (k_name, k_info) in enumerate(kpis.items()):
         col_idx = idx % 4
         with kpi_cols[col_idx]:
             st.markdown(f"""
-            <div class="metric-card">
-                <div class="metric-title">{k_info.get('label', k_name)}</div>
-                <div class="metric-value">{k_info.get('value', '')}</div>
-                <div class="metric-delta delta-neutral">{k_info.get('description', '')}</div>
+            <div class="kpi-card border-blue" style="margin-bottom: 12px;">
+                <div class="kpi-card-label">{k_info.get('label', k_name)}</div>
+                <div class="kpi-val-number" style="font-size: 20px;">{k_info.get('value', '')}</div>
+                <div class="kpi-delta-row">{k_info.get('description', '')}</div>
             </div>
             """, unsafe_allow_html=True)
 
-    st.markdown("<br>", unsafe_allow_html=True)
-    st.markdown('<div class="section-title">Numerical Extended Statistical Summary</div>', unsafe_allow_html=True)
-    
+    st.markdown("---")
+    st.markdown('<div class="saas-box-header">🔢 Extended 5-Number Statistical Summary</div>', unsafe_allow_html=True)
     if not stat_summary.empty:
         st.dataframe(stat_summary, use_container_width=True)
     else:
-        st.info("No numeric columns available for statistical profiling.")
+        st.info("No numeric columns available for statistical summary.")
 
     st.markdown("---")
-    st.markdown('<div class="section-title">Grouped Dimensional Breakdowns</div>', unsafe_allow_html=True)
-    
+    st.markdown('<div class="saas-box-header">📑 Dimensional Grouped Breakdowns</div>', unsafe_allow_html=True)
     if aggregations:
         agg_tab_names = [k.replace("_", " ").title() for k in aggregations.keys()]
         agg_tabs = st.tabs(agg_tab_names)
@@ -576,13 +823,15 @@ with tab_kpi:
                 st.dataframe(agg_df, use_container_width=True)
     else:
         st.info("No categorical dimensions found for grouped breakdowns.")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
 # Tab 5: Visual Summary
 # -------------------------------------------------------------
 with tab_charts:
-    st.markdown('<div class="section-title">Interactive Visual Analytics & Distributions</div>', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box-header">📊 Interactive Visual Analytics & Distributions</div>', unsafe_allow_html=True)
     
     col_ch1, col_ch2 = st.columns(2)
 
@@ -657,126 +906,166 @@ with tab_charts:
     corr_fig = create_correlation_heatmap(transformed_df)
     if corr_fig:
         st.plotly_chart(corr_fig, use_container_width=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
 # Tab 6: Automated Insights
 # -------------------------------------------------------------
 with tab_insights:
-    st.markdown('<div class="section-title">Automated Business Intelligence & Strategic Recommendations</div>', unsafe_allow_html=True)
-    
     col_ins1, col_ins2 = st.columns(2)
     with col_ins1:
-        st.markdown("#### 🩺 Data Quality & Hygiene Insights")
+        st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+        st.markdown('<div class="saas-box-header">🩺 Data Quality & Hygiene Highlights</div>', unsafe_allow_html=True)
         for q_ins in insights.get("quality_insights", []):
             st.success(f"✔️ {q_ins}")
 
-        st.markdown("#### 🔍 Anomaly & Outlier Diagnostics")
+        st.markdown('<div class="saas-box-header" style="margin-top: 20px;">🔍 Anomaly & Outlier Diagnostics</div>', unsafe_allow_html=True)
         for a_ins in insights.get("anomaly_insights", []):
             st.info(f"📊 {a_ins}")
+        st.markdown('</div>', unsafe_allow_html=True)
 
     with col_ins2:
-        st.markdown("#### 📈 Business Performance Findings")
+        st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+        st.markdown('<div class="saas-box-header">📈 Business Performance Findings</div>', unsafe_allow_html=True)
         for b_ins in insights.get("business_insights", []):
             st.markdown(f"💡 **Finding:** {b_ins}")
 
-        st.markdown("#### 🎯 Strategic Actionable Recommendations")
+        st.markdown('<div class="saas-box-header" style="margin-top: 20px;">🎯 Strategic Actionable Recommendations</div>', unsafe_allow_html=True)
         for r_ins in insights.get("recommendations", []):
             st.warning(f"🚀 **Action:** {r_ins}")
+        st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
 # Tab 7: Multi-Format Export Studio
 # -------------------------------------------------------------
 with tab_export:
-    st.markdown('<div class="section-title">Multi-Format Export Studio</div>', unsafe_allow_html=True)
-    st.write("Generate and download publication-ready reports and clean data in multiple formats.")
+    st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box-header">📥 Multi-Format Publication-Ready Export Studio</div>', unsafe_allow_html=True)
+    st.write("Generate and download publication-ready reports and clean datasets in industry-standard formats.")
+    
+    col_e1, col_e2, col_e3, col_e4 = st.columns(4)
 
-    col_exp1, col_exp2 = st.columns(2)
-
-    with col_exp1:
-        st.markdown("### 📊 Styled Multi-Sheet Excel Report")
-        st.write("Contains separate formatted sheets: Executive Summary, Quality Scorecard, Cleaning Audit Log, KPIs, and Cleaned Data.")
+    # 1. Styled Excel Report
+    with col_e1:
+        st.markdown("""
+        <div class="export-box">
+            <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <div class="export-icon-box" style="background: #dcfce7; color: #15803d;">📊</div>
+                    <div style="font-weight: 700; font-size: 16px;">Excel Report</div>
+                </div>
+                <div style="font-size: 13px; color: #64748b; line-height: 1.4; margin-bottom: 14px;">
+                    Multi-sheet styled workbook (.xlsx) with Executive Summary, Data Quality, Audit Trail, KPIs, and Clean Data.
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
         
-        with st.spinner("Compiling styled Excel workbook..."):
-            excel_report_bytes = generate_excel_report(
+        with st.spinner("Compiling Excel..."):
+            excel_bytes = generate_excel_report(
                 raw_df, transformed_df, raw_validation, clean_validation,
                 audit_log, kpis, aggregations, insights
             )
-
         st.download_button(
-            label="📥 Download Styled Excel Report (.xlsx)",
-            data=excel_report_bytes,
-            file_name=f"Automated_Report_{file_meta.get('file_name', 'data').split('.')[0]}.xlsx",
+            label="📥 Download Excel (.xlsx)",
+            data=excel_bytes,
+            file_name=f"Report_{file_meta.get('file_name', 'data').split('.')[0]}.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             use_container_width=True
         )
 
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("### 📄 Executive PDF Business Report")
-        st.write("Formal PDF document with cover title, Executive Summary, Scorecard, KPI grid, embedded chart, and recommendations.")
-        
-        with st.spinner("Generating Executive PDF..."):
-            pdf_report_bytes = generate_pdf_report(
+    # 2. Executive PDF Report
+    with col_e2:
+        st.markdown("""
+        <div class="export-box">
+            <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <div class="export-icon-box" style="background: #fee2e2; color: #b91c1c;">📄</div>
+                    <div style="font-weight: 700; font-size: 16px;">PDF Summary</div>
+                </div>
+                <div style="font-size: 13px; color: #64748b; line-height: 1.4; margin-bottom: 14px;">
+                    Formal business report (.pdf) with executive scorecard, KPI grid, chart snapshot, and recommendations.
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        with st.spinner("Compiling PDF..."):
+            pdf_bytes = generate_pdf_report(
                 transformed_df, raw_validation, clean_validation,
                 audit_log, kpis, insights
             )
-
         st.download_button(
-            label="📥 Download Executive PDF Report (.pdf)",
-            data=pdf_report_bytes,
+            label="📥 Download PDF (.pdf)",
+            data=pdf_bytes,
             file_name=f"Executive_Summary_{file_meta.get('file_name', 'data').split('.')[0]}.pdf",
             mime="application/pdf",
             use_container_width=True
         )
 
-    with col_exp2:
-        st.markdown("### 🌐 Standalone Interactive HTML Report")
-        st.write("Responsive single-page web report with KPI cards, audit summary, insights, and data preview.")
-        
-        html_report_bytes = generate_html_report(
+    # 3. Interactive HTML Report
+    with col_e3:
+        st.markdown("""
+        <div class="export-box">
+            <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <div class="export-icon-box" style="background: #e0e7ff; color: #4338ca;">🌐</div>
+                    <div style="font-weight: 700; font-size: 16px;">HTML Report</div>
+                </div>
+                <div style="font-size: 13px; color: #64748b; line-height: 1.4; margin-bottom: 14px;">
+                    Standalone responsive web report (.html) with CSS metric cards, audit summary, and data preview.
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        html_bytes = generate_html_report(
             transformed_df, raw_validation, clean_validation,
             audit_log, kpis, insights
         )
-
         st.download_button(
-            label="📥 Download Interactive HTML Report (.html)",
-            data=html_report_bytes,
+            label="📥 Download HTML (.html)",
+            data=html_bytes,
             file_name=f"Executive_Report_{file_meta.get('file_name', 'data').split('.')[0]}.html",
             mime="text/html",
             use_container_width=True
         )
 
-        st.markdown("<br>", unsafe_allow_html=True)
-        st.markdown("### 💾 Cleaned Dataset Exports")
-        st.write("Direct raw cleaned dataset files for downstream SQL databases or ML pipelines.")
-        
-        col_c_csv, col_c_xls = st.columns(2)
-        with col_c_csv:
-            csv_clean_bytes = export_cleaned_data(transformed_df, file_format="csv")
-            st.download_button(
-                label="📥 Cleaned CSV (.csv)",
-                data=csv_clean_bytes,
-                file_name=f"cleaned_{file_meta.get('file_name', 'data').split('.')[0]}.csv",
-                mime="text/csv",
-                use_container_width=True
-            )
-        with col_c_xls:
-            xls_clean_bytes = export_cleaned_data(transformed_df, file_format="xlsx")
-            st.download_button(
-                label="📥 Cleaned Excel (.xlsx)",
-                data=xls_clean_bytes,
-                file_name=f"cleaned_{file_meta.get('file_name', 'data').split('.')[0]}.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                use_container_width=True
-            )
+    # 4. Cleaned CSV & Excel Dataset
+    with col_e4:
+        st.markdown("""
+        <div class="export-box">
+            <div>
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                    <div class="export-icon-box" style="background: #fef3c7; color: #b45309;">💾</div>
+                    <div style="font-weight: 700; font-size: 16px;">Clean Dataset</div>
+                </div>
+                <div style="font-size: 13px; color: #64748b; line-height: 1.4; margin-bottom: 14px;">
+                    Direct raw cleaned data files ready for SQL databases, ML training, PowerBI, or Tableau.
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        csv_bytes = export_cleaned_data(transformed_df, file_format="csv")
+        st.download_button(
+            label="📥 Cleaned CSV (.csv)",
+            data=csv_bytes,
+            file_name=f"cleaned_{file_meta.get('file_name', 'data').split('.')[0]}.csv",
+            mime="text/csv",
+            use_container_width=True
+        )
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
 # -------------------------------------------------------------
 # Tab 8: System Logs
 # -------------------------------------------------------------
 with tab_logs:
-    st.markdown('<div class="section-title">Operational Pipeline Logs & Execution Audit</div>', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box">', unsafe_allow_html=True)
+    st.markdown('<div class="saas-box-header">📜 Operational Pipeline Logs & Execution Audit</div>', unsafe_allow_html=True)
     
     logs_data = get_audit_trail()
     if logs_data:
@@ -788,3 +1077,4 @@ with tab_logs:
     if st.button("Clear In-Memory Audit Logs"):
         clear_audit_trail()
         st.rerun()
+    st.markdown('</div>', unsafe_allow_html=True)

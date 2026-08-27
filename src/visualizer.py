@@ -15,38 +15,87 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# Set cohesive design theme
-PLOTLY_TEMPLATE = "plotly_white"
-COLOR_PALETTE = ["#2563eb", "#7c3aed", "#059669", "#d97706", "#dc2626", "#0891b2", "#4f46e5"]
+# Modern SaaS Color Palette
+COLOR_PALETTE = [
+    "#3b82f6",  # Vibrant Blue
+    "#8b5cf6",  # Royal Violet
+    "#10b981",  # Emerald Green
+    "#f59e0b",  # Amber Gold
+    "#06b6d4",  # Cyan
+    "#ec4899",  # Rose Pink
+    "#6366f1",  # Indigo
+    "#14b8a6"   # Teal
+]
+
+PLOTLY_LAYOUT_DEFAULTS = dict(
+    font=dict(family="Plus Jakarta Sans, Inter, sans-serif", color="#334155", size=12),
+    paper_bgcolor="rgba(0,0,0,0)",
+    plot_bgcolor="rgba(0,0,0,0)",
+    margin=dict(l=24, r=24, t=48, b=24),
+    xaxis=dict(
+        showgrid=True,
+        gridcolor="rgba(226, 232, 240, 0.7)",
+        zeroline=False,
+        linecolor="rgba(203, 213, 225, 0.8)"
+    ),
+    yaxis=dict(
+        showgrid=True,
+        gridcolor="rgba(226, 232, 240, 0.7)",
+        zeroline=False,
+        linecolor="rgba(203, 213, 225, 0.8)"
+    ),
+    legend=dict(
+        bgcolor="rgba(255, 255, 255, 0.8)",
+        bordercolor="rgba(226, 232, 240, 0.8)",
+        borderwidth=1,
+        font=dict(size=11)
+    )
+)
 
 
 def create_quality_gauge(score: float, grade: str) -> go.Figure:
-    """Create an interactive gauge for Data Quality Health Score."""
+    """Create an interactive modern gauge for Data Quality Health Score."""
+    # Choose color based on score
+    if score >= 90:
+        bar_color = "#10b981" # Emerald
+    elif score >= 75:
+        bar_color = "#3b82f6" # Blue
+    elif score >= 50:
+        bar_color = "#f59e0b" # Amber
+    else:
+        bar_color = "#ef4444" # Red
+
     fig = go.Figure(go.Indicator(
-        mode="gauge+number+delta",
+        mode="gauge+number",
         value=score,
+        number={'suffix': "/100", 'font': {'size': 32, 'color': '#0f172a', 'family': 'Plus Jakarta Sans, Inter'}},
         domain={'x': [0, 1], 'y': [0, 1]},
-        title={'text': f"Data Health Score: {grade}", 'font': {'size': 20, 'color': '#1e293b'}},
+        title={'text': f"Health Grade: {grade}", 'font': {'size': 15, 'color': '#475569', 'family': 'Plus Jakarta Sans'}},
         gauge={
-            'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "#64748b"},
-            'bar': {'color': "#2563eb"},
-            'bgcolor': "white",
-            'borderwidth': 2,
-            'bordercolor': "#cbd5e1",
+            'axis': {'range': [0, 100], 'tickwidth': 1, 'tickcolor': "#94a3b8"},
+            'bar': {'color': bar_color, 'thickness': 0.28},
+            'bgcolor': "rgba(241, 245, 249, 0.6)",
+            'borderwidth': 1.5,
+            'bordercolor': "rgba(226, 232, 240, 0.9)",
             'steps': [
-                {'range': [0, 50], 'color': '#fee2e2'},
-                {'range': [50, 75], 'color': '#fef3c7'},
-                {'range': [75, 90], 'color': '#d1fae5'},
-                {'range': [90, 100], 'color': '#bbf7d0'}
+                {'range': [0, 50], 'color': 'rgba(254, 226, 226, 0.5)'},
+                {'range': [50, 75], 'color': 'rgba(254, 243, 199, 0.5)'},
+                {'range': [75, 90], 'color': 'rgba(224, 231, 255, 0.5)'},
+                {'range': [90, 100], 'color': 'rgba(209, 250, 229, 0.6)'}
             ],
             'threshold': {
-                'line': {'color': "#16a34a", 'width': 4},
-                'thickness': 0.75,
+                'line': {'color': "#059669", 'width': 3.5},
+                'thickness': 0.8,
                 'value': 90
             }
         }
     ))
-    fig.update_layout(height=260, margin=dict(l=20, r=20, t=50, b=20), paper_bgcolor="rgba(0,0,0,0)")
+    fig.update_layout(
+        height=260,
+        margin=dict(l=20, r=20, t=40, b=10),
+        paper_bgcolor="rgba(0,0,0,0)",
+        font=dict(family="Plus Jakarta Sans, Inter, sans-serif")
+    )
     return fig
 
 
@@ -56,7 +105,6 @@ def create_before_after_missing_chart(raw_df: pd.DataFrame, clean_df: pd.DataFra
         return None
 
     raw_missing = raw_df.isna().sum()
-    # Map raw columns to snake_case if possible, or display top columns
     top_missing = raw_missing[raw_missing > 0].sort_values(ascending=False).head(10)
     if top_missing.empty:
         return None
@@ -64,7 +112,6 @@ def create_before_after_missing_chart(raw_df: pd.DataFrame, clean_df: pd.DataFra
     cols = list(top_missing.index)
     raw_counts = [int(top_missing[c]) for c in cols]
     
-    # Check matching in clean_df
     clean_counts = []
     for c in cols:
         clean_col = c.strip().lower().replace(" ", "_")
@@ -75,46 +122,71 @@ def create_before_after_missing_chart(raw_df: pd.DataFrame, clean_df: pd.DataFra
             clean_counts.append(0)
 
     fig = go.Figure(data=[
-        go.Bar(name='Before Cleaning', x=cols, y=raw_counts, marker_color='#ef4444'),
-        go.Bar(name='After Cleaning', x=cols, y=clean_counts, marker_color='#10b981')
+        go.Bar(
+            name='Before Cleaning (Raw)',
+            x=cols,
+            y=raw_counts,
+            marker_color='#f43f5e', # Coral Rose
+            marker_line_color='rgba(225, 29, 72, 0.3)',
+            marker_line_width=1,
+            opacity=0.9
+        ),
+        go.Bar(
+            name='After Cleaning (Cleaned)',
+            x=cols,
+            y=clean_counts,
+            marker_color='#10b981', # Emerald Green
+            marker_line_color='rgba(5, 150, 105, 0.3)',
+            marker_line_width=1,
+            opacity=0.95
+        )
     ])
     fig.update_layout(
         barmode='group',
-        title="Missing Values by Column (Before vs After Cleaning)",
+        title=dict(text="Missing Values by Column (Before vs After)", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
         xaxis_title="Column",
-        yaxis_title="Missing Count",
-        template=PLOTLY_TEMPLATE,
-        height=350,
-        margin=dict(l=20, r=20, t=50, b=40),
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+        yaxis_title="Missing Cell Count",
+        height=360,
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        **PLOTLY_LAYOUT_DEFAULTS
     )
     return fig
 
 
 def create_trend_chart(df: pd.DataFrame, date_col: str, val_col: str) -> Optional[go.Figure]:
-    """Create time-series trend line chart with smooth markers."""
+    """Create time-series trend line chart with smooth markers and gradient area."""
     if date_col not in df.columns or val_col not in df.columns:
         return None
 
     try:
         trend_df = df.groupby(date_col)[val_col].sum().reset_index().sort_values(by=date_col)
-        fig = px.line(
-            trend_df,
-            x=date_col,
-            y=val_col,
-            markers=True,
-            title=f"Trend Analysis: {val_col.replace('_', ' ').title()} over Time",
-            color_discrete_sequence=["#2563eb"]
+        fig = go.Figure()
+        
+        # Area fill under line
+        fig.add_trace(go.Scatter(
+            x=trend_df[date_col],
+            y=trend_df[val_col],
+            mode='lines+markers',
+            name=val_col.replace('_', ' ').title(),
+            line=dict(color='#3b82f6', width=3, shape='spline'),
+            marker=dict(size=8, color='#1d4ed8', symbol='circle', line=dict(color='#ffffff', width=1.5)),
+            fill='tozeroy',
+            fillcolor='rgba(59, 130, 246, 0.08)'
+        ))
+
+        fig.update_layout(
+            title=dict(text=f"Trend Analysis: {val_col.replace('_', ' ').title()} over Time", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
+            height=380,
+            showlegend=False,
+            **PLOTLY_LAYOUT_DEFAULTS
         )
-        fig.update_traces(line=dict(width=3), marker=dict(size=8, color="#1e40af"))
-        fig.update_layout(template=PLOTLY_TEMPLATE, height=380, margin=dict(l=20, r=20, t=50, b=20))
         return fig
     except Exception:
         return None
 
 
 def create_category_bar_chart(df: pd.DataFrame, cat_col: str, val_col: str) -> Optional[go.Figure]:
-    """Create horizontal or vertical category bar chart."""
+    """Create horizontal category bar chart with modern styling."""
     if cat_col not in df.columns or val_col not in df.columns:
         return None
 
@@ -126,15 +198,22 @@ def create_category_bar_chart(df: pd.DataFrame, cat_col: str, val_col: str) -> O
             y=cat_col,
             orientation="h",
             text_auto=".2s",
-            title=f"Performance by {cat_col.replace('_', ' ').title()}",
+            title=f"Performance Breakdown by {cat_col.replace('_', ' ').title()}",
             color=val_col,
-            color_continuous_scale="Blues"
+            color_continuous_scale=[[0, "#93c5fd"], [0.5, "#3b82f6"], [1, "#1e40af"]]
+        )
+        fig.update_traces(
+            textposition='outside',
+            cliponaxis=False,
+            marker_line_color='rgba(37, 99, 235, 0.2)',
+            marker_line_width=1
         )
         fig.update_layout(
-            template=PLOTLY_TEMPLATE,
             height=380,
             showlegend=False,
-            margin=dict(l=20, r=20, t=50, b=20)
+            coloraxis_showscale=False,
+            title=dict(text=f"Performance Breakdown by {cat_col.replace('_', ' ').title()}", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
+            **PLOTLY_LAYOUT_DEFAULTS
         )
         return fig
     except Exception:
@@ -142,7 +221,7 @@ def create_category_bar_chart(df: pd.DataFrame, cat_col: str, val_col: str) -> O
 
 
 def create_donut_chart(df: pd.DataFrame, cat_col: str, val_col: Optional[str] = None) -> Optional[go.Figure]:
-    """Create styled donut chart for distributions."""
+    """Create styled donut chart for distributions with center hole."""
     if cat_col not in df.columns:
         return None
 
@@ -159,12 +238,21 @@ def create_donut_chart(df: pd.DataFrame, cat_col: str, val_col: Optional[str] = 
             agg,
             names=cat_col,
             values=values_target,
-            hole=0.45,
+            hole=0.55,
             title=f"Distribution by {cat_col.replace('_', ' ').title()}",
             color_discrete_sequence=COLOR_PALETTE
         )
-        fig.update_traces(textposition='inside', textinfo='percent+label')
-        fig.update_layout(template=PLOTLY_TEMPLATE, height=380, margin=dict(l=20, r=20, t=50, b=20))
+        fig.update_traces(
+            textposition='outside',
+            textinfo='percent+label',
+            marker=dict(line=dict(color='#ffffff', width=2))
+        )
+        fig.update_layout(
+            height=380,
+            title=dict(text=f"Distribution by {cat_col.replace('_', ' ').title()}", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
+            showlegend=False,
+            **PLOTLY_LAYOUT_DEFAULTS
+        )
         return fig
     except Exception:
         return None
@@ -181,17 +269,24 @@ def create_distribution_chart(df: pd.DataFrame, num_col: str) -> Optional[go.Fig
             x=num_col,
             marginal="box",
             nbins=30,
-            title=f"Distribution & Outlier Spread: {num_col.replace('_', ' ').title()}",
-            color_discrete_sequence=["#7c3aed"]
+            title=f"Distribution & Outliers: {num_col.replace('_', ' ').title()}",
+            color_discrete_sequence=["#8b5cf6"]
         )
-        fig.update_layout(template=PLOTLY_TEMPLATE, height=380, margin=dict(l=20, r=20, t=50, b=20))
+        fig.update_traces(
+            marker=dict(line=dict(color='#6d28d9', width=1), opacity=0.85)
+        )
+        fig.update_layout(
+            height=380,
+            title=dict(text=f"Distribution & Outliers: {num_col.replace('_', ' ').title()}", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
+            **PLOTLY_LAYOUT_DEFAULTS
+        )
         return fig
     except Exception:
         return None
 
 
 def create_correlation_heatmap(df: pd.DataFrame) -> Optional[go.Figure]:
-    """Create numerical correlation matrix heatmap."""
+    """Create numerical correlation matrix heatmap with clean palette."""
     num_df = df.select_dtypes(include=[np.number])
     if num_df.shape[1] < 2:
         return None
@@ -202,9 +297,13 @@ def create_correlation_heatmap(df: pd.DataFrame) -> Optional[go.Figure]:
         text_auto=True,
         aspect="auto",
         title="Numerical Features Correlation Matrix",
-        color_continuous_scale="RdBu_r"
+        color_continuous_scale=[[0, "#ef4444"], [0.5, "#f8fafc"], [1, "#3b82f6"]]
     )
-    fig.update_layout(template=PLOTLY_TEMPLATE, height=400, margin=dict(l=20, r=20, t=50, b=20))
+    fig.update_layout(
+        height=400,
+        title=dict(text="Numerical Features Correlation Matrix", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
+        **PLOTLY_LAYOUT_DEFAULTS
+    )
     return fig
 
 
