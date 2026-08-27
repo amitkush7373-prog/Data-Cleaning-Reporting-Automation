@@ -488,10 +488,10 @@ st.markdown("""
 if raw_df is None or raw_df.empty:
     st.markdown("""
     <div class="saas-box" style="text-align: center; padding: 40px 20px;">
-        <div style="font-size: 48px; margin-bottom: 12px;">📊</div>
-        <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Ready to Clean & Analyze Your Dataset</h2>
+        <div style="font-size: 48px; margin-bottom: 12px;">📂</div>
+        <h2 style="font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 8px;">Upload a CSV or Excel file to generate your cleaned dataset</h2>
         <p style="color: #64748b; font-size: 14px; max-width: 600px; margin: 0 auto 24px auto;">
-            Upload your CSV or Excel business dataset from the sidebar, or select one of our pre-built realistic messy datasets to explore the automated workflow.
+            Upload your business dataset from the sidebar, or select one of our pre-built realistic messy datasets to explore the automated workflow.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -628,6 +628,65 @@ st.markdown(f"""
     </div>
 </div>
 """, unsafe_allow_html=True)
+
+
+# -------------------------------------------------------------
+# Prominent "Download Your Cleaned Dataset" Quick Action Section
+# -------------------------------------------------------------
+orig_filename = file_meta.get("file_name", "dataset.csv")
+base_clean_name = os.path.splitext(orig_filename)[0].rstrip("._-")
+if not base_clean_name:
+    base_clean_name = "dataset"
+
+clean_csv_bytes = export_cleaned_data(transformed_df, file_format="csv")
+clean_xlsx_bytes = export_cleaned_data(transformed_df, file_format="xlsx")
+
+col_banner_left, col_banner_btn1, col_banner_btn2 = st.columns([3, 1, 1])
+with col_banner_left:
+    st.markdown(f"""
+    <div style="background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%); border: 1.5px solid #86efac; border-radius: 14px; padding: 18px 22px; box-shadow: var(--shadow-subtle); margin-bottom: 20px;">
+        <div style="font-size: 17px; font-weight: 800; color: #14532d; display: flex; align-items: center; gap: 8px;">
+            📥 Download Your Cleaned Dataset
+            <span class="pill-green" style="font-size: 11px;">✅ Pipeline Ready</span>
+        </div>
+        <div style="font-size: 13px; color: #475569; margin: 4px 0 8px 0;">
+            Your uploaded data has been processed and cleaned. Download the final sanitized dataset for downstream SQL, ML, PowerBI, or Tableau.
+        </div>
+        <div style="display: flex; gap: 14px; font-size: 12px; font-weight: 600; color: #0f172a; flex-wrap: wrap;">
+            <span>📁 Original: <b>{orig_filename}</b></span>
+            <span>•</span>
+            <span>📊 <b>{len(transformed_df):,}</b> Clean Rows</span>
+            <span>•</span>
+            <span>⚙️ <b>{len(transformed_df.columns)}</b> Columns</span>
+            <span>•</span>
+            <span>✨ <b>{raw_missing - clean_missing:,}</b> Missing Resolved</span>
+            <span>•</span>
+            <span>🩺 <b>{clean_score:.0f}/100</b> Health Score</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col_banner_btn1:
+    st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+    st.download_button(
+        label="⬇️ Download Cleaned CSV",
+        data=clean_csv_bytes,
+        file_name=f"{base_clean_name}_cleaned.csv",
+        mime="text/csv",
+        use_container_width=True,
+        help="Download the final sanitized dataset as CSV"
+    )
+
+with col_banner_btn2:
+    st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+    st.download_button(
+        label="📊 Download Cleaned Excel",
+        data=clean_xlsx_bytes,
+        file_name=f"{base_clean_name}_cleaned.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        use_container_width=True,
+        help="Download the final sanitized dataset as Excel (.xlsx)"
+    )
 
 
 # -------------------------------------------------------------
@@ -938,14 +997,63 @@ with tab_insights:
 
 
 # -------------------------------------------------------------
-# Tab 7: Multi-Format Export Studio
+# Tab 7: Multi-Format Export Studio & Cleaned Dataset Download
 # -------------------------------------------------------------
 with tab_export:
     st.markdown('<div class="saas-box">', unsafe_allow_html=True)
     st.markdown('<div class="saas-box-header">📥 Multi-Format Publication-Ready Export Studio</div>', unsafe_allow_html=True)
-    st.write("Generate and download publication-ready reports and clean datasets in industry-standard formats.")
+    st.write("Generate and download publication-ready executive reports and sanitized datasets in industry-standard formats.")
     
-    col_e1, col_e2, col_e3, col_e4 = st.columns(4)
+    # ---------------------------------------------------------
+    # Dedicated Cleaned Dataset Download Workspace
+    # ---------------------------------------------------------
+    st.markdown(f"""
+    <div style="background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%); border: 1.5px solid #86efac; border-radius: 14px; padding: 22px 24px; margin-bottom: 24px; box-shadow: var(--shadow-subtle);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
+            <div style="font-size: 18px; font-weight: 800; color: #14532d; display: flex; align-items: center; gap: 8px;">
+                💾 Download Your Cleaned Dataset
+                <span class="pill-green" style="font-size: 11px;">✅ Validated & Ready</span>
+            </div>
+            <div style="font-size: 12px; color: #15803d; font-weight: 700;">
+                100% In-Memory Safe Export
+            </div>
+        </div>
+        <div style="font-size: 13px; color: #475569; margin-bottom: 16px; line-height: 1.5;">
+            Your uploaded data has been fully validated, standardized to snake_case, imputed for missing values, and deduplicated.
+            Download the production-ready cleaned dataset for SQL databases, Machine Learning pipelines, PowerBI, or Tableau.
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; background: white; padding: 14px; border-radius: 10px; border: 1px solid #dcfce7; margin-bottom: 16px;">
+            <div><span style="color: #64748b; font-size: 11px; text-transform: uppercase; font-weight: 700;">Original File</span><br><b style="color: #0f172a; font-size: 13px;">{orig_filename}</b></div>
+            <div><span style="color: #64748b; font-size: 11px; text-transform: uppercase; font-weight: 700;">Original Rows</span><br><b style="color: #0f172a; font-size: 13px;">{raw_validation['total_rows']:,}</b></div>
+            <div><span style="color: #64748b; font-size: 11px; text-transform: uppercase; font-weight: 700;">Cleaned Rows</span><br><b style="color: #15803d; font-size: 13px;">{len(transformed_df):,}</b></div>
+            <div><span style="color: #64748b; font-size: 11px; text-transform: uppercase; font-weight: 700;">Duplicates Removed</span><br><b style="color: #0284c7; font-size: 13px;">{dups_removed:,}</b></div>
+            <div><span style="color: #64748b; font-size: 11px; text-transform: uppercase; font-weight: 700;">Health Score</span><br><b style="color: #15803d; font-size: 13px;">{clean_score:.0f}/100 ({clean_validation.get('quality_grade', '')})</b></div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    col_clean_csv, col_clean_xlsx = st.columns(2)
+    with col_clean_csv:
+        st.download_button(
+            label=f"⬇️ Download Cleaned CSV ({base_clean_name}_cleaned.csv)",
+            data=clean_csv_bytes,
+            file_name=f"{base_clean_name}_cleaned.csv",
+            mime="text/csv",
+            use_container_width=True
+        )
+    with col_clean_xlsx:
+        st.download_button(
+            label=f"📊 Download Cleaned Excel ({base_clean_name}_cleaned.xlsx)",
+            data=clean_xlsx_bytes,
+            file_name=f"{base_clean_name}_cleaned.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            use_container_width=True
+        )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    st.markdown('<div class="saas-box-header">📑 Publication-Ready Reports</div>', unsafe_allow_html=True)
+
+    col_e1, col_e2, col_e3 = st.columns(3)
 
     # 1. Styled Excel Report
     with col_e1:
@@ -954,10 +1062,10 @@ with tab_export:
             <div>
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                     <div class="export-icon-box" style="background: #dcfce7; color: #15803d;">📊</div>
-                    <div style="font-weight: 700; font-size: 16px;">Excel Report</div>
+                    <div style="font-weight: 700; font-size: 16px;">Styled Excel Workbook</div>
                 </div>
                 <div style="font-size: 13px; color: #64748b; line-height: 1.4; margin-bottom: 14px;">
-                    Multi-sheet styled workbook (.xlsx) with Executive Summary, Data Quality, Audit Trail, KPIs, and Clean Data.
+                    Multi-sheet formatted workbook (.xlsx) with Executive Summary, Data Health Scorecard, Cleaning Audit Log, KPIs, and Clean Data.
                 </div>
             </div>
         </div>
@@ -969,9 +1077,9 @@ with tab_export:
                 audit_log, kpis, aggregations, insights
             )
         st.download_button(
-            label="📥 Download Excel (.xlsx)",
+            label="📥 Download Excel Report (.xlsx)",
             data=excel_bytes,
-            file_name=f"Report_{file_meta.get('file_name', 'data').split('.')[0]}.xlsx",
+            file_name=f"{base_clean_name}_Report.xlsx",
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
             use_container_width=True
         )
@@ -983,10 +1091,10 @@ with tab_export:
             <div>
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                     <div class="export-icon-box" style="background: #fee2e2; color: #b91c1c;">📄</div>
-                    <div style="font-weight: 700; font-size: 16px;">PDF Summary</div>
+                    <div style="font-weight: 700; font-size: 16px;">Executive PDF Report</div>
                 </div>
                 <div style="font-size: 13px; color: #64748b; line-height: 1.4; margin-bottom: 14px;">
-                    Formal business report (.pdf) with executive scorecard, KPI grid, chart snapshot, and recommendations.
+                    Formal executive PDF document with cover title, Executive Scorecard, KPI grid, chart snapshot, and recommendations.
                 </div>
             </div>
         </div>
@@ -998,9 +1106,9 @@ with tab_export:
                 audit_log, kpis, insights
             )
         st.download_button(
-            label="📥 Download PDF (.pdf)",
+            label="📥 Download Executive PDF (.pdf)",
             data=pdf_bytes,
-            file_name=f"Executive_Summary_{file_meta.get('file_name', 'data').split('.')[0]}.pdf",
+            file_name=f"{base_clean_name}_Executive_Summary.pdf",
             mime="application/pdf",
             use_container_width=True
         )
@@ -1012,10 +1120,10 @@ with tab_export:
             <div>
                 <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
                     <div class="export-icon-box" style="background: #e0e7ff; color: #4338ca;">🌐</div>
-                    <div style="font-weight: 700; font-size: 16px;">HTML Report</div>
+                    <div style="font-weight: 700; font-size: 16px;">Standalone HTML Report</div>
                 </div>
                 <div style="font-size: 13px; color: #64748b; line-height: 1.4; margin-bottom: 14px;">
-                    Standalone responsive web report (.html) with CSS metric cards, audit summary, and data preview.
+                    Self-contained interactive single-page web report (.html) with CSS metric cards, audit summary, and data preview.
                 </div>
             </div>
         </div>
@@ -1026,37 +1134,13 @@ with tab_export:
             audit_log, kpis, insights
         )
         st.download_button(
-            label="📥 Download HTML (.html)",
+            label="📥 Download HTML Report (.html)",
             data=html_bytes,
-            file_name=f"Executive_Report_{file_meta.get('file_name', 'data').split('.')[0]}.html",
+            file_name=f"{base_clean_name}_Executive_Report.html",
             mime="text/html",
             use_container_width=True
         )
 
-    # 4. Cleaned CSV & Excel Dataset
-    with col_e4:
-        st.markdown("""
-        <div class="export-box">
-            <div>
-                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                    <div class="export-icon-box" style="background: #fef3c7; color: #b45309;">💾</div>
-                    <div style="font-weight: 700; font-size: 16px;">Clean Dataset</div>
-                </div>
-                <div style="font-size: 13px; color: #64748b; line-height: 1.4; margin-bottom: 14px;">
-                    Direct raw cleaned data files ready for SQL databases, ML training, PowerBI, or Tableau.
-                </div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-        csv_bytes = export_cleaned_data(transformed_df, file_format="csv")
-        st.download_button(
-            label="📥 Cleaned CSV (.csv)",
-            data=csv_bytes,
-            file_name=f"cleaned_{file_meta.get('file_name', 'data').split('.')[0]}.csv",
-            mime="text/csv",
-            use_container_width=True
-        )
     st.markdown('</div>', unsafe_allow_html=True)
 
 
