@@ -9,6 +9,11 @@ import numpy as np
 from src.logger import log_event
 
 
+def _is_real_numeric(series: pd.Series) -> bool:
+    """Check if series is numeric and not a boolean."""
+    return pd.api.types.is_numeric_dtype(series) and not pd.api.types.is_bool_dtype(series) and str(series.dtype).lower() not in ["boolean", "bool"]
+
+
 def calculate_kpis(df: pd.DataFrame) -> Dict[str, Any]:
     """
     Dynamically discover and calculate relevant business KPIs based on available columns.
@@ -30,7 +35,7 @@ def calculate_kpis(df: pd.DataFrame) -> Dict[str, Any]:
 
     # 1. Revenue / Sales Metrics
     rev_col = _find_col(df, ["calculated_revenue", "net_revenue", "revenue", "gross_revenue", "total_amount", "sales", "amount"])
-    if rev_col and pd.api.types.is_numeric_dtype(df[rev_col]):
+    if rev_col and _is_real_numeric(df[rev_col]):
         total_rev = float(df[rev_col].sum())
         avg_rev = float(df[rev_col].mean())
         max_rev = float(df[rev_col].max())
@@ -57,7 +62,7 @@ def calculate_kpis(df: pd.DataFrame) -> Dict[str, Any]:
 
     # 2. Volume / Quantity Metrics
     qty_col = _find_col(df, ["quantity", "qty", "units_sold", "volume"])
-    if qty_col and pd.api.types.is_numeric_dtype(df[qty_col]):
+    if qty_col and _is_real_numeric(df[qty_col]):
         total_qty = float(df[qty_col].sum())
         avg_qty = float(df[qty_col].mean())
         kpis["total_quantity"] = {
@@ -69,7 +74,7 @@ def calculate_kpis(df: pd.DataFrame) -> Dict[str, Any]:
 
     # 3. Profit & Margin Metrics
     profit_col = _find_col(df, ["gross_profit", "net_profit", "profit"])
-    if profit_col and pd.api.types.is_numeric_dtype(df[profit_col]):
+    if profit_col and _is_real_numeric(df[profit_col]):
         total_profit = float(df[profit_col].sum())
         kpis["total_profit"] = {
             "label": "Total Gross Profit",
@@ -78,7 +83,7 @@ def calculate_kpis(df: pd.DataFrame) -> Dict[str, Any]:
             "description": f"Gross profit calculated from '{profit_col}'"
         }
         margin_col = _find_col(df, ["profit_margin_pct", "margin"])
-        if margin_col and pd.api.types.is_numeric_dtype(df[margin_col]):
+        if margin_col and _is_real_numeric(df[margin_col]):
             avg_margin = float(df[margin_col].mean())
             kpis["average_margin"] = {
                 "label": "Average Margin",
@@ -98,25 +103,34 @@ def calculate_kpis(df: pd.DataFrame) -> Dict[str, Any]:
             "description": f"Distinct entities in '{cust_col}'"
         }
 
-    # 5. Products / Categories
-    item_col = _find_col(df, ["item", "product_name", "product", "sku", "job_title"])
-    if item_col:
-        unique_items = int(df[item_col].nunique(dropna=True))
-        kpis["unique_products"] = {
-            "label": "Unique Products / SKUs",
-            "value": f"{unique_items:,}",
-            "raw": unique_items,
-            "description": f"Distinct offerings in '{item_col}'"
+    # 5. Salary / Compensation Metrics
+    sal_col = _find_col(df, ["salary", "annual_salary", "ctc", "compensation", "annual_income"])
+    if sal_col and _is_real_numeric(df[sal_col]):
+        total_payroll = float(df[sal_col].sum())
+        avg_sal = float(df[sal_col].mean())
+        med_sal = float(df[sal_col].median())
+        kpis["total_payroll"] = {
+            "label": "Total Payroll / Spend",
+            "value": f"${total_payroll:,.2f}",
+            "raw": total_payroll,
+            "description": f"Sum of '{sal_col}'"
+        }
+        kpis["median_salary"] = {
+            "label": "Median Salary",
+            "value": f"${med_sal:,.2f}",
+            "raw": med_sal,
+            "description": f"50th percentile of '{sal_col}'"
         }
 
-    # 6. Top Category Performance
-    cat_col = _find_col(df, ["product_category", "category", "department", "business_unit", "segment"])
-    if cat_col:
-        if rev_col and pd.api.types.is_numeric_dtype(df[rev_col]):
-            top_cat_agg = df.groupby(cat_col)[rev_col].sum().sort_values(ascending=False)
-            if not top_cat_agg.empty:
-                top_cat_name = str(top_cat_agg.index[0])
-                top_cat_val = float(top_cat_agg.iloc[0])
+    # 6. Leading Category Metric
+    cat_col = _find_col(df, ["product_category", "category", "department", "business_unit", "customer_segment"])
+    if cat_col and cat_col in df.columns:
+        if rev_col and _is_real_numeric(df[rev_col]):
+            cat_perf = df.groupby(cat_col)[rev_col].sum().sort_values(ascending=False)
+            if not cat_perf.empty:
+                top_cat_name = str(cat_perf.index[0])
+                top_cat_val = float(cat_perf.iloc[0])
+                total_rev = float(df[rev_col].sum())
                 share = (top_cat_val / total_rev * 100) if total_rev > 0 else 0
                 kpis["top_category"] = {
                     "label": f"Top Category ({top_cat_name})",
@@ -136,7 +150,7 @@ def calculate_kpis(df: pd.DataFrame) -> Dict[str, Any]:
 
     # 7. Period-over-Period Growth
     date_col = _find_col(df, ["month_year", "order_date", "signup_date", "fiscal_quarter", "hire_date"])
-    if date_col and rev_col and pd.api.types.is_numeric_dtype(df[rev_col]):
+    if date_col and rev_col and _is_real_numeric(df[rev_col]):
         try:
             period_df = df.groupby(date_col)[rev_col].sum().reset_index()
             if len(period_df) >= 2:
@@ -162,13 +176,13 @@ def generate_statistical_summary(df: pd.DataFrame) -> pd.DataFrame:
     Generate extended 5-number summary with mean, std dev, variance, skewness,
     and missing count for all numeric columns.
     """
-    num_df = df.select_dtypes(include=[np.number])
-    if num_df.empty:
+    num_cols = [c for c in df.select_dtypes(include=[np.number]).columns if _is_real_numeric(df[c])]
+    if not num_cols:
         return pd.DataFrame()
 
     stats_list = []
-    for col in num_df.columns:
-        series = num_df[col].dropna()
+    for col in num_cols:
+        series = df[col].dropna()
         if series.empty:
             continue
 
@@ -198,7 +212,7 @@ def generate_aggregations(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
     if df is None or df.empty:
         return aggregations
 
-    num_cols = list(df.select_dtypes(include=[np.number]).columns)
+    num_cols = [c for c in df.select_dtypes(include=[np.number]).columns if _is_real_numeric(df[c])]
     val_col = _find_col(df, ["calculated_revenue", "net_revenue", "revenue", "gross_revenue", "total_amount", "salary", "annual_income", "quantity"])
     if not val_col and num_cols:
         val_col = num_cols[0]
@@ -218,7 +232,7 @@ def generate_aggregations(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
             aggregations["by_category"] = df[cat_col].value_counts().reset_index(name="Record_Count")
 
     # 2. By Region / Location / City
-    reg_col = _find_col(df, ["region", "location", "city", "country"])
+    reg_col = _find_col(df, ["region", "location", "city", "country", "territory", "branch"])
     if reg_col:
         if val_col:
             agg_reg = df.groupby(reg_col).agg(
@@ -231,21 +245,27 @@ def generate_aggregations(df: pd.DataFrame) -> Dict[str, pd.DataFrame]:
         else:
             aggregations["by_region"] = df[reg_col].value_counts().reset_index(name="Record_Count")
 
-    # 3. By Period / Time
-    time_col = _find_col(df, ["order_month_year", "month_year", "order_year", "signup_month_year", "fiscal_quarter", "hire_year"])
+    # 3. By Period (Monthly / Quarterly)
+    time_col = _find_col(df, ["month_year", "quarter", "order_month_year", "fiscal_quarter"])
     if time_col and val_col:
         agg_time = df.groupby(time_col).agg(
             Record_Count=(time_col, "count"),
             Total_Value=(val_col, "sum"),
             Average_Value=(val_col, "mean")
         ).reset_index().sort_values(by=time_col)
-        aggregations["by_time"] = agg_time
+        aggregations["by_period"] = agg_time
+
+    # 4. By Status / Lifecycle
+    status_col = _find_col(df, ["status", "account_status", "order_status", "payment_status"])
+    if status_col:
+        agg_stat = df[status_col].value_counts().reset_index(name="Record_Count")
+        aggregations["by_status"] = agg_stat
 
     return aggregations
 
 
 def _find_col(df: pd.DataFrame, keywords: List[str]) -> str:
-    """Helper to locate exact or substring matching column in DataFrame."""
+    """Helper to find column by exact name or substring."""
     for kw in keywords:
         for col in df.columns:
             if str(col).lower().strip() == kw:

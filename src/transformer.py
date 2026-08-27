@@ -9,6 +9,11 @@ import numpy as np
 from src.logger import log_event
 
 
+def _is_real_numeric(series: pd.Series) -> bool:
+    """Check if series is numeric and not a boolean."""
+    return pd.api.types.is_numeric_dtype(series) and not pd.api.types.is_bool_dtype(series) and str(series.dtype).lower() not in ["boolean", "bool"]
+
+
 def transform_data(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, str]]:
     """
     Apply intelligent feature engineering and domain transformations.
@@ -61,19 +66,16 @@ def transform_data(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, str]]:
     # -------------------------------------------------------------
     # 2. Sales & Commerce Calculated Metrics
     # -------------------------------------------------------------
-    # Revenue = Quantity * Unit Price
     qty_col = _find_matching_col(transformed_df, ["quantity", "qty", "units_sold", "volume"])
     price_col = _find_matching_col(transformed_df, ["unit_price", "price", "item_price", "rate"])
     
-    if qty_col and price_col and pd.api.types.is_numeric_dtype(transformed_df[qty_col]) and pd.api.types.is_numeric_dtype(transformed_df[price_col]):
+    if qty_col and price_col and _is_real_numeric(transformed_df[qty_col]) and _is_real_numeric(transformed_df[price_col]):
         rev_col = "calculated_revenue" if "revenue" in transformed_df.columns or "total_amount" in transformed_df.columns else "revenue"
         transformed_df[rev_col] = (transformed_df[qty_col] * transformed_df[price_col]).round(2)
         transformations_applied[rev_col] = f"Calculated Revenue = ({qty_col} × {price_col})"
 
-        # Net Revenue if Discount exists
         disc_col = _find_matching_col(transformed_df, ["discount_pct", "discount", "discount_rate"])
-        if disc_col and pd.api.types.is_numeric_dtype(transformed_df[disc_col]):
-            # If discount is > 1 (e.g. 15 for 15%), convert to decimal rate
+        if disc_col and _is_real_numeric(transformed_df[disc_col]):
             disc_rate = transformed_df[disc_col].apply(lambda x: x / 100.0 if x > 1.0 else x)
             transformed_df["discount_amount"] = (transformed_df[rev_col] * disc_rate).round(2)
             transformed_df["net_revenue"] = (transformed_df[rev_col] - transformed_df["discount_amount"]).round(2)
@@ -85,10 +87,9 @@ def transform_data(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, str]]:
     rev_target = _find_matching_col(transformed_df, ["gross_revenue", "revenue", "sales", "net_revenue", "calculated_revenue"])
     cost_target = _find_matching_col(transformed_df, ["operating_cost", "cost", "total_cost", "cogs", "expenses"])
 
-    if rev_target and cost_target and pd.api.types.is_numeric_dtype(transformed_df[rev_target]) and pd.api.types.is_numeric_dtype(transformed_df[cost_target]):
+    if rev_target and cost_target and _is_real_numeric(transformed_df[rev_target]) and _is_real_numeric(transformed_df[cost_target]):
         if "profit" not in transformed_df.columns and "net_profit" not in transformed_df.columns:
             transformed_df["gross_profit"] = (transformed_df[rev_target] - transformed_df[cost_target]).round(2)
-            # Avoid division by zero
             transformed_df["profit_margin_pct"] = np.where(
                 transformed_df[rev_target] > 0,
                 ((transformed_df["gross_profit"] / transformed_df[rev_target]) * 100).round(2),
@@ -108,7 +109,7 @@ def transform_data(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, str]]:
 
     # Credit Score Tiering
     credit_col = _find_matching_col(transformed_df, ["credit_score", "cibil_score"])
-    if credit_col and pd.api.types.is_numeric_dtype(transformed_df[credit_col]) and "credit_tier" not in transformed_df.columns:
+    if credit_col and _is_real_numeric(transformed_df[credit_col]) and "credit_tier" not in transformed_df.columns:
         bins = [-np.inf, 579, 669, 739, 799, np.inf]
         labels = ["Poor (<580)", "Fair (580-669)", "Good (670-739)", "Very Good (740-799)", "Exceptional (800+)"]
         transformed_df["credit_tier"] = pd.cut(transformed_df[credit_col], bins=bins, labels=labels)
@@ -116,7 +117,7 @@ def transform_data(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, str]]:
 
     # Experience Level Tiering
     exp_col = _find_matching_col(transformed_df, ["experience_yrs", "experience", "years_experience", "tenure"])
-    if exp_col and pd.api.types.is_numeric_dtype(transformed_df[exp_col]) and "experience_level" not in transformed_df.columns:
+    if exp_col and _is_real_numeric(transformed_df[exp_col]) and "experience_level" not in transformed_df.columns:
         bins = [-np.inf, 2, 5, 10, np.inf]
         labels = ["Junior (0-2 yrs)", "Mid-Level (3-5 yrs)", "Senior (6-10 yrs)", "Lead/Principal (10+ yrs)"]
         transformed_df["experience_level"] = pd.cut(transformed_df[exp_col], bins=bins, labels=labels)
@@ -133,7 +134,6 @@ def _find_matching_col(df: pd.DataFrame, keywords: list) -> str:
             col_clean = str(col).lower().strip()
             if col_clean == kw:
                 return col
-    # Fallback to substring matching
     for kw in keywords:
         for col in df.columns:
             col_clean = str(col).lower().strip()

@@ -1,52 +1,60 @@
 """
-Automatic and Configurable Data Cleaning Pipeline Module.
-Implements standardized naming, duplicate removal, currency/type conversion,
-missing value imputation, categorical normalization, outlier handling,
-and complete audit log generation.
+Data Cleaning & Transformation Engine Module.
+Performs automated, deterministic, and configurable cleaning operations:
+- Column standardization (snake_case)
+- Exact duplicate row removal
+- Smart data type casting (currency strings, dates, booleans)
+- Missing value imputation (numeric, categorical, datetime, boolean)
+- Anomaly correction (negative values in positive fields, whitespace/casing)
+- Outlier handling (IQR / Z-Score clipping or removal)
+- Produces a comprehensive step-by-step audit changelog
 """
 import re
-from typing import Dict, Any, List, Optional, Tuple, Union
+from typing import Dict, Any, List, Tuple, Optional, Union
 import pandas as pd
 import numpy as np
 from src.logger import log_event
 
 
-def standardize_column_names(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, str]]:
+def clean_column_names(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, str]]:
     """
-    Standardize all column names into clean snake_case format.
-    - Strips whitespace
-    - Replaces symbols (%, #, $, etc.) with descriptive text or underscores
-    - Resolves collisions with suffixes (_1, _2)
+    Standardize all column headers to clean snake_case.
+    
+    Operations:
+    - Strip leading/trailing whitespaces
+    - Replace spaces, hyphens, dots, slashes with single underscores
+    - Remove special characters (#, $, %, @, etc.)
+    - Convert to lowercase
+    - Deduplicate identical column names by appending numeric suffix
     
     Returns:
-        Tuple of (DataFrame with new columns, mapping dictionary of old_name -> new_name)
+        Tuple of (Cleaned DataFrame, mapping dictionary of original -> new names)
     """
     cleaned_df = df.copy()
-    mapping = {}
-    seen_names = {}
+    mapping: Dict[str, str] = {}
+    seen_names: Dict[str, int] = {}
 
-    for col in cleaned_df.columns:
-        original = str(col)
-        # Handle symbols
-        s = original.strip()
-        s = s.replace("%", " pct ").replace("#", " num ").replace("$", " usd ").replace("₹", " inr ")
-        s = s.replace("&", " and ").replace("@", " at ").replace("/", "_").replace("\\", "_")
-        # Replace non-alphanumeric with underscore
-        s = re.sub(r"[^\w\s]", "_", s)
-        # Convert to snake_case
-        s = re.sub(r"[\s_]+", "_", s).strip("_").lower()
-        if not s:
-            s = "unnamed_column"
+    for orig_col in cleaned_df.columns:
+        col_str = str(orig_col).strip()
+        # Replace special separators with underscores
+        cleaned_name = re.sub(r"[\s\-\.\/\\\(\)\[\]]+", "_", col_str)
+        # Remove non-alphanumeric except underscores
+        cleaned_name = re.sub(r"[^a-zA-Z0-9_]", "", cleaned_name)
+        # Collapse multiple underscores
+        cleaned_name = re.sub(r"_+", "_", cleaned_name).strip("_").lower()
 
-        # Avoid collisions
-        if s in seen_names:
-            seen_names[s] += 1
-            final_name = f"{s}_{seen_names[s]}"
+        if not cleaned_name:
+            cleaned_name = "unnamed_col"
+
+        # Handle duplicate column names
+        if cleaned_name in seen_names:
+            seen_names[cleaned_name] += 1
+            final_name = f"{cleaned_name}_{seen_names[cleaned_name]}"
         else:
-            seen_names[s] = 0
-            final_name = s
+            seen_names[cleaned_name] = 0
+            final_name = cleaned_name
 
-        mapping[original] = final_name
+        mapping[orig_col] = final_name
 
     cleaned_df.rename(columns=mapping, inplace=True)
     return cleaned_df, mapping
@@ -78,8 +86,8 @@ def standardize_data_types(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, st
     currency_regex = re.compile(r"[\$₹€£¥,\s]")
 
     for col in cleaned_df.columns:
-        # Check if already numeric or datetime
-        if pd.api.types.is_numeric_dtype(cleaned_df[col]) or pd.api.types.is_datetime64_any_dtype(cleaned_df[col]):
+        # Check if already numeric, datetime, or boolean
+        if pd.api.types.is_numeric_dtype(cleaned_df[col]) or pd.api.types.is_datetime64_any_dtype(cleaned_df[col]) or pd.api.types.is_bool_dtype(cleaned_df[col]):
             continue
 
         series = cleaned_df[col].dropna()
@@ -90,9 +98,7 @@ def standardize_data_types(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, st
         str_series = series.astype(str).str.strip()
 
         # 1. Test Currency / Percentage / Comma-separated numbers
-        # Filter out obvious non-numeric text
         cleaned_str = str_series.apply(lambda x: currency_regex.sub("", str(x)))
-        # Check if percentage
         is_pct = str_series.str.endswith("%").sum() / len(str_series) > 0.5
         if is_pct:
             cleaned_str = cleaned_str.str.replace("%", "", regex=False)
@@ -101,9 +107,7 @@ def standardize_data_types(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, st
         valid_ratio = numeric_success.notna().sum() / len(series)
 
         if valid_ratio >= 0.75:
-            # Apply numeric conversion across entire column
             col_cleaned = cleaned_df[col].astype(str).apply(lambda x: currency_regex.sub("", str(x)).replace("%", "") if pd.notna(x) else x)
-            # Retain NaN
             converted_num = pd.to_numeric(col_cleaned, errors="coerce")
             cleaned_df[col] = converted_num
             converted_cols[col] = "Float (Cleaned from Currency/Formatted Text)"
@@ -150,7 +154,6 @@ def standardize_categorical_values(
     cleaned_df = df.copy()
     changes_count = {}
 
-    # Domain-specific standardizers
     standard_rules = {
         "gender": {
             "m": "Male", "male": "Male", "m.": "Male", "man": "Male",
@@ -187,13 +190,10 @@ def standardize_categorical_values(
 
     for col in cleaned_df.columns:
         if cleaned_df[col].dtype == "object" or isinstance(cleaned_df[col].dtype, pd.StringDtype):
-            # Clean whitespace and empty strings
             cleaned_series = cleaned_df[col].astype(str).str.strip()
-            # Convert stringified "None", "nan", "null", "" to NaN
-            null_mask = cleaned_series.str.lower().isin(["nan", "none", "null", "n/a", "", "undefined"])
+            null_mask = cleaned_series.str.lower().isin(["nan", "none", "null", "n/a", "", "undefined", "<na>"])
             cleaned_series[null_mask] = np.nan
             
-            # Check for domain rule matches
             col_key = col.lower().replace(" ", "_")
             matched_rule = None
             for rule_key, rule_dict in standard_rules.items():
@@ -214,10 +214,8 @@ def standardize_categorical_values(
                 if diff > 0:
                     changes_count[col] = int(diff)
             else:
-                # Default clean title casing if values are text
                 old_vals = cleaned_series.copy()
-                # If column looks like ID/Code, don't title case
-                if "id" in col_key or "code" in col_key or "email" in col_key:
+                if "id" in col_key or "code" in col_key or "email" in col_key or "url" in col_key:
                     cleaned_df[col] = cleaned_series
                 else:
                     cleaned_df[col] = cleaned_series.apply(lambda x: x.title() if pd.notna(x) and isinstance(x, str) else x)
@@ -239,6 +237,8 @@ def fix_invalid_numeric_values(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str
                          "age", "revenue", "cost", "spend", "sales", "experience"]
 
     for col in cleaned_df.select_dtypes(include=[np.number]).columns:
+        if pd.api.types.is_bool_dtype(cleaned_df[col]) or str(cleaned_df[col].dtype).lower() in ["boolean", "bool"]:
+            continue
         col_lower = str(col).lower().replace(" ", "_")
         if any(kw in col_lower for kw in positive_keywords):
             neg_mask = cleaned_df[col] < 0
@@ -258,11 +258,12 @@ def handle_missing_values(
     custom_col_strategies: Optional[Dict[str, str]] = None
 ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     """
-    Handle missing values with configurable intelligent strategies.
+    Handle missing values with configurable intelligent strategies and bulletproof type safety.
     
     Strategies:
     - Numeric: 'median', 'mean', 'zero', 'drop_row', 'forward_fill'
     - Categorical: 'mode_or_unknown', 'mode', 'constant_unknown', 'drop_row'
+    - Boolean: mode / False
     - Date: 'keep_nat', 'forward_fill', 'drop_row'
     
     Returns:
@@ -278,31 +279,85 @@ def handle_missing_values(
 
         strategy = (custom_col_strategies or {}).get(col)
 
-        # 1. Numeric Columns
-        if pd.api.types.is_numeric_dtype(cleaned_df[col]):
-            strat = strategy or numeric_strategy
-            if strat == "median":
-                med_val = cleaned_df[col].median()
-                fill_val = 0 if pd.isna(med_val) else round(float(med_val), 2)
-                cleaned_df[col] = cleaned_df[col].fillna(fill_val)
-                imputation_log[col] = {"strategy": "median", "filled_count": missing_count, "fill_value": fill_val}
-            elif strat == "mean":
-                mean_val = cleaned_df[col].mean()
-                fill_val = 0 if pd.isna(mean_val) else round(float(mean_val), 2)
-                cleaned_df[col] = cleaned_df[col].fillna(fill_val)
-                imputation_log[col] = {"strategy": "mean", "filled_count": missing_count, "fill_value": fill_val}
-            elif strat == "zero":
-                cleaned_df[col] = cleaned_df[col].fillna(0)
-                imputation_log[col] = {"strategy": "constant (0)", "filled_count": missing_count, "fill_value": 0}
-            elif strat == "forward_fill":
-                cleaned_df[col] = cleaned_df[col].ffill().bfill()
-                imputation_log[col] = {"strategy": "forward_fill", "filled_count": missing_count}
-            elif strat == "drop_row":
+        # -------------------------------------------------------------
+        # 1. Boolean Columns (Must be handled BEFORE is_numeric_dtype!)
+        # -------------------------------------------------------------
+        is_bool = (
+            pd.api.types.is_bool_dtype(cleaned_df[col]) or
+            str(cleaned_df[col].dtype).lower() in ["boolean", "bool"] or
+            isinstance(cleaned_df[col].dtype, pd.BooleanDtype)
+        )
+        if is_bool:
+            strat = strategy or categorical_strategy
+            if strat == "drop_row":
                 cleaned_df = cleaned_df.dropna(subset=[col]).copy()
                 imputation_log[col] = {"strategy": "dropped_rows", "dropped_count": missing_count}
+            else:
+                mode_series = cleaned_df[col].dropna().mode()
+                fill_val = bool(mode_series.iloc[0]) if not mode_series.empty else False
+                try:
+                    cleaned_df[col] = cleaned_df[col].fillna(fill_val)
+                except Exception:
+                    cleaned_df[col] = cleaned_df[col].astype(object).fillna(fill_val).astype("boolean")
+                imputation_log[col] = {"strategy": "boolean_mode", "filled_count": missing_count, "fill_value": fill_val}
+            continue
 
-        # 2. Datetime Columns
-        elif pd.api.types.is_datetime64_any_dtype(cleaned_df[col]):
+        # -------------------------------------------------------------
+        # 2. Categorical (pd.CategoricalDtype) Columns
+        # -------------------------------------------------------------
+        if isinstance(cleaned_df[col].dtype, pd.CategoricalDtype):
+            strat = strategy or categorical_strategy
+            if strat == "drop_row":
+                cleaned_df = cleaned_df.dropna(subset=[col]).copy()
+                imputation_log[col] = {"strategy": "dropped_rows", "dropped_count": missing_count}
+            else:
+                mode_series = cleaned_df[col].dropna().mode()
+                fill_val = mode_series.iloc[0] if not mode_series.empty else "Unknown"
+                if fill_val not in cleaned_df[col].cat.categories:
+                    cleaned_df[col] = cleaned_df[col].cat.add_categories([fill_val])
+                cleaned_df[col] = cleaned_df[col].fillna(fill_val)
+                imputation_log[col] = {"strategy": "categorical_mode", "filled_count": missing_count, "fill_value": str(fill_val)}
+            continue
+
+        # -------------------------------------------------------------
+        # 3. Numeric Columns
+        # -------------------------------------------------------------
+        if pd.api.types.is_numeric_dtype(cleaned_df[col]):
+            strat = strategy or numeric_strategy
+            try:
+                if strat == "median":
+                    med_val = cleaned_df[col].median()
+                    fill_val = 0 if pd.isna(med_val) else round(float(med_val), 2)
+                    if pd.api.types.is_integer_dtype(cleaned_df[col]):
+                        fill_val = int(round(fill_val))
+                    cleaned_df[col] = cleaned_df[col].fillna(fill_val)
+                    imputation_log[col] = {"strategy": "median", "filled_count": missing_count, "fill_value": fill_val}
+                elif strat == "mean":
+                    mean_val = cleaned_df[col].mean()
+                    fill_val = 0 if pd.isna(mean_val) else round(float(mean_val), 2)
+                    if pd.api.types.is_integer_dtype(cleaned_df[col]):
+                        fill_val = int(round(fill_val))
+                    cleaned_df[col] = cleaned_df[col].fillna(fill_val)
+                    imputation_log[col] = {"strategy": "mean", "filled_count": missing_count, "fill_value": fill_val}
+                elif strat == "zero":
+                    fill_val = 0 if pd.api.types.is_integer_dtype(cleaned_df[col]) else 0.0
+                    cleaned_df[col] = cleaned_df[col].fillna(fill_val)
+                    imputation_log[col] = {"strategy": "constant (0)", "filled_count": missing_count, "fill_value": 0}
+                elif strat == "forward_fill":
+                    cleaned_df[col] = cleaned_df[col].ffill().bfill()
+                    imputation_log[col] = {"strategy": "forward_fill", "filled_count": missing_count}
+                elif strat == "drop_row":
+                    cleaned_df = cleaned_df.dropna(subset=[col]).copy()
+                    imputation_log[col] = {"strategy": "dropped_rows", "dropped_count": missing_count}
+            except Exception:
+                cleaned_df[col] = cleaned_df[col].astype(float).fillna(0.0)
+                imputation_log[col] = {"strategy": "numeric_safe_fallback", "filled_count": missing_count, "fill_value": 0.0}
+            continue
+
+        # -------------------------------------------------------------
+        # 4. Datetime Columns
+        # -------------------------------------------------------------
+        if pd.api.types.is_datetime64_any_dtype(cleaned_df[col]):
             strat = strategy or date_strategy
             if strat == "forward_fill":
                 cleaned_df[col] = cleaned_df[col].ffill().bfill()
@@ -312,26 +367,30 @@ def handle_missing_values(
                 imputation_log[col] = {"strategy": "dropped_rows", "dropped_count": missing_count}
             else:
                 imputation_log[col] = {"strategy": "retained NaT (safe date handling)", "missing_count": missing_count}
+            continue
 
-        # 3. Categorical / Text Columns
+        # -------------------------------------------------------------
+        # 5. Categorical / Text / Object Columns
+        # -------------------------------------------------------------
+        strat = strategy or categorical_strategy
+        if strat == "mode":
+            mode_series = cleaned_df[col].mode(dropna=True)
+            fill_val = mode_series.iloc[0] if not mode_series.empty else "Unknown"
+        elif strat == "mode_or_unknown":
+            mode_series = cleaned_df[col].mode(dropna=True)
+            fill_val = mode_series.iloc[0] if not mode_series.empty and cleaned_df[col].nunique() < 20 else "Unknown"
+        elif strat == "drop_row":
+            cleaned_df = cleaned_df.dropna(subset=[col]).copy()
+            imputation_log[col] = {"strategy": "dropped_rows", "dropped_count": missing_count}
+            continue
         else:
-            strat = strategy or categorical_strategy
-            if strat == "mode":
-                mode_series = cleaned_df[col].mode(dropna=True)
-                fill_val = mode_series.iloc[0] if not mode_series.empty else "Unknown"
-                cleaned_df[col] = cleaned_df[col].fillna(fill_val)
-                imputation_log[col] = {"strategy": "mode", "filled_count": missing_count, "fill_value": fill_val}
-            elif strat == "mode_or_unknown":
-                mode_series = cleaned_df[col].mode(dropna=True)
-                fill_val = mode_series.iloc[0] if not mode_series.empty and cleaned_df[col].nunique() < 20 else "Unknown"
-                cleaned_df[col] = cleaned_df[col].fillna(fill_val)
-                imputation_log[col] = {"strategy": "mode_or_unknown", "filled_count": missing_count, "fill_value": fill_val}
-            elif strat == "drop_row":
-                cleaned_df = cleaned_df.dropna(subset=[col]).copy()
-                imputation_log[col] = {"strategy": "dropped_rows", "dropped_count": missing_count}
-            else:
-                cleaned_df[col] = cleaned_df[col].fillna("Unknown")
-                imputation_log[col] = {"strategy": "constant ('Unknown')", "filled_count": missing_count, "fill_value": "Unknown"}
+            fill_val = "Unknown"
+
+        try:
+            cleaned_df[col] = cleaned_df[col].fillna(fill_val)
+        except Exception:
+            cleaned_df[col] = cleaned_df[col].astype(str).replace({"nan": fill_val, "None": fill_val, "<NA>": fill_val, "": fill_val})
+        imputation_log[col] = {"strategy": strat, "filled_count": missing_count, "fill_value": str(fill_val)}
 
     return cleaned_df, imputation_log
 
@@ -356,6 +415,8 @@ def detect_outliers(
     num_cols = df.select_dtypes(include=[np.number]).columns
 
     for col in num_cols:
+        if pd.api.types.is_bool_dtype(df[col]) or str(df[col].dtype).lower() in ["boolean", "bool"]:
+            continue
         series = df[col].dropna()
         if len(series) < 5 or series.nunique() <= 2:
             continue
@@ -369,24 +430,26 @@ def detect_outliers(
             lower_bound = round(float(q1 - (threshold * iqr)), 2)
             upper_bound = round(float(q3 + (threshold * iqr)), 2)
             outlier_mask = (series < lower_bound) | (series > upper_bound)
-        else: # Z-Score
+        elif method == "zscore":
             mean = series.mean()
             std = series.std()
             if std == 0 or pd.isna(std):
                 continue
-            lower_bound = round(float(mean - (threshold * std)), 2)
-            upper_bound = round(float(mean + (threshold * std)), 2)
             z_scores = ((series - mean) / std).abs()
             outlier_mask = z_scores > threshold
+            lower_bound = round(float(mean - (threshold * std)), 2)
+            upper_bound = round(float(mean + (threshold * std)), 2)
+        else:
+            continue
 
         outlier_count = int(outlier_mask.sum())
         if outlier_count > 0:
             outlier_report[col] = {
+                "method": method,
                 "outlier_count": outlier_count,
                 "outlier_pct": round((outlier_count / len(series)) * 100, 2),
                 "lower_bound": lower_bound,
-                "upper_bound": upper_bound,
-                "sample_outlier_values": [round(float(x), 2) for x in series[outlier_mask].head(5).tolist()]
+                "upper_bound": upper_bound
             }
 
     return outlier_report
@@ -399,36 +462,36 @@ def handle_outliers(
 ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     """
     Handle detected outliers:
-    - 'keep': Do nothing (safe default, logs presence)
+    - 'keep': Flag and retain original values
     - 'cap': Winsorize / clip values to lower and upper bounds
-    - 'remove': Drop rows containing outliers
+    - 'remove': Drop rows containing outlier values
     """
     cleaned_df = df.copy()
-    action_log = {}
+    actions_taken: Dict[str, Any] = {}
 
-    if not outlier_report or action == "keep":
-        return cleaned_df, {"action": "keep", "details": "Retained detected outliers in dataset."}
+    if action == "keep" or not outlier_report:
+        return cleaned_df, {"action": "kept_all", "columns_affected": list(outlier_report.keys())}
 
-    if action == "cap":
-        for col, stats in outlier_report.items():
-            if col in cleaned_df.columns:
-                lower = stats["lower_bound"]
-                upper = stats["upper_bound"]
-                cleaned_df[col] = cleaned_df[col].clip(lower=lower, upper=upper)
-                action_log[col] = f"Capped {stats['outlier_count']} values to [{lower}, {upper}]"
-        return cleaned_df, {"action": "cap", "details": action_log}
+    for col, stats in outlier_report.items():
+        if col not in cleaned_df.columns:
+            continue
 
-    if action == "remove":
-        drop_indices = set()
-        for col, stats in outlier_report.items():
-            if col in cleaned_df.columns:
-                mask = (cleaned_df[col] < stats["lower_bound"]) | (cleaned_df[col] > stats["upper_bound"])
-                drop_indices.update(cleaned_df[mask].index)
-        
-        cleaned_df = cleaned_df.drop(index=list(drop_indices)).copy()
-        return cleaned_df, {"action": "remove", "dropped_rows": len(drop_indices)}
+        lower = stats["lower_bound"]
+        upper = stats["upper_bound"]
 
-    return cleaned_df, {"action": "keep", "details": "Retained outliers"}
+        if action == "cap":
+            clipped_series = cleaned_df[col].clip(lower=lower, upper=upper)
+            changed = (cleaned_df[col] != clipped_series).sum()
+            cleaned_df[col] = clipped_series
+            actions_taken[col] = {"action": "capped", "clipped_count": int(changed), "bounds": [lower, upper]}
+
+        elif action == "remove":
+            mask = (cleaned_df[col] >= lower) & (cleaned_df[col] <= upper) | (cleaned_df[col].isna())
+            initial_len = len(cleaned_df)
+            cleaned_df = cleaned_df[mask].copy()
+            actions_taken[col] = {"action": "removed_rows", "dropped_rows": initial_len - len(cleaned_df)}
+
+    return cleaned_df, actions_taken
 
 
 def clean_data(
@@ -436,125 +499,113 @@ def clean_data(
     options: Optional[Dict[str, Any]] = None
 ) -> Tuple[pd.DataFrame, Dict[str, Any]]:
     """
-    Full automated end-to-end cleaning pipeline.
+    Master automated pipeline orchestrator for data cleaning.
+    Executes all cleaning steps deterministically and produces an audit trail.
     
-    Options dictionary:
-    - standardize_names (bool): default True
-    - remove_dups (bool): default True
-    - convert_types (bool): default True
-    - fix_negatives (bool): default True
-    - standardize_cats (bool): default True
-    - handle_missing (bool): default True
-    - numeric_missing_strategy (str): 'median', 'mean', 'zero', 'drop_row'
-    - categorical_missing_strategy (str): 'mode_or_unknown', 'mode', 'constant_unknown'
-    - outlier_method (str): 'iqr' or 'zscore'
-    - outlier_action (str): 'keep', 'cap', 'remove'
-    
-    Returns:
-        Tuple of (Cleaned DataFrame, Audit Log Dictionary)
+    Default options:
+    - standardize_names: True
+    - remove_dups: True
+    - convert_types: True
+    - fix_negatives: True
+    - standardize_cats: True
+    - handle_missing: True
+    - numeric_missing_strategy: 'median'
+    - categorical_missing_strategy: 'mode_or_unknown'
+    - outlier_method: 'iqr'
+    - outlier_action: 'keep'
     """
-    opts = options or {}
-    standardize_names_opt = opts.get("standardize_names", True)
-    remove_dups_opt = opts.get("remove_dups", True)
-    convert_types_opt = opts.get("convert_types", True)
-    fix_negatives_opt = opts.get("fix_negatives", True)
-    standardize_cats_opt = opts.get("standardize_cats", True)
-    handle_missing_opt = opts.get("handle_missing", True)
-    num_missing_strat = opts.get("numeric_missing_strategy", "median")
-    cat_missing_strat = opts.get("categorical_missing_strategy", "mode_or_unknown")
-    outlier_method = opts.get("outlier_method", "iqr")
-    outlier_action = opts.get("outlier_action", "keep")
+    if df is None or df.empty:
+        return df, {"status": "empty_dataset"}
 
+    opts = options or {}
+    cleaned_df = df.copy()
     audit_log: Dict[str, Any] = {
-        "initial_rows": len(df),
-        "initial_columns": len(df.columns),
-        "steps_executed": [],
-        "column_renaming": {},
-        "duplicates_removed": 0,
-        "types_converted": {},
-        "negatives_fixed": {},
-        "categories_standardized": {},
-        "missing_imputed": {},
-        "outlier_detection": {},
-        "outlier_handling": {},
-        "final_rows": 0,
-        "final_columns": 0
+        "initial_shape": (len(df), len(df.columns)),
+        "steps_executed": []
     }
 
-    cleaned_df = df.copy()
-
     # Step 1: Standardize Column Names
-    if standardize_names_opt:
-        cleaned_df, rename_map = standardize_column_names(cleaned_df)
-        audit_log["column_renaming"] = rename_map
-        audit_log["steps_executed"].append(f"Standardized {len(rename_map)} column names into clean snake_case.")
-        log_event("INFO", "CLEAN", "Column names standardized.")
+    if opts.get("standardize_names", True):
+        cleaned_df, name_mapping = clean_column_names(cleaned_df)
+        audit_log["column_renaming"] = name_mapping
+        audit_log["steps_executed"].append(f"Standardized {len(name_mapping)} column headers to snake_case.")
+        log_event("INFO", "CLEAN", f"Standardized {len(name_mapping)} column names.")
 
     # Step 2: Remove Exact Duplicates
-    if remove_dups_opt:
-        cleaned_df, dups_removed, _ = remove_duplicates(cleaned_df)
+    if opts.get("remove_dups", True):
+        cleaned_df, dups_removed, remaining = remove_duplicates(cleaned_df)
         audit_log["duplicates_removed"] = dups_removed
         if dups_removed > 0:
-            audit_log["steps_executed"].append(f"Removed {dups_removed} exact duplicate records.")
+            audit_log["steps_executed"].append(f"Removed {dups_removed} duplicate rows ({remaining} rows remaining).")
             log_event("INFO", "CLEAN", f"Removed {dups_removed} duplicate rows.")
 
-    # Step 3: Standardize Data Types (Currency, Percentages, Dates, Booleans)
-    if convert_types_opt:
+    # Step 3: Type Conversions & Currency Parsing
+    if opts.get("convert_types", True):
         cleaned_df, converted_types = standardize_data_types(cleaned_df)
         audit_log["types_converted"] = converted_types
         if converted_types:
-            audit_log["steps_executed"].append(f"Converted {len(converted_types)} columns to appropriate numeric/date/boolean types.")
-            log_event("INFO", "CLEAN", f"Converted data types: {list(converted_types.keys())}")
+            audit_log["steps_executed"].append(f"Parsed and converted data types for {len(converted_types)} columns.")
+            log_event("INFO", "CLEAN", f"Converted types for columns: {list(converted_types.keys())}")
 
-    # Step 4: Fix Invalid Negative Values in Positive Fields
-    if fix_negatives_opt:
-        cleaned_df, neg_fixed = fix_invalid_numeric_values(cleaned_df)
-        audit_log["negatives_fixed"] = neg_fixed
-        if neg_fixed:
-            total_fixed = sum(neg_fixed.values())
-            audit_log["steps_executed"].append(f"Corrected {total_fixed} negative values across {len(neg_fixed)} positive columns.")
-            log_event("INFO", "CLEAN", f"Fixed negative values in {neg_fixed}")
+    # Step 4: Fix Negatives in Strictly Positive Fields
+    if opts.get("fix_negatives", True):
+        cleaned_df, fixed_negs = fix_invalid_numeric_values(cleaned_df)
+        audit_log["negatives_fixed"] = fixed_negs
+        if fixed_negs:
+            total_fixed = sum(fixed_negs.values())
+            audit_log["steps_executed"].append(f"Corrected {total_fixed} negative values across {len(fixed_negs)} numeric fields.")
+            log_event("INFO", "CLEAN", f"Fixed negative values in: {fixed_negs}")
 
-    # Step 5: Standardize Categorical Values & Trim Whitespace
-    if standardize_cats_opt:
+    # Step 5: Standardize Categorical Values & Text Domains
+    if opts.get("standardize_cats", True):
         cleaned_df, cat_changes = standardize_categorical_values(cleaned_df)
-        audit_log["categories_standardized"] = cat_changes
+        audit_log["categorical_standardized"] = cat_changes
         if cat_changes:
-            audit_log["steps_executed"].append(f"Normalized casing and categorical variants across {len(cat_changes)} text columns.")
-            log_event("INFO", "CLEAN", "Categorical normalization completed.")
+            total_std = sum(cat_changes.values())
+            audit_log["steps_executed"].append(f"Standardized casing and text domains across {len(cat_changes)} categorical columns ({total_std} values adjusted).")
+            log_event("INFO", "CLEAN", f"Standardized categories: {cat_changes}")
 
     # Step 6: Handle Missing Values
-    if handle_missing_opt:
-        cleaned_df, missing_actions = handle_missing_values(
+    if opts.get("handle_missing", True):
+        cleaned_df, imp_log = handle_missing_values(
             cleaned_df,
-            numeric_strategy=num_missing_strat,
-            categorical_strategy=cat_missing_strat
+            numeric_strategy=opts.get("numeric_missing_strategy", "median"),
+            categorical_strategy=opts.get("categorical_missing_strategy", "mode_or_unknown")
         )
-        audit_log["missing_imputed"] = missing_actions
-        if missing_actions:
-            audit_log["steps_executed"].append(f"Handled missing values across {len(missing_actions)} columns using intelligent imputation.")
-            log_event("INFO", "CLEAN", f"Imputed missing values across {len(missing_actions)} columns.")
+        audit_log["missing_value_imputation"] = imp_log
+        if imp_log:
+            audit_log["steps_executed"].append(f"Handled missing values across {len(imp_log)} columns using intelligent imputation strategies.")
+            log_event("INFO", "CLEAN", f"Imputed columns: {list(imp_log.keys())}")
 
     # Step 7: Outlier Detection and Handling
+    outlier_method = opts.get("outlier_method", "iqr")
+    outlier_action = opts.get("outlier_action", "keep")
     outlier_report = detect_outliers(cleaned_df, method=outlier_method)
     audit_log["outlier_detection"] = outlier_report
-    if outlier_report:
-        cleaned_df, outlier_action_res = handle_outliers(cleaned_df, outlier_report, action=outlier_action)
-        audit_log["outlier_handling"] = outlier_action_res
-        audit_log["steps_executed"].append(f"Detected outliers in {len(outlier_report)} numeric columns (Action: {outlier_action}).")
-        log_event("INFO", "CLEAN", f"Outliers processed with action '{outlier_action}'.")
 
-    # Final counts
-    audit_log["final_rows"] = len(cleaned_df)
-    audit_log["final_columns"] = len(cleaned_df.columns)
-    log_event("SUCCESS", "CLEAN", f"Cleaning completed successfully. Shape changed from ({audit_log['initial_rows']}, {audit_log['initial_columns']}) to ({audit_log['final_rows']}, {audit_log['final_columns']}).")
+    if outlier_action != "keep" and outlier_report:
+        cleaned_df, outlier_actions = handle_outliers(cleaned_df, outlier_report, action=outlier_action)
+        audit_log["outlier_actions"] = outlier_actions
+        audit_log["steps_executed"].append(f"Applied outlier action '{outlier_action}' across {len(outlier_actions)} columns.")
+        log_event("INFO", "CLEAN", f"Outlier action '{outlier_action}' applied.")
 
+    audit_log["final_shape"] = (len(cleaned_df), len(cleaned_df.columns))
     return cleaned_df, audit_log
 
 
-def _is_date_string(val: Any) -> bool:
-    """Helper to detect date strings."""
+# -------------------------------------------------------------
+# Internal Helper Functions
+# -------------------------------------------------------------
+
+def _is_date_string(val: str) -> bool:
+    """Check if a string resembles a common date format."""
     if not isinstance(val, str) or len(val.strip()) < 6:
         return False
-    val = val.strip()
-    return bool(re.match(r"^\d{4}[-/]\d{1,2}[-/]\d{1,2}|^\d{1,2}[-/]\d{1,2}[-/]\d{2,4}", val))
+    val_clean = val.strip()
+    date_patterns = [
+        r"^\d{4}[-/.]\d{1,2}[-/.]\d{1,2}", # YYYY-MM-DD
+        r"^\d{1,2}[-/.]\d{1,2}[-/.]\d{2,4}", # DD-MM-YYYY or MM-DD-YYYY
+        r"^[a-zA-Z]{3,9}\s+\d{1,2},?\s+\d{4}", # Month DD, YYYY
+        r"^\d{1,2}\s+[a-zA-Z]{3,9}\s+\d{4}" # DD Month YYYY
+    ]
+    return any(re.match(p, val_clean) for p in date_patterns)
