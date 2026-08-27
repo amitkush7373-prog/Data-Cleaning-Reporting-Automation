@@ -27,35 +27,56 @@ COLOR_PALETTE = [
     "#14b8a6"   # Teal
 ]
 
-PLOTLY_LAYOUT_DEFAULTS = dict(
-    font=dict(family="Plus Jakarta Sans, Inter, sans-serif", color="#334155", size=12),
-    paper_bgcolor="rgba(0,0,0,0)",
-    plot_bgcolor="rgba(0,0,0,0)",
-    margin=dict(l=24, r=24, t=48, b=24),
-    xaxis=dict(
-        showgrid=True,
-        gridcolor="rgba(226, 232, 240, 0.7)",
-        zeroline=False,
-        linecolor="rgba(203, 213, 225, 0.8)"
-    ),
-    yaxis=dict(
-        showgrid=True,
-        gridcolor="rgba(226, 232, 240, 0.7)",
-        zeroline=False,
-        linecolor="rgba(203, 213, 225, 0.8)"
-    ),
-    legend=dict(
-        bgcolor="rgba(255, 255, 255, 0.8)",
-        bordercolor="rgba(226, 232, 240, 0.8)",
-        borderwidth=1,
-        font=dict(size=11)
-    )
-)
+
+def apply_saas_theme(
+    fig: go.Figure, 
+    title: Optional[str] = None, 
+    height: int = 380, 
+    showlegend: bool = False, 
+    legend_horizontal: bool = False
+) -> go.Figure:
+    """Apply unified SaaS visual layout theme to any Plotly figure safely without keyword collisions."""
+    layout_args: Dict[str, Any] = {
+        "font": dict(family="Plus Jakarta Sans, Inter, sans-serif", color="#334155", size=12),
+        "paper_bgcolor": "rgba(0,0,0,0)",
+        "plot_bgcolor": "rgba(0,0,0,0)",
+        "height": height,
+        "showlegend": showlegend,
+        "margin": dict(l=24, r=24, t=48 if title else 24, b=24)
+    }
+    
+    if title:
+        layout_args["title"] = dict(text=title, font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans"))
+    
+    if showlegend:
+        if legend_horizontal:
+            layout_args["legend"] = dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1,
+                bgcolor="rgba(255, 255, 255, 0.85)",
+                bordercolor="rgba(226, 232, 240, 0.8)",
+                borderwidth=1,
+                font=dict(size=11)
+            )
+        else:
+            layout_args["legend"] = dict(
+                bgcolor="rgba(255, 255, 255, 0.85)",
+                bordercolor="rgba(226, 232, 240, 0.8)",
+                borderwidth=1,
+                font=dict(size=11)
+            )
+
+    fig.update_layout(**layout_args)
+    fig.update_xaxes(showgrid=True, gridcolor="rgba(226, 232, 240, 0.7)", zeroline=False, linecolor="rgba(203, 213, 225, 0.8)")
+    fig.update_yaxes(showgrid=True, gridcolor="rgba(226, 232, 240, 0.7)", zeroline=False, linecolor="rgba(203, 213, 225, 0.8)")
+    return fig
 
 
 def create_quality_gauge(score: float, grade: str) -> go.Figure:
     """Create an interactive modern gauge for Data Quality Health Score."""
-    # Choose color based on score
     if score >= 90:
         bar_color = "#10b981" # Emerald
     elif score >= 75:
@@ -141,16 +162,19 @@ def create_before_after_missing_chart(raw_df: pd.DataFrame, clean_df: pd.DataFra
             opacity=0.95
         )
     ])
+    
     fig.update_layout(
         barmode='group',
-        title=dict(text="Missing Values by Column (Before vs After)", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
         xaxis_title="Column",
-        yaxis_title="Missing Cell Count",
-        height=360,
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-        **PLOTLY_LAYOUT_DEFAULTS
+        yaxis_title="Missing Cell Count"
     )
-    return fig
+    return apply_saas_theme(
+        fig, 
+        title="Missing Values by Column (Before vs After)", 
+        height=360, 
+        showlegend=True, 
+        legend_horizontal=True
+    )
 
 
 def create_trend_chart(df: pd.DataFrame, date_col: str, val_col: str) -> Optional[go.Figure]:
@@ -174,13 +198,12 @@ def create_trend_chart(df: pd.DataFrame, date_col: str, val_col: str) -> Optiona
             fillcolor='rgba(59, 130, 246, 0.08)'
         ))
 
-        fig.update_layout(
-            title=dict(text=f"Trend Analysis: {val_col.replace('_', ' ').title()} over Time", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
+        return apply_saas_theme(
+            fig,
+            title=f"Trend Analysis: {val_col.replace('_', ' ').title()} over Time",
             height=380,
-            showlegend=False,
-            **PLOTLY_LAYOUT_DEFAULTS
+            showlegend=False
         )
-        return fig
     except Exception:
         return None
 
@@ -208,14 +231,13 @@ def create_category_bar_chart(df: pd.DataFrame, cat_col: str, val_col: str) -> O
             marker_line_color='rgba(37, 99, 235, 0.2)',
             marker_line_width=1
         )
-        fig.update_layout(
+        fig.update_layout(coloraxis_showscale=False)
+        return apply_saas_theme(
+            fig,
+            title=f"Performance Breakdown by {cat_col.replace('_', ' ').title()}",
             height=380,
-            showlegend=False,
-            coloraxis_showscale=False,
-            title=dict(text=f"Performance Breakdown by {cat_col.replace('_', ' ').title()}", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
-            **PLOTLY_LAYOUT_DEFAULTS
+            showlegend=False
         )
-        return fig
     except Exception:
         return None
 
@@ -247,13 +269,12 @@ def create_donut_chart(df: pd.DataFrame, cat_col: str, val_col: Optional[str] = 
             textinfo='percent+label',
             marker=dict(line=dict(color='#ffffff', width=2))
         )
-        fig.update_layout(
+        return apply_saas_theme(
+            fig,
+            title=f"Distribution by {cat_col.replace('_', ' ').title()}",
             height=380,
-            title=dict(text=f"Distribution by {cat_col.replace('_', ' ').title()}", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
-            showlegend=False,
-            **PLOTLY_LAYOUT_DEFAULTS
+            showlegend=False
         )
-        return fig
     except Exception:
         return None
 
@@ -275,12 +296,12 @@ def create_distribution_chart(df: pd.DataFrame, num_col: str) -> Optional[go.Fig
         fig.update_traces(
             marker=dict(line=dict(color='#6d28d9', width=1), opacity=0.85)
         )
-        fig.update_layout(
+        return apply_saas_theme(
+            fig,
+            title=f"Distribution & Outliers: {num_col.replace('_', ' ').title()}",
             height=380,
-            title=dict(text=f"Distribution & Outliers: {num_col.replace('_', ' ').title()}", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
-            **PLOTLY_LAYOUT_DEFAULTS
+            showlegend=False
         )
-        return fig
     except Exception:
         return None
 
@@ -299,12 +320,12 @@ def create_correlation_heatmap(df: pd.DataFrame) -> Optional[go.Figure]:
         title="Numerical Features Correlation Matrix",
         color_continuous_scale=[[0, "#ef4444"], [0.5, "#f8fafc"], [1, "#3b82f6"]]
     )
-    fig.update_layout(
+    return apply_saas_theme(
+        fig,
+        title="Numerical Features Correlation Matrix",
         height=400,
-        title=dict(text="Numerical Features Correlation Matrix", font=dict(size=14, color="#1e293b", family="Plus Jakarta Sans")),
-        **PLOTLY_LAYOUT_DEFAULTS
+        showlegend=False
     )
-    return fig
 
 
 # -------------------------------------------------------------
@@ -318,7 +339,7 @@ def generate_static_summary_plot(df: pd.DataFrame, cat_col: Optional[str] = None
 
     if cat_col and val_col and cat_col in df.columns and val_col in df.columns:
         agg = df.groupby(cat_col)[val_col].sum().sort_values(ascending=False).head(8)
-        sns.barplot(x=agg.values, y=agg.index, ax=ax, palette="Blues_r")
+        sns.barplot(x=agg.values, y=agg.index, hue=agg.index, ax=ax, palette="Blues_r", legend=False)
         ax.set_title(f"Top {cat_col.replace('_', ' ').title()} by {val_col.replace('_', ' ').title()}", fontsize=11, fontweight="bold")
         ax.set_xlabel(val_col.replace('_', ' ').title(), fontsize=9)
     else:
