@@ -122,6 +122,11 @@ def standardize_data_types(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, st
             except Exception:
                 parsed_dates = pd.to_datetime(cleaned_df[col], errors="coerce")
             if parsed_dates.notna().sum() / len(series) >= 0.5:
+                if hasattr(parsed_dates.dt, 'tz') and parsed_dates.dt.tz is not None:
+                    try:
+                        parsed_dates = parsed_dates.dt.tz_localize(None)
+                    except Exception:
+                        pass
                 cleaned_df[col] = parsed_dates
                 converted_cols[col] = "Datetime (Parsed multi-format dates)"
                 continue
@@ -136,6 +141,15 @@ def standardize_data_types(df: pd.DataFrame) -> Tuple[pd.DataFrame, Dict[str, st
             cleaned_df[col] = lower_series.map(bool_map).astype("boolean")
             converted_cols[col] = "Boolean (Standardized yes/no/1/0)"
             continue
+
+    # Strip timezones from all datetime columns for Excel compatibility
+    for col in cleaned_df.columns:
+        if pd.api.types.is_datetime64_any_dtype(cleaned_df[col]):
+            if hasattr(cleaned_df[col].dt, 'tz') and cleaned_df[col].dt.tz is not None:
+                try:
+                    cleaned_df[col] = cleaned_df[col].dt.tz_localize(None)
+                except Exception:
+                    pass
 
     return cleaned_df, converted_cols
 

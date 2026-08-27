@@ -27,6 +27,26 @@ from src.logger import log_event
 from src.visualizer import generate_static_summary_plot
 
 
+def _sanitize_df_for_excel(df: pd.DataFrame) -> pd.DataFrame:
+    """Sanitize DataFrame for Excel export by stripping timezones from datetime columns."""
+    if df is None or df.empty:
+        return df
+    excel_df = df.copy()
+    for col in excel_df.columns:
+        if pd.api.types.is_datetime64_any_dtype(excel_df[col]):
+            try:
+                if hasattr(excel_df[col].dt, "tz") and excel_df[col].dt.tz is not None:
+                    excel_df[col] = excel_df[col].dt.tz_localize(None)
+            except Exception:
+                excel_df[col] = excel_df[col].astype(str)
+        elif str(excel_df[col].dtype).lower() in ["datetime64[ns, utc]", "datetimetz"]:
+            try:
+                excel_df[col] = excel_df[col].dt.tz_localize(None)
+            except Exception:
+                excel_df[col] = excel_df[col].astype(str)
+    return excel_df
+
+
 # -------------------------------------------------------------
 # 1. Multi-Sheet Styled Excel Report (.xlsx)
 # -------------------------------------------------------------
@@ -46,6 +66,8 @@ def generate_excel_report(
     Generate a professional multi-sheet Excel workbook with styled headers,
     KPI cards, audit log, and formatted tables.
     """
+    raw_df = _sanitize_df_for_excel(raw_df)
+    clean_df = _sanitize_df_for_excel(clean_df)
     wb = openpyxl.Workbook()
     
     # Styles
@@ -279,6 +301,11 @@ def generate_excel_report(
     # Data Rows
     for row_idx, row_vals in enumerate(clean_df.itertuples(index=False), start=2):
         for col_idx, val in enumerate(row_vals, start=1):
+            if isinstance(val, (pd.Timestamp, datetime)) and getattr(val, "tzinfo", None) is not None:
+                try:
+                    val = val.replace(tzinfo=None)
+                except Exception:
+                    val = str(val)
             cell = ws_data.cell(row=row_idx, column=col_idx, value=val if pd.notna(val) else "")
             cell.font = regular_font
             cell.border = thin_border
@@ -689,11 +716,12 @@ def export_cleaned_data(
         else:
             return df.to_csv(index=False).encode("utf-8")
     else: # Excel
+        export_df = _sanitize_df_for_excel(df)
         if is_file:
-            df.to_excel(filepath_or_buffer, index=False)
+            export_df.to_excel(filepath_or_buffer, index=False)
             return filepath_or_buffer
         else:
             buf = io.BytesIO()
-            df.to_excel(buf, index=False)
+            export_df.to_excel(buf, index=False)
             buf.seek(0)
             return buf.getvalue()
