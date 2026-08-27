@@ -638,8 +638,15 @@ base_clean_name = os.path.splitext(orig_filename)[0].rstrip("._-")
 if not base_clean_name:
     base_clean_name = "dataset"
 
-clean_csv_bytes = export_cleaned_data(transformed_df, file_format="csv")
-clean_xlsx_bytes = export_cleaned_data(transformed_df, file_format="xlsx")
+try:
+    clean_csv_bytes = export_cleaned_data(transformed_df, file_format="csv")
+except Exception:
+    clean_csv_bytes = transformed_df.to_csv(index=False).encode("utf-8")
+
+try:
+    clean_xlsx_bytes = export_cleaned_data(transformed_df, file_format="xlsx")
+except Exception:
+    clean_xlsx_bytes = None
 
 col_banner_left, col_banner_btn1, col_banner_btn2 = st.columns([3, 1, 1])
 with col_banner_left:

@@ -28,22 +28,64 @@ from src.visualizer import generate_static_summary_plot
 
 
 def _sanitize_df_for_excel(df: pd.DataFrame) -> pd.DataFrame:
-    """Sanitize DataFrame for Excel export by stripping timezones from datetime columns."""
+    """
+    Sanitize DataFrame for 100% fail-safe Excel export:
+    - Strips timezones from datetime/timestamp series and individual object cells
+    - Converts Period/Interval/Categorical and complex types to strings
+    - Truncates strings exceeding Excel's 32,767 character cell limit
+    - Limits rows to Excel maximum (1,048,576)
+    """
     if df is None or df.empty:
         return df
+    
     excel_df = df.copy()
+
+    # Excel row limit safeguard
+    if len(excel_df) > 1048500:
+        excel_df = excel_df.iloc[:1048500]
+
     for col in excel_df.columns:
-        if pd.api.types.is_datetime64_any_dtype(excel_df[col]):
+        s = excel_df[col]
+        dtype_str = str(s.dtype).lower()
+
+        # 1. Datetime series
+        if pd.api.types.is_datetime64_any_dtype(s) or "datetime" in dtype_str or "timestamp" in dtype_str:
             try:
-                if hasattr(excel_df[col].dt, "tz") and excel_df[col].dt.tz is not None:
-                    excel_df[col] = excel_df[col].dt.tz_localize(None)
+                if hasattr(s.dt, "tz") and s.dt.tz is not None:
+                    excel_df[col] = s.dt.tz_localize(None)
             except Exception:
-                excel_df[col] = excel_df[col].astype(str)
-        elif str(excel_df[col].dtype).lower() in ["datetime64[ns, utc]", "datetimetz"]:
+                excel_df[col] = s.astype(str)
+
+        # 2. Categorical / Period / Interval
+        elif isinstance(s.dtype, (pd.CategoricalDtype, pd.PeriodDtype, pd.IntervalDtype)) or "interval" in dtype_str or "period" in dtype_str:
+            excel_df[col] = s.astype(str)
+
+        # 3. Object columns (might contain timezone-aware datetimes, dicts, lists, or huge text)
+        elif s.dtype == "object":
+            def _clean_val(val):
+                if pd.isna(val):
+                    return ""
+                # Python datetime / pd.Timestamp with timezone
+                if isinstance(val, (datetime, pd.Timestamp)):
+                    if getattr(val, "tzinfo", None) is not None:
+                        try:
+                            return val.replace(tzinfo=None)
+                        except Exception:
+                            return str(val)
+                    return val
+                # Period / Interval / complex object
+                if isinstance(val, (pd.Period, pd.Interval, dict, list, tuple, set)):
+                    return str(val)
+                # String truncation for Excel cell limit
+                if isinstance(val, str) and len(val) > 32000:
+                    return val[:32000] + "... [truncated]"
+                return val
+
             try:
-                excel_df[col] = excel_df[col].dt.tz_localize(None)
+                excel_df[col] = s.map(_clean_val)
             except Exception:
-                excel_df[col] = excel_df[col].astype(str)
+                excel_df[col] = s.astype(str)
+
     return excel_df
 
 
@@ -704,7 +746,7 @@ def export_cleaned_data(
     filepath_or_buffer: Optional[Union[str, io.BytesIO]] = None,
     file_format: str = "csv"
 ) -> Union[str, bytes]:
-    """Export cleaned dataset to CSV or Excel bytes/file."""
+    """Export cleaned dataset to CSV or Excel bytes/file with robust fallback."""
     is_file = isinstance(filepath_or_buffer, str)
     if is_file and os.path.dirname(filepath_or_buffer):
         os.makedirs(os.path.dirname(filepath_or_buffer), exist_ok=True)
@@ -716,12 +758,25 @@ def export_cleaned_data(
         else:
             return df.to_csv(index=False).encode("utf-8")
     else: # Excel
-        export_df = _sanitize_df_for_excel(df)
-        if is_file:
-            export_df.to_excel(filepath_or_buffer, index=False)
-            return filepath_or_buffer
-        else:
-            buf = io.BytesIO()
-            export_df.to_excel(buf, index=False)
-            buf.seek(0)
-            return buf.getvalue()
+        try:
+            export_df = _sanitize_df_for_excel(df)
+            if is_file:
+                export_df.to_excel(filepath_or_buffer, index=False, engine="openpyxl")
+                return filepath_or_buffer
+            else:
+                buf = io.BytesIO()
+                export_df.to_excel(buf, index=False, engine="openpyxl")
+                buf.seek(0)
+                return buf.getvalue()
+        except Exception as e:
+            log_event("WARNING", "EXPORT", f"Excel export standard serializer failed, applying fallback: {e}")
+            # Ultimate fail-safe fallback
+            fallback_df = df.copy().astype(str)
+            if is_file:
+                fallback_df.to_excel(filepath_or_buffer, index=False, engine="openpyxl")
+                return filepath_or_buffer
+            else:
+                buf = io.BytesIO()
+                fallback_df.to_excel(buf, index=False, engine="openpyxl")
+                buf.seek(0)
+                return buf.getvalue()
